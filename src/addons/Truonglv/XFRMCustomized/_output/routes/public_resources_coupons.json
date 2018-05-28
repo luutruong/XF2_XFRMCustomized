@@ -1,0 +1,11 @@
+{
+    "route_type": "public",
+    "route_prefix": "resources",
+    "sub_name": "coupons",
+    "format": "coupons/:int<coupon_id,title>",
+    "build_class": "",
+    "build_method": "",
+    "controller": "Truonglv\\XFRMCustomized:Coupon",
+    "context": "xfrm",
+    "action_prefix": ""
+}

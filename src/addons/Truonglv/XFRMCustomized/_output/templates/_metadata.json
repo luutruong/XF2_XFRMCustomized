@@ -1,0 +1,27 @@
+{
+    "email/payment_received_receipt_tl_xfrm_customized_resource.html": {
+        "version_id": 1000470,
+        "version_string": "1.0.4",
+        "hash": "6fa8191df3c2e07317cfb018ae3bbe8e"
+    },
+    "public/xfrm_customized_resource_add_buyer.html": {
+        "version_id": 1000870,
+        "version_string": "1.0.8",
+        "hash": "f4690e16bd26cd7b635632b2aa48a70d"
+    },
+    "public/xfrm_customized_resource_buyers.html": {
+        "version_id": 1000870,
+        "version_string": "1.0.8",
+        "hash": "407dbbf30efd51debd1047262fcac2af"
+    },
+    "public/xfrm_customized_resource_macros.html": {
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "d48bf048ea91292441254e0b79254d4f"
+    },
+    "public/xfrm_customized_resource_purchase.html": {
+        "version_id": 1000070,
+        "version_string": "1.0.0",
+        "hash": "26d2b552ed2a9da85aa15861f0fcf879"
+    }
+}

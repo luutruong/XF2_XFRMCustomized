@@ -1,0 +1,6 @@
+{
+    "from_class": "XFRM\\Entity\\ResourceVersion",
+    "to_class": "Truonglv\\XFRMCustomized\\XFRM\\Entity\\ResourceVersion",
+    "execute_order": 10,
+    "active": true
+}

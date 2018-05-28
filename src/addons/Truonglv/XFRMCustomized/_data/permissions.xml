@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="resource" permission_id="xfrm_customized_addBuyer" permission_type="flag" interface_group_id="resourceModeratorPermissions" display_order="1999"/>
+</permissions>

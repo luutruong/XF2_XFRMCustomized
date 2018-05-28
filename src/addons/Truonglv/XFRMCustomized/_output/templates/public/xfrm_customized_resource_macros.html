@@ -1,0 +1,41 @@
+<xf:macro name="type"
+	arg-currentType="!"
+	arg-resource="!"
+	arg-category="!"
+	arg-versionAttachData="!"
+	arg-allowCurrentType="{{ false }}">
+
+	<xf:radiorow name="resource_type" value="{$currentType}"
+		label="{{ phrase('type') }}"
+		data-xf-init="attachment-manager">
+
+		<xf:option value="download_local"
+			label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
+
+			<xf:macro template="helper_attach_upload" name="upload_block"
+				arg-attachmentData="{$versionAttachData}"
+				arg-hiddenName="version_attachment_hash" />
+		</xf:option>
+	</xf:radiorow>
+
+    <xf:macro name="purchase_inputs" arg-resource="{$resource}" arg-showPrice="{{ true }}" />
+</xf:macro>
+
+<xf:macro name="purchase_inputs" arg-resource="!" arg-showPrice="{{ false }}">
+    <hr class="formRowSep" />
+    <xf:callback class="Truonglv\XFRMCustomized\Callback"
+                 method="renderPaymentProfiles"
+                 params="{'resource': $resource}" />
+    <xf:if is="$showPrice">
+        <xf:formrow rowtype="input" label="{{ phrase('price') }}">
+            <xf:macro template="xfrm_resource_edit_macros" name="purchase_inputs"
+                      arg-resource="{$resource}" />
+        </xf:formrow>
+    </xf:if>
+
+    <xf:textboxrow name="renew_price"
+                   label="{{ phrase('tl_xfrm_customized.renew_price') }}"
+                   value="{{ $resource.renew_price ?: '' }}"
+                   placeholder="{{ phrase('tl_xfrm_customized.renew_price') }}" style="width: 120px" />
+    <hr class="formRowSep" />
+</xf:macro>

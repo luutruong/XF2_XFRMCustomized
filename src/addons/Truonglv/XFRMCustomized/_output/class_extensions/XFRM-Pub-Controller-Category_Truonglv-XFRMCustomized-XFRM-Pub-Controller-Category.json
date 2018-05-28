@@ -1,0 +1,6 @@
+{
+    "from_class": "XFRM\\Pub\\Controller\\Category",
+    "to_class": "Truonglv\\XFRMCustomized\\XFRM\\Pub\\Controller\\Category",
+    "execute_order": 10,
+    "active": true
+}

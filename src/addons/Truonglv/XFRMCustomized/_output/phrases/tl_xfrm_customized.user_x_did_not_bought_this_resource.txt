@@ -1,0 +1,1 @@
+The user {name} did not bought this resource.

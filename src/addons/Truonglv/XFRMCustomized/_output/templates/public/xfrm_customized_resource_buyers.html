@@ -1,0 +1,72 @@
+<xf:title>{{ phrase('tl_xfrm_customized.buyers') }}</xf:title>
+
+<xf:wrap template="xfrm_resource_wrapper">
+    <xf:set var="$pageSelected" value="buyers" />
+</xf:wrap>
+
+<xf:css src="member.less" />
+
+<div class="block">
+    <div class="block-outer">
+        <div class="block-outer-opposite">
+            <xf:if is="$resource.canAddBuyer()">
+                <xf:button href="{{ link('resources/add-buyer', $resource) }}"
+                           class="button--link"
+                           overlay="true"><i class="fa fa-plus"></i> {{ phrase('tl_xfrm_customized.add_buyer') }}</xf:button>
+            </xf:if>
+
+            <xf:button class="button--link menuTrigger" data-xf-click="menu"
+                       aria-haspopup="true"
+                       aria-expanded="false">{{ phrase('tl_xfrm_customized.find_buyer') }}</xf:button>
+            <div class="menu" data-menu="menu" aria-hidden="true">
+                <xf:form action="{{ link('resources/buyers', $resource) }}" method="get" class="menu-content">
+                    <div class="menu-row">
+                        {{ phrase('tl_xfrm_customized.find_buyer:') }}
+                        <xf:textbox name="username" ac="single"
+                                    value="{{ $user ? $user.username : '' }}"
+                                    maxlength="{{ max_length($xf.visitor, 'username') }}" />
+                    </div>
+                    <div class="menu-footer">
+                        <span class="menu-footer-controls"><xf:button type="submit" class="button--primary" icon="search" /></span>
+                    </div>
+                </xf:form>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-container">
+        <ol class="block-body">
+            <xf:foreach loop="{$buyers}" key="$userId" value="$data">
+                <xf:set var="$extraHtml">
+                    <ol class="listPlain" style="min-width: 200px">
+                        <li><span>{{ phrase('tl_xfrm_customized.amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
+                        <li><span>{{ phrase('tl_xfrm_customized.purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
+                        <li><span>{{ phrase('tl_xfrm_customized.expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
+
+                        <xf:if is="$resource.canAddBuyer()">
+                        <li><xf:button class="button--small button--link"
+                                       href="{{ link('resources/buyer-edit', $resource, {'user_id': $data.User.user_id}) }}"
+                                       overlay="true"
+                                       icon="edit"></xf:button></li>
+                        </xf:if>
+                    </ol>
+                </xf:set>
+
+                <li class="block-row block-row--separated">
+                    <xf:macro template="member_list_macros" name="item"
+                              arg-user="{$data.User}"
+                              arg-extraData="{$extraHtml}"
+                              arg-extraDataBig="{{ false }}" />
+                </li>
+            <xf:else />
+                <li class="block-row">{{ phrase('tl_xfrm_customized.there_are_no_users_bought_this_resource') }}</li>
+            </xf:foreach>
+        </ol>
+    </div>
+
+    <div class="block-outer block-outer--after">
+        <xf:pagenav link="resources/buyers" data="{$resource}"
+                    total="{$total}" perpage="{$perPage}"
+                    page="{$page}" />
+    </div>
+</div>

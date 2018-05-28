@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="permission.resource_xfrm_customized_addBuyer" version_id="1000470" version_string="1.0.4"><![CDATA[Manual add buyer]]></phrase>
+  <phrase title="tl_xfrm_customized.12_months" version_id="1000070" version_string="1.0.0"><![CDATA[12 months]]></phrase>
+  <phrase title="tl_xfrm_customized.add_buyer" version_id="1000470" version_string="1.0.4"><![CDATA[Add Buyer]]></phrase>
+  <phrase title="tl_xfrm_customized.amount" version_id="1000470" version_string="1.0.4"><![CDATA[Amount]]></phrase>
+  <phrase title="tl_xfrm_customized.buy_resource" version_id="1000070" version_string="1.0.0"><![CDATA[Buy Resource]]></phrase>
+  <phrase title="tl_xfrm_customized.buyers" version_id="1000470" version_string="1.0.4"><![CDATA[Buyers]]></phrase>
+  <phrase title="tl_xfrm_customized.download_resource" version_id="1000370" version_string="1.0.3"><![CDATA[Download Resource]]></phrase>
+  <phrase title="tl_xfrm_customized.expire_date" version_id="1000470" version_string="1.0.4"><![CDATA[Expire Date]]></phrase>
+  <phrase title="tl_xfrm_customized.expire_date_must_be_great_than_purchased_date" version_id="1000870" version_string="1.0.8"><![CDATA[Expire date must be great than purchased date.]]></phrase>
+  <phrase title="tl_xfrm_customized.find_buyer" version_id="1000670" version_string="1.0.6"><![CDATA[Find Buyer]]></phrase>
+  <phrase title="tl_xfrm_customized.license_duration" version_id="1000070" version_string="1.0.0"><![CDATA[License Duration]]></phrase>
+  <phrase title="tl_xfrm_customized.price" version_id="1000470" version_string="1.0.4"><![CDATA[Price]]></phrase>
+  <phrase title="tl_xfrm_customized.purchase_resource" version_id="1000070" version_string="1.0.0"><![CDATA[Purchase Resource]]></phrase>
+  <phrase title="tl_xfrm_customized.purchase_via" version_id="1000070" version_string="1.0.0"><![CDATA[Purchase via]]></phrase>
+  <phrase title="tl_xfrm_customized.purchased_date" version_id="1000470" version_string="1.0.4"><![CDATA[Purchased Date]]></phrase>
+  <phrase title="tl_xfrm_customized.receipt_for_your_resource_purchase_at_x" version_id="1000370" version_string="1.0.3"><![CDATA[Receipt for your resource purchase at {board_title}]]></phrase>
+  <phrase title="tl_xfrm_customized.renew_price" version_id="1000070" version_string="1.0.0"><![CDATA[Renew Price]]></phrase>
+  <phrase title="tl_xfrm_customized.renew_purchase_resource" version_id="1000070" version_string="1.0.0"><![CDATA[Renew Purchase Resource]]></phrase>
+  <phrase title="tl_xfrm_customized.resource" version_id="1000070" version_string="1.0.0"><![CDATA[Resource]]></phrase>
+  <phrase title="tl_xfrm_customized.sure_you_want_to_purchase_this_resource" version_id="1000070" version_string="1.0.0"><![CDATA[Are you want to purchase this resource?]]></phrase>
+  <phrase title="tl_xfrm_customized.thank_you_for_purchasing_resource_at_x" version_id="1000370" version_string="1.0.3"><![CDATA[Thank you for purchasing an resource at <a href="{board_url}">{board_title}</a>.]]></phrase>
+  <phrase title="tl_xfrm_customized.there_are_no_users_bought_this_resource" version_id="1000470" version_string="1.0.4"><![CDATA[There are no users bought this resource.]]></phrase>
+  <phrase title="tl_xfrm_customized.user_x_did_not_bought_this_resource" version_id="1000870" version_string="1.0.8"><![CDATA[The user {name} did not bought this resource.]]></phrase>
+  <phrase title="tl_xfrm_customized.you_may_purchase_this_resource_to_download" version_id="1000070" version_string="1.0.0"><![CDATA[You may purchase this resource to download.]]></phrase>
+  <phrase title="tl_xfrm_customized.your_license_expired_renew_to_download_latest_version" version_id="1000070" version_string="1.0.0"><![CDATA[Your license has expired. Please renew to download the latest version.]]></phrase>
+</phrases>

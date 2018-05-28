@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_resource_edit",
+    "description": "Remove external purchase URL.",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<xf:textboxrow name=\"external_purchase_url\" value=\"{$resource.external_purchase_url}\"\n\t\t\t\t\tlabel=\"{{ phrase('xfrm_external_purchase_url') }}\" />",
+    "replace": "<xf:macro template=\"xfrm_customized_resource_macros\"\n\t\t  name=\"purchase_inputs\"\n\t\t  arg-resource=\"{$resource}\" />"
+}

@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_resource_wrapper_macros",
+    "description": "Replace buy button",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<xf:button href=\"{$resource.external_purchase_url}\" class=\"button--cta\" icon=\"purchase\">{{ phrase('xfrm_buy_for_x', {'price': $resource.price|currency($resource.currency)}) }}</xf:button>",
+    "replace": "<xf:button href=\"{$resource.external_purchase_url}\" \n\t\t\tclass=\"button--cta\" \n\t\t   overlay=\"true\"\n\t\t\ticon=\"purchase\">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:button>\n"
+}

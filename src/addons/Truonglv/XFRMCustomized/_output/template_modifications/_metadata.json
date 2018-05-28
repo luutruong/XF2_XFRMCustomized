@@ -1,0 +1,17 @@
+{
+    "admin/XFRM_Customized_Migrate.json": {
+        "hash": "1422f730559ce2f2672bfc61c28667d5"
+    },
+    "public/XFRM_Customized_addTab.json": {
+        "hash": "7f11f65a29f7323d8239828aee12d2cc"
+    },
+    "public/XFRM_Customized_changeType.json": {
+        "hash": "0fbf0c00d6cf57637095ff32710875d7"
+    },
+    "public/XFRM_Customized_removeExtUrl.json": {
+        "hash": "51702f7d388e4ef4433f377059ae5d78"
+    },
+    "public/XFRM_Customized_replaceBuyBtn.json": {
+        "hash": "e320e208018879605550806c2bc4861e"
+    }
+}

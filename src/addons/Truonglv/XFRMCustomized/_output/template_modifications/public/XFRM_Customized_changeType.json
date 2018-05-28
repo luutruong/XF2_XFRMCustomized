@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_category_add_resource",
+    "description": "Change resource type inputs.",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<xf:macro template=\"xfrm_resource_edit_macros\" name=\"type\"",
+    "replace": "<xf:macro template=\"xfrm_customized_resource_macros\" name=\"type\""
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="admin" template="tools_rebuild" modification_key="XFRM_Customized_Migrate" description="Add migrate rebuilds" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:after_thread]-->]]></find>
+    <replace><![CDATA[$0
+<xf:macro name="rebuild_job"
+	arg-header="Import buyers from add-on [bd] Paygate"
+	arg-job="Truonglv\XFRMCustomized:MigrateBDPaygate" />]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_category_add_resource" modification_key="XFRM_Customized_changeType" description="Change resource type inputs." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro template="xfrm_resource_edit_macros" name="type"]]></find>
+    <replace><![CDATA[<xf:macro template="xfrm_customized_resource_macros" name="type"]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_edit" modification_key="XFRM_Customized_removeExtUrl" description="Remove external purchase URL." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:textboxrow name="external_purchase_url" value="{$resource.external_purchase_url}"
+					label="{{ phrase('xfrm_external_purchase_url') }}" />]]></find>
+    <replace><![CDATA[<xf:macro template="xfrm_customized_resource_macros"
+		  name="purchase_inputs"
+		  arg-resource="{$resource}" />]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="XFRM_Customized_addTab" description="Add tab in resource view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$resource.hasViewableDiscussion()">]]></find>
+    <replace><![CDATA[<xf:if is="$resource.canEdit()">
+	<a class="tabs-tab {{ $selected == 'buyers' ? 'is-active' : '' }}" href="{{ link('resources/buyers', $resource) }}">{{ phrase('tl_xfrm_customized.buyers') }}</a>
+</xf:if>
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="XFRM_Customized_replaceBuyBtn" description="Replace buy button" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:button href="{$resource.external_purchase_url}" class="button--cta" icon="purchase">{{ phrase('xfrm_buy_for_x', {'price': $resource.price|currency($resource.currency)}) }}</xf:button>]]></find>
+    <replace><![CDATA[<xf:button href="{$resource.external_purchase_url}" 
+			class="button--cta" 
+		   overlay="true"
+			icon="purchase">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:button>
+]]></replace>
+  </modification>
+</template_modifications>

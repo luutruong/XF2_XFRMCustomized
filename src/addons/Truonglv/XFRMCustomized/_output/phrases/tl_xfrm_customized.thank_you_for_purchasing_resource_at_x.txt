@@ -1,0 +1,1 @@
+Thank you for purchasing an resource at <a href="{board_url}">{board_title}</a>.

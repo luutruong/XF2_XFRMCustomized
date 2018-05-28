@@ -1,0 +1,6 @@
+{
+    "from_class": "XFRM\\Pub\\Controller\\ResourceItem",
+    "to_class": "Truonglv\\XFRMCustomized\\XFRM\\Pub\\Controller\\ResourceItem",
+    "execute_order": 10,
+    "active": true
+}

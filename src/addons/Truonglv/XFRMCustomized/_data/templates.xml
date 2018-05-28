@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="email" title="payment_received_receipt_tl_xfrm_customized_resource" version_id="1000470" version_string="1.0.4"><![CDATA[<mail:subject>{{ phrase('tl_xfrm_customized.receipt_for_your_resource_purchase_at_x', {'board_title': $xf.options.boardTitle}) }}</mail:subject>
+
+<p>{{ phrase('tl_xfrm_customized.thank_you_for_purchasing_resource_at_x', {'board_url': link('canonical:index'), 'board_title': $xf.options.boardTitle}) }}</p>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><b>{{ phrase('purchased_item') }}</b></td>
+        <td align="right"><b>{{ phrase('price') }}</b></td>
+    </tr>
+    <tr>
+        <td><a href="{{ link('canonical:resources', $purchasable.purchasable) }}">{$purchasable.title}</a></td>
+        <td align="right">{$purchasable.cost|currency($purchasable.currency)}</td>
+    </tr>
+</table>
+
+<p><a href="{{ link('canonical:resources', $purchasable.purchasable) }}"
+      class="button">{{ phrase('tl_xfrm_customized.download_resource') }}</a></p>
+
+<xf:if is="$xf.toUser.canUseContactForm()">
+    <p>{{ phrase('thank_you_for_your_purchase_questions_contact_us', {'contacturl': link('canonical:misc/contact') }) }}</p>
+    <xf:else />
+    <p>{{ phrase('thank_you_for_your_purchase') }}</p>
+</xf:if>]]></template>
+  <template type="public" title="xfrm_customized_resource_add_buyer" version_id="1000870" version_string="1.0.8"><![CDATA[<xf:title>{{ phrase('tl_xfrm_customized.add_buyer') }}</xf:title>
+
+<xf:breadcrumb source="$resource.getBreadcrumbs()" />
+
+<xf:form action="{$formAction}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:if is="$purchased is not empty">
+                <xf:formrow label="{{ phrase('tl_xfrm_customized.buyers') }}">
+                    <xf:username user="{$purchased.User}" defaultname="{$purchase.username}" />
+                </xf:formrow>
+
+                <xf:hiddenval name="user_id">{$purchased.user_id}</xf:hiddenval>
+                <xf:formrow label="{{ phrase('tl_xfrm_customized.purchased_date') }}">{{ date($purchased.purchased_date, 'Y-m-d') }}</xf:formrow>
+            <xf:else />
+                <xf:textboxrow name="names"
+                               label="{{ phrase('tl_xfrm_customized.buyers') }}"
+                               ac="true" />
+                <xf:dateinputrow name="purchased_date"
+                                 value="{{ date($xf.time, 'picker') }}"
+                                 label="{{ phrase('tl_xfrm_customized.purchased_date') }}"  />
+            </xf:if>
+
+            <xf:numberboxrow name="amount"
+                             min="0"
+                             value="{$purchased.amount}"
+                             label="{{ phrase('tl_xfrm_customized.price') }}" />
+
+            <xf:dateinputrow name="expire_date"
+                             value="{{ $purchased.expire_date ? date($purchased.expire_date, 'picker') : '' }}"
+                             label="{{ phrase('tl_xfrm_customized.expire_date') }}"  />
+        </div>
+
+        <xf:submitrow submit="{{ phrase('tl_xfrm_customized.add_buyer') }}" />
+    </div>
+</xf:form>]]></template>
+  <template type="public" title="xfrm_customized_resource_buyers" version_id="1000870" version_string="1.0.8"><![CDATA[<xf:title>{{ phrase('tl_xfrm_customized.buyers') }}</xf:title>
+
+<xf:wrap template="xfrm_resource_wrapper">
+    <xf:set var="$pageSelected" value="buyers" />
+</xf:wrap>
+
+<xf:css src="member.less" />
+
+<div class="block">
+    <div class="block-outer">
+        <div class="block-outer-opposite">
+            <xf:if is="$resource.canAddBuyer()">
+                <xf:button href="{{ link('resources/add-buyer', $resource) }}"
+                           class="button--link"
+                           overlay="true"><i class="fa fa-plus"></i> {{ phrase('tl_xfrm_customized.add_buyer') }}</xf:button>
+            </xf:if>
+
+            <xf:button class="button--link menuTrigger" data-xf-click="menu"
+                       aria-haspopup="true"
+                       aria-expanded="false">{{ phrase('tl_xfrm_customized.find_buyer') }}</xf:button>
+            <div class="menu" data-menu="menu" aria-hidden="true">
+                <xf:form action="{{ link('resources/buyers', $resource) }}" method="get" class="menu-content">
+                    <div class="menu-row">
+                        {{ phrase('tl_xfrm_customized.find_buyer:') }}
+                        <xf:textbox name="username" ac="single"
+                                    value="{{ $user ? $user.username : '' }}"
+                                    maxlength="{{ max_length($xf.visitor, 'username') }}" />
+                    </div>
+                    <div class="menu-footer">
+                        <span class="menu-footer-controls"><xf:button type="submit" class="button--primary" icon="search" /></span>
+                    </div>
+                </xf:form>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-container">
+        <ol class="block-body">
+            <xf:foreach loop="{$buyers}" key="$userId" value="$data">
+                <xf:set var="$extraHtml">
+                    <ol class="listPlain" style="min-width: 200px">
+                        <li><span>{{ phrase('tl_xfrm_customized.amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
+                        <li><span>{{ phrase('tl_xfrm_customized.purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
+                        <li><span>{{ phrase('tl_xfrm_customized.expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
+
+                        <xf:if is="$resource.canAddBuyer()">
+                        <li><xf:button class="button--small button--link"
+                                       href="{{ link('resources/buyer-edit', $resource, {'user_id': $data.User.user_id}) }}"
+                                       overlay="true"
+                                       icon="edit"></xf:button></li>
+                        </xf:if>
+                    </ol>
+                </xf:set>
+
+                <li class="block-row block-row--separated">
+                    <xf:macro template="member_list_macros" name="item"
+                              arg-user="{$data.User}"
+                              arg-extraData="{$extraHtml}"
+                              arg-extraDataBig="{{ false }}" />
+                </li>
+            <xf:else />
+                <li class="block-row">{{ phrase('tl_xfrm_customized.there_are_no_users_bought_this_resource') }}</li>
+            </xf:foreach>
+        </ol>
+    </div>
+
+    <div class="block-outer block-outer--after">
+        <xf:pagenav link="resources/buyers" data="{$resource}"
+                    total="{$total}" perpage="{$perPage}"
+                    page="{$page}" />
+    </div>
+</div>]]></template>
+  <template type="public" title="xfrm_customized_resource_macros" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:macro name="type"
+	arg-currentType="!"
+	arg-resource="!"
+	arg-category="!"
+	arg-versionAttachData="!"
+	arg-allowCurrentType="{{ false }}">
+
+	<xf:radiorow name="resource_type" value="{$currentType}"
+		label="{{ phrase('type') }}"
+		data-xf-init="attachment-manager">
+
+		<xf:option value="download_local"
+			label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
+
+			<xf:macro template="helper_attach_upload" name="upload_block"
+				arg-attachmentData="{$versionAttachData}"
+				arg-hiddenName="version_attachment_hash" />
+		</xf:option>
+	</xf:radiorow>
+
+    <xf:macro name="purchase_inputs" arg-resource="{$resource}" arg-showPrice="{{ true }}" />
+</xf:macro>
+
+<xf:macro name="purchase_inputs" arg-resource="!" arg-showPrice="{{ false }}">
+    <hr class="formRowSep" />
+    <xf:callback class="Truonglv\XFRMCustomized\Callback"
+                 method="renderPaymentProfiles"
+                 params="{'resource': $resource}" />
+    <xf:if is="$showPrice">
+        <xf:formrow rowtype="input" label="{{ phrase('price') }}">
+            <xf:macro template="xfrm_resource_edit_macros" name="purchase_inputs"
+                      arg-resource="{$resource}" />
+        </xf:formrow>
+    </xf:if>
+
+    <xf:textboxrow name="renew_price"
+                   label="{{ phrase('tl_xfrm_customized.renew_price') }}"
+                   value="{{ $resource.renew_price ?: '' }}"
+                   placeholder="{{ phrase('tl_xfrm_customized.renew_price') }}" style="width: 120px" />
+    <hr class="formRowSep" />
+</xf:macro>]]></template>
+  <template type="public" title="xfrm_customized_resource_purchase" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ $isRenewPurchase
+    ? phrase('tl_xfrm_customized.renew_purchase_resource')
+    : phrase('tl_xfrm_customized.purchase_resource') }}</xf:title>
+
+<xf:breadcrumb source="$resource.getBreadcrumbs()" />
+
+<xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:if is="!$isRenewPurchase">
+                <xf:inforow rowtype="confirm">
+                    {{ phrase('tl_xfrm_customized.sure_you_want_to_purchase_this_resource') }}
+                    <strong><a href="{{ link('resources', $resource) }}">{$resource.title}</a></strong>
+                </xf:inforow>
+            </xf:if>
+
+            <xf:formrow label="{{ phrase('price') }}">{$purchasePrice|currency($resource.currency)}</xf:formrow>
+            <xf:formrow label="{{ phrase('tl_xfrm_customized.license_duration') }}">{{ phrase('tl_xfrm_customized.12_months') }}</xf:formrow>
+
+            <xf:selectrow label="{{ phrase('tl_xfrm_customized.purchase_via') }}" name="payment_profile_id">
+                <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
+                    <xf:option value="{$paymentProfile.payment_profile_id}">{$paymentProfile.display_title}</xf:option>
+                </xf:foreach>
+            </xf:selectrow>
+        </div>
+
+        <xf:hiddenval name="resource_id">{$resource.resource_id}</xf:hiddenval>
+
+        <xf:submitrow submit="{{ phrase('tl_xfrm_customized.purchase_resource') }}"
+                      rowtype="simple"
+                      icon="purchase" />
+    </div>
+</xf:form>]]></template>
+</templates>

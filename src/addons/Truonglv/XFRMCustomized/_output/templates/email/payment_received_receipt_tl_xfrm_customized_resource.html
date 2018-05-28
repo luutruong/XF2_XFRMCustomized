@@ -1,0 +1,23 @@
+<mail:subject>{{ phrase('tl_xfrm_customized.receipt_for_your_resource_purchase_at_x', {'board_title': $xf.options.boardTitle}) }}</mail:subject>
+
+<p>{{ phrase('tl_xfrm_customized.thank_you_for_purchasing_resource_at_x', {'board_url': link('canonical:index'), 'board_title': $xf.options.boardTitle}) }}</p>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td><b>{{ phrase('purchased_item') }}</b></td>
+        <td align="right"><b>{{ phrase('price') }}</b></td>
+    </tr>
+    <tr>
+        <td><a href="{{ link('canonical:resources', $purchasable.purchasable) }}">{$purchasable.title}</a></td>
+        <td align="right">{$purchasable.cost|currency($purchasable.currency)}</td>
+    </tr>
+</table>
+
+<p><a href="{{ link('canonical:resources', $purchasable.purchasable) }}"
+      class="button">{{ phrase('tl_xfrm_customized.download_resource') }}</a></p>
+
+<xf:if is="$xf.toUser.canUseContactForm()">
+    <p>{{ phrase('thank_you_for_your_purchase_questions_contact_us', {'contacturl': link('canonical:misc/contact') }) }}</p>
+    <xf:else />
+    <p>{{ phrase('thank_you_for_your_purchase') }}</p>
+</xf:if>
