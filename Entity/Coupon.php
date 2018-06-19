@@ -7,6 +7,7 @@ namespace Truonglv\XFRMCustomized\Entity;
 
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
+use XFRM\Entity\ResourceItem;
 
 /**
  * Class Coupon
@@ -33,6 +34,75 @@ class Coupon extends Entity
         return true;
     }
 
+    public function canEdit(&$error = null)
+    {
+        return true;
+    }
+
+    public function canDelete(&$error = null)
+    {
+        return true;
+    }
+
+    public function canUse(ResourceItem $resourceItem)
+    {
+        $visitor = \XF::visitor();
+
+        if ($this->begin_date >= \XF::$time
+            || $this->end_date <= \XF::$time
+        ) {
+            // not begin or expired
+            return false;
+        }
+
+        if ($this->used_count >= $this->max_use_count) {
+            // reached the limit
+            return false;
+        }
+
+        $rules = $this->apply_rules;
+        if (empty($rules['usable_user_group_ids']) && empty($rules['resource_ids'])) {
+            // no rules.
+            return false;
+        }
+
+        if (!empty($rules['usable_user_group_ids'])
+            && !$visitor->isMemberOf($rules['usable_user_group_ids'])
+        ) {
+            return false;
+        }
+
+        if (!empty($rules['resource_ids'])
+            && strpos($rules['resource_ids'], $resourceItem->resource_id) === false
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function verifyCouponCode(&$value)
+    {
+        if ($value === $this->getExistingValue('coupon_code') && $this->isUpdate()) {
+            return true;
+        }
+
+        /** @var static $existCoupon */
+        $existCoupon = $this->em()->findOne('Truonglv\XFRMCustomized:Coupon', [
+            'coupon_code' => $value
+        ]);
+
+        if ($existCoupon || ($existCoupon && $existCoupon->coupon_id != $this->coupon_id)) {
+            $this->error(\XF::phrase('tl_xfrm_customized.coupon_code_x_not_available', [
+                'code' => $value
+            ]));
+
+            return false;
+        }
+
+        return true;
+    }
+
     public static function getStructure(Structure $structure)
     {
         $structure->table = 'tl_xfrm_coupon';
@@ -52,6 +122,15 @@ class Coupon extends Entity
             'discount_amount' => ['type' => self::UINT, 'default' => 0],
             'user_id' => ['type' => self::UINT, 'required' => true],
             'username' => ['type' => self::STR, 'required' => true, 'maxLength' => 50]
+        ];
+
+        $structure->relations = [
+            'User' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XF:User',
+                'conditions' => 'user_id',
+                'primary' => true
+            ]
         ];
 
         return $structure;

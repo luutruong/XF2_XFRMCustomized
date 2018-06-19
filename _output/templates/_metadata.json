@@ -4,6 +4,16 @@
         "version_string": "1.0.4",
         "hash": "6fa8191df3c2e07317cfb018ae3bbe8e"
     },
+    "public/xfrm_customized_coupon_add.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "2d867f859c19bc4006477c579c4158ea"
+    },
+    "public/xfrm_customized_coupon_view.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "1eb3c1cb02e3ad576b6b1a4fc71df950"
+    },
     "public/xfrm_customized_resource_add_buyer.html": {
         "version_id": 1000870,
         "version_string": "1.0.8",
@@ -20,8 +30,8 @@
         "hash": "d48bf048ea91292441254e0b79254d4f"
     },
     "public/xfrm_customized_resource_purchase.html": {
-        "version_id": 1000070,
-        "version_string": "1.0.0",
-        "hash": "26d2b552ed2a9da85aa15861f0fcf879"
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "e4f88f14d43996f2eb5d7c8329d39fbc"
     }
 }

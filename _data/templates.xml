@@ -23,6 +23,52 @@
     <xf:else />
     <p>{{ phrase('thank_you_for_your_purchase') }}</p>
 </xf:if>]]></template>
+  <template type="public" title="xfrm_customized_coupon_add" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ $coupon.coupon_id
+    ? phrase('tl_xfrm_customized.edit_coupon')
+    : phrase('tl_xfrm_customized.add_coupon') }}</xf:title>
+
+<xf:form action="{{ $coupon.coupon_id ? link('resources/coupons/edit', $coupon) : link('resources/coupons/add') }}"
+         ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:textboxrow name="title" label="{{ phrase('title') }}" value="{$coupon.title}" />
+            <xf:textboxrow name="coupon_code" label="{{ phrase('tl_xfrm_customized.coupon_code') }}"
+                           value="{$coupon.coupon_code}" />
+
+            <xf:dateinputrow name="begin_date" value="{{ $coupon.begin_date ? date($coupon.begin_date, 'Y-m-d') : '' }}"
+                             label="{{ phrase('tl_xfrm_customized.begin_date') }}" />
+            <xf:dateinputrow name="end_date" value="{{ $coupon.end_date ? date($coupon.end_date, 'Y-m-d') : '' }}"
+                             label="{{ phrase('tl_xfrm_customized.end_date') }}" />
+
+            <xf:numberboxrow name="max_use_count" value="{{ $coupon.max_use_count ?: 0 }}"
+                             min="0"
+                             label="{{ phrase('tl_xfrm_customized.max_use_count') }}" />
+
+            <xf:formrow label="{{ phrase('tl_xfrm_customized.discount') }}" rowtype="input">
+                <div class="inputGroup">
+                    <xf:numberbox name="discount_amount" value="{$coupon.discount_amount}"
+                                  min="0" />
+                    <span class="inputGroup-splitter"></span>
+                    <xf:select name="discount_unit" value="{$coupon.discount_unit}">
+                        <xf:option value="percent">{{ phrase('tl_xfrm_customized.percent') }}</xf:option>
+                        <xf:option value="fixed">{{ phrase('tl_xfrm_customized.fixed') }}</xf:option>
+                    </xf:select>
+                </div>
+            </xf:formrow>
+
+            <xf:checkboxrow name="apply_rules[usable_user_group_ids]"
+                            listclass="listColumns"
+                            label="{{ phrase('tl_xfrm_customized.usable_user_group_ids') }}">
+                <xf:options source="$userGroups" />
+            </xf:checkboxrow>
+
+            <xf:textboxrow name="apply_rules[resource_ids]" value="{$coupon.apply_rules.resource_ids|join(', ')}"
+                           label="{{ phrase('tl_xfrm_customized.resource_ids') }}" />
+        </div>
+
+        <xf:submitrow icon="save" />
+    </div>
+</xf:form>]]></template>
   <template type="public" title="xfrm_customized_resource_add_buyer" version_id="1000870" version_string="1.0.8"><![CDATA[<xf:title>{{ phrase('tl_xfrm_customized.add_buyer') }}</xf:title>
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />

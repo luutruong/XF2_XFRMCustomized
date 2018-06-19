@@ -4,6 +4,9 @@
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />
 
+<xf:js src="Truonglv/XFRMCustomized/coupon.js"
+       addon="Truonglv/XFRMCustomized" min="1" />
+
 <xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
     <div class="block-container">
         <div class="block-body">
@@ -17,11 +20,24 @@
             <xf:formrow label="{{ phrase('price') }}">{$purchasePrice|currency($resource.currency)}</xf:formrow>
             <xf:formrow label="{{ phrase('tl_xfrm_customized.license_duration') }}">{{ phrase('tl_xfrm_customized.12_months') }}</xf:formrow>
 
-            <xf:selectrow label="{{ phrase('tl_xfrm_customized.purchase_via') }}" name="payment_profile_id">
+            <xf:radiorow label="{{ phrase('tl_xfrm_customized.purchase_via') }}" name="payment_profile_id">
                 <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
-                    <xf:option value="{$paymentProfile.payment_profile_id}">{$paymentProfile.display_title}</xf:option>
+                    <xf:option value="{$paymentProfile.payment_profile_id}">{{ $paymentProfile.display_title . ' - ' . $paymentProfile.title }}</xf:option>
                 </xf:foreach>
-            </xf:selectrow>
+            </xf:radiorow>
+
+            <xf:formrow label="{{ phrase('tl_xfrm_customized.coupon_code') }}" rowtype="input"
+                        explain="{{ phrase('tl_xfrm_customized.enter_coupon_code_to_receive_discount') }}">
+                <div class="inputGroup">
+                    <xf:textbox name="coupon_code" value="" class="input--couponCode" />
+                    <span class="inputGroup-splitter"></span>
+                    <xf:button data-xf-click="xfrmc-check-coupon-code"
+                               data-href="{{ link('resources/coupons/check') }}"
+                               data-resource-id="{$resource.resource_id}"
+                               data-coupon-input="< .inputGroup | .input--couponCode"
+                               type="button">{{ phrase('tl_xfrm_customized.check_available') }}</xf:button>
+                </div>
+            </xf:formrow>
         </div>
 
         <xf:hiddenval name="resource_id">{$resource.resource_id}</xf:hiddenval>
