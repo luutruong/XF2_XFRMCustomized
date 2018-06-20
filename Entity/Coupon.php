@@ -22,7 +22,7 @@ use XFRM\Entity\ResourceItem;
  * @property int max_use_count
  * @property int used_count
  * @property array apply_rules
- * @property string discount_uint
+ * @property string discount_unit
  * @property int discount_amount
  * @property int user_id
  * @property string username
@@ -73,12 +73,26 @@ class Coupon extends Entity
         }
 
         if (!empty($rules['resource_ids'])
-            && strpos($rules['resource_ids'], $resourceItem->resource_id) === false
+            && strpos($rules['resource_ids'], strval($resourceItem->resource_id)) === false
         ) {
             return false;
         }
 
         return true;
+    }
+
+    public function getFinalPrice(ResourceItem $resourceItem)
+    {
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resourceItem */
+        $price = $resourceItem->getPurchasePrice();
+
+        if ($this->discount_unit === 'fixed') {
+            $price = max(0, $price - $this->discount_amount);
+        } else {
+            $price -= ($price * $this->discount_amount)/100;
+        }
+
+        return $price;
     }
 
     public function verifyCouponCode(&$value)

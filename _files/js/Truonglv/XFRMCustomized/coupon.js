@@ -5,10 +5,15 @@
         options: {
             resourceId: null,
             couponInput: null,
-            href: null
+            href: null,
+            finalPrice: null,
+            originalPrice: null
         },
 
         $input: null,
+        $finalPrice: null,
+        $originalPrice: null,
+
         loading: false,
 
         init: function () {
@@ -20,6 +25,9 @@
             if (!this.$input.length) {
                 throw new Error('Not found any coupon inputs');
             }
+
+            this.$finalPrice = $(this.options.finalPrice);
+            this.$originalPrice = $(this.options.originalPrice);
         },
 
         click: function (e) {
@@ -42,7 +50,8 @@
         },
 
         onResponse: function (data) {
-            console.log(data);
+            this.$originalPrice.show();
+            this.$finalPrice.text(data.newPrice);
         }
     });
 

@@ -17,7 +17,11 @@
                 </xf:inforow>
             </xf:if>
 
-            <xf:formrow label="{{ phrase('price') }}">{$purchasePrice|currency($resource.currency)}</xf:formrow>
+            <xf:formrow label="{{ phrase('price') }}">
+                <span id="final-price">{$purchasePrice|currency($resource.currency)}</span>
+                <span id="original-price" style="text-decoration: line-through;display: none">{$purchasePrice|currency($resource.currency)}</span>
+            </xf:formrow>
+
             <xf:formrow label="{{ phrase('tl_xfrm_customized.license_duration') }}">{{ phrase('tl_xfrm_customized.12_months') }}</xf:formrow>
 
             <xf:radiorow label="{{ phrase('tl_xfrm_customized.purchase_via') }}" name="payment_profile_id">
@@ -35,6 +39,8 @@
                                data-href="{{ link('resources/coupons/check') }}"
                                data-resource-id="{$resource.resource_id}"
                                data-coupon-input="< .inputGroup | .input--couponCode"
+                               data-final-price="#final-price"
+                               data-original-price="#original-price"
                                type="button">{{ phrase('tl_xfrm_customized.check_available') }}</xf:button>
                 </div>
             </xf:formrow>

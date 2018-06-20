@@ -60,7 +60,13 @@ class Coupon extends AbstractController
             return $this->error(\XF::phrase('tl_xfrm_customized.coupon_has_been_expired_or_deleted'));
         }
 
-        return $this->message(\XF::phrase(''));
+        $message = $this->message(\XF::phrase('tl_xfrm_customized.coupon_code_available_for_use'));
+
+        $price = $coupon->getFinalPrice($resource);
+        $price = $this->app()->templater()->filter($price, [['currency', [$resource->currency]]]);
+        $message->setJsonParam('newPrice', $price);
+
+        return $message;
     }
 
     public function actionAdd()
