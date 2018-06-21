@@ -98,7 +98,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\AddBuyer',
-            'xfrm_customized_resource_add_buyer',
+            'xfrmc_resource_add_buyer',
             $viewParams
         );
     }
@@ -149,7 +149,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\BuyerEdit',
-            'xfrm_customized_resource_add_buyer',
+            'xfrmc_resource_add_buyer',
             $viewParams
         );
     }
@@ -199,7 +199,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Buyers',
-            'xfrm_customized_resource_buyers',
+            'xfrmc_resource_buyers',
             $viewParams
         );
     }
@@ -230,7 +230,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Purchase',
-            'xfrm_customized_resource_purchase',
+            'xfrmc_resource_purchase',
             $viewParams
         );
     }

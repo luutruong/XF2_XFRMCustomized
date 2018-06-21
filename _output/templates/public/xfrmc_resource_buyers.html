@@ -1,4 +1,4 @@
-<xf:title>{{ phrase('tl_xfrm_customized.buyers') }}</xf:title>
+<xf:title>{{ phrase('xfrmc.buyers') }}</xf:title>
 
 <xf:wrap template="xfrm_resource_wrapper">
     <xf:set var="$pageSelected" value="buyers" />
@@ -12,16 +12,16 @@
             <xf:if is="$resource.canAddBuyer()">
                 <xf:button href="{{ link('resources/add-buyer', $resource) }}"
                            class="button--link"
-                           overlay="true"><i class="fa fa-plus"></i> {{ phrase('tl_xfrm_customized.add_buyer') }}</xf:button>
+                           overlay="true"><i class="fa fa-plus"></i> {{ phrase('xfrmc.add_buyer') }}</xf:button>
             </xf:if>
 
             <xf:button class="button--link menuTrigger" data-xf-click="menu"
                        aria-haspopup="true"
-                       aria-expanded="false">{{ phrase('tl_xfrm_customized.find_buyer') }}</xf:button>
+                       aria-expanded="false">{{ phrase('xfrmc.find_buyer') }}</xf:button>
             <div class="menu" data-menu="menu" aria-hidden="true">
                 <xf:form action="{{ link('resources/buyers', $resource) }}" method="get" class="menu-content">
                     <div class="menu-row">
-                        {{ phrase('tl_xfrm_customized.find_buyer:') }}
+                        {{ phrase('xfrmc.find_buyer:') }}
                         <xf:textbox name="username" ac="single"
                                     value="{{ $user ? $user.username : '' }}"
                                     maxlength="{{ max_length($xf.visitor, 'username') }}" />
@@ -39,9 +39,9 @@
             <xf:foreach loop="{$buyers}" key="$userId" value="$data">
                 <xf:set var="$extraHtml">
                     <ol class="listPlain" style="min-width: 200px">
-                        <li><span>{{ phrase('tl_xfrm_customized.amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
-                        <li><span>{{ phrase('tl_xfrm_customized.purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
-                        <li><span>{{ phrase('tl_xfrm_customized.expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
+                        <li><span>{{ phrase('xfrmc.amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
+                        <li><span>{{ phrase('xfrmc.purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
+                        <li><span>{{ phrase('xfrmc.expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
 
                         <xf:if is="$resource.canAddBuyer()">
                         <li><xf:button class="button--small button--link"
@@ -59,7 +59,7 @@
                               arg-extraDataBig="{{ false }}" />
                 </li>
             <xf:else />
-                <li class="block-row">{{ phrase('tl_xfrm_customized.there_are_no_users_bought_this_resource') }}</li>
+                <li class="block-row">{{ phrase('xfrmc.there_are_no_users_bought_this_resource') }}</li>
             </xf:foreach>
         </ol>
     </div>

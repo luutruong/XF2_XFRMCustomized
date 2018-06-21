@@ -5,148 +5,148 @@
         "version_string": "1.0.4",
         "hash": "82bd15e5dcae83f52fcfcf824a1fc4bc"
     },
-    "tl_xfrm_customized.12_months.txt": {
+    "xfrmc.12_months.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "e3b2a6d5fe4c268d7f994b6a3bda9811"
     },
-    "tl_xfrm_customized.add_buyer.txt": {
+    "xfrmc.add_buyer.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "c6da6693d9de2031be87630c1e6b91d1"
     },
-    "tl_xfrm_customized.amount.txt": {
+    "xfrmc.amount.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "b2f40690858b404ed10e62bdf422c704"
     },
-    "tl_xfrm_customized.buy_resource.txt": {
+    "xfrmc.buy_resource.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "920275635e7d5165c0c60496ac2ab013"
     },
-    "tl_xfrm_customized.buyers.txt": {
+    "xfrmc.buyers.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "573d777ae25da71069204861897481e9"
     },
-    "tl_xfrm_customized.download_resource.txt": {
+    "xfrmc.download_resource.txt": {
         "global_cache": false,
-        "version_id": 1000370,
-        "version_string": "1.0.3",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "2d38b1af2197d1717173987c653dc98d"
     },
-    "tl_xfrm_customized.expire_date.txt": {
+    "xfrmc.expire_date.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "5a787141d53b573ec9b86e900bfe0d79"
     },
-    "tl_xfrm_customized.expire_date_must_be_great_than_purchased_date.txt": {
+    "xfrmc.expire_date_must_be_great_than_purchased_date.txt": {
         "global_cache": false,
-        "version_id": 1000870,
-        "version_string": "1.0.8",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "9efd5d1168d8316b2b6fa92f86bbd226"
     },
-    "tl_xfrm_customized.find_buyer.txt": {
+    "xfrmc.find_buyer.txt": {
         "global_cache": false,
-        "version_id": 1000670,
-        "version_string": "1.0.6",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "4bbe1413f0d61e1ed6c80883eac3edcf"
     },
-    "tl_xfrm_customized.license_duration.txt": {
+    "xfrmc.license_duration.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "64327ffdb5066cee512561e369aae0e7"
     },
-    "tl_xfrm_customized.price.txt": {
+    "xfrmc.price.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "3601146c4e948c32b6424d2c0a7f0118"
     },
-    "tl_xfrm_customized.purchase_resource.txt": {
+    "xfrmc.purchase_resource.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "250096d7a95a80d06d17bdadc76b71de"
     },
-    "tl_xfrm_customized.purchase_via.txt": {
+    "xfrmc.purchase_via.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "0bcd134f6f239be9fbb0140c990770f9"
     },
-    "tl_xfrm_customized.purchased_date.txt": {
+    "xfrmc.purchased_date.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "c7af2887ff24145b0976a580682b4c2d"
     },
-    "tl_xfrm_customized.receipt_for_your_resource_purchase_at_x.txt": {
+    "xfrmc.receipt_for_your_resource_purchase_at_x.txt": {
         "global_cache": false,
-        "version_id": 1000370,
-        "version_string": "1.0.3",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "581be822e22b8c4ca28875ab4f921fd7"
     },
-    "tl_xfrm_customized.renew_price.txt": {
+    "xfrmc.renew_price.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "022d2853ee8f1ca7dd7753fb59ea87e4"
     },
-    "tl_xfrm_customized.renew_purchase_resource.txt": {
+    "xfrmc.renew_purchase_resource.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "37651488479b765863e7ecb2f220eadf"
     },
-    "tl_xfrm_customized.resource.txt": {
+    "xfrmc.resource.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "be8545ae7ab0276e15898aae7acfbd7a"
     },
-    "tl_xfrm_customized.sure_you_want_to_purchase_this_resource.txt": {
+    "xfrmc.sure_you_want_to_purchase_this_resource.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "fdd019bf729793eb71c6cc998765f3a7"
     },
-    "tl_xfrm_customized.thank_you_for_purchasing_resource_at_x.txt": {
+    "xfrmc.thank_you_for_purchasing_resource_at_x.txt": {
         "global_cache": false,
-        "version_id": 1000370,
-        "version_string": "1.0.3",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "7e1c0061461f15a592175ab9ea6e1e12"
     },
-    "tl_xfrm_customized.there_are_no_users_bought_this_resource.txt": {
+    "xfrmc.there_are_no_users_bought_this_resource.txt": {
         "global_cache": false,
-        "version_id": 1000470,
-        "version_string": "1.0.4",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "04f2d2d9e5eeb2d949d0b9652d99f78d"
     },
-    "tl_xfrm_customized.user_x_did_not_bought_this_resource.txt": {
+    "xfrmc.user_x_did_not_bought_this_resource.txt": {
         "global_cache": false,
-        "version_id": 1000870,
-        "version_string": "1.0.8",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "7cdaea27ff8be65943105339cab662e0"
     },
-    "tl_xfrm_customized.you_may_purchase_this_resource_to_download.txt": {
+    "xfrmc.you_may_purchase_this_resource_to_download.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "73bc56e27fff1cae96b24b1565039e7e"
     },
-    "tl_xfrm_customized.your_license_expired_renew_to_download_latest_version.txt": {
+    "xfrmc.your_license_expired_renew_to_download_latest_version.txt": {
         "global_cache": false,
-        "version_id": 1000070,
-        "version_string": "1.0.0",
+        "version_id": 1000970,
+        "version_string": "1.0.9",
         "hash": "826bab9249c7d07d7e3549eefeffe4a4"
     }
 }

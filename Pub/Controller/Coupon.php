@@ -45,7 +45,7 @@ class Coupon extends AbstractController
             'coupon' => $coupon
         ];
 
-        return $this->view('Truonglv\XFRMCustomized:Coupon\View', 'xfrm_customized_coupon_view', $viewParams);
+        return $this->view('Truonglv\XFRMCustomized:Coupon\View', 'xfrmc_coupon_view', $viewParams);
     }
 
     public function actionCheck()
@@ -178,7 +178,7 @@ class Coupon extends AbstractController
 
         return $this->view(
             'Truonglv\XFRMCustomized:Coupon\Add',
-            'xfrm_customized_coupon_add',
+            'xfrmc_coupon_add',
             $viewParams
         );
     }
