@@ -72,7 +72,7 @@ class ResourceItem extends XFCP_ResourceItem
                 }
 
                 if ($expireDate < $purchasedDate) {
-                    return $this->error(\XF::phrase('tl_xfrm_customized.expire_date_must_be_great_than_purchased_date'));
+                    return $this->error(\XF::phrase('xfrmc_expire_date_must_be_great_than_purchased_date'));
                 }
 
                 /** @var \Truonglv\XFRMCustomized\Entity\Purchase $entity */
@@ -122,7 +122,7 @@ class ResourceItem extends XFCP_ResourceItem
             ->fetchOne();
 
         if (!$purchased) {
-            return $this->error(\XF::phrase('tl_xfrm_customized.user_x_did_not_bought_this_resource', [
+            return $this->error(\XF::phrase('xfrmc_user_x_did_not_bought_this_resource', [
                 'name' => $user->username
             ]));
         }
@@ -130,7 +130,7 @@ class ResourceItem extends XFCP_ResourceItem
         if ($this->isPost()) {
             $expireDate = $this->filter('expire_date', 'datetime');
             if ($expireDate < $purchased->purchased_date) {
-                return $this->error(\XF::phrase('tl_xfrm_customized.expire_date_must_be_great_than_purchased_date'));
+                return $this->error(\XF::phrase('xfrmc_expire_date_must_be_great_than_purchased_date'));
             }
 
             $purchased->amount = $this->filter('amount', 'float');

@@ -63,7 +63,7 @@ class Coupon extends AbstractController
         ]);
 
         if (!$coupon || !$coupon->canView()) {
-            return $this->error(\XF::phrase('tl_xfrm_customized.requested_coupon_not_found'));
+            return $this->error(\XF::phrase('xfrmc_requested_coupon_not_found'));
         }
 
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
@@ -73,10 +73,10 @@ class Coupon extends AbstractController
         }
 
         if (!$coupon->canUse($resource)) {
-            return $this->error(\XF::phrase('tl_xfrm_customized.coupon_has_been_expired_or_deleted'));
+            return $this->error(\XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
         }
 
-        $message = $this->message(\XF::phrase('tl_xfrm_customized.coupon_code_available_for_use'));
+        $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
 
         $price = $coupon->getFinalPrice($resource);
         $price = $this->app()->templater()->filter($price, [['currency', [$resource->currency]]]);
@@ -137,7 +137,7 @@ class Coupon extends AbstractController
         /** @var \Truonglv\XFRMCustomized\Entity\Coupon $coupon */
         $coupon = $this->em()->find('Truonglv\XFRMCustomized:Coupon', $id);
         if (!$coupon) {
-            throw $this->exception($this->notFound(\XF::phrase('tl_xfrm_customized.requested_coupon_not_found')));
+            throw $this->exception($this->notFound(\XF::phrase('xfrmc_requested_coupon_not_found')));
         }
 
         if (!$coupon->canView($error)) {

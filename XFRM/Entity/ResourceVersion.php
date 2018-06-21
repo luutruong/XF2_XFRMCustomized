@@ -19,7 +19,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             && $resource->user_id != \XF::visitor()->user_id
         ) {
             if (!$resource->Purchase) {
-                $error = \XF::phrase('tl_xfrm_customized.you_may_purchase_this_resource_to_download');
+                $error = \XF::phrase('xfrmc_you_may_purchase_this_resource_to_download');
 
                 return false;
             }
@@ -31,7 +31,7 @@ class ResourceVersion extends XFCP_ResourceVersion
                     return true;
                 }
 
-                $error = \XF::phrase('tl_xfrm_customized.your_license_expired_renew_to_download_latest_version');
+                $error = \XF::phrase('xfrmc_your_license_expired_renew_to_download_latest_version');
 
                 return false;
             }

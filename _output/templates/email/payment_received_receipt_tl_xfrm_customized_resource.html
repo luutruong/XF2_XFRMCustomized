@@ -1,6 +1,6 @@
-<mail:subject>{{ phrase('xfrmc.receipt_for_your_resource_purchase_at_x', {'board_title': $xf.options.boardTitle}) }}</mail:subject>
+<mail:subject>{{ phrase('xfrmc_receipt_for_your_resource_purchase_at_x', {'board_title': $xf.options.boardTitle}) }}</mail:subject>
 
-<p>{{ phrase('xfrmc.thank_you_for_purchasing_resource_at_x', {'board_url': link('canonical:index'), 'board_title': $xf.options.boardTitle}) }}</p>
+<p>{{ phrase('xfrmc_thank_you_for_purchasing_resource_at_x', {'board_url': link('canonical:index'), 'board_title': $xf.options.boardTitle}) }}</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -14,7 +14,7 @@
 </table>
 
 <p><a href="{{ link('canonical:resources', $purchasable.purchasable) }}"
-      class="button">{{ phrase('xfrmc.download_resource') }}</a></p>
+      class="button">{{ phrase('xfrmc_download_resource') }}</a></p>
 
 <xf:if is="$xf.toUser.canUseContactForm()">
     <p>{{ phrase('thank_you_for_your_purchase_questions_contact_us', {'contacturl': link('canonical:misc/contact') }) }}</p>

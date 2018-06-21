@@ -5,145 +5,193 @@
         "version_string": "1.0.4",
         "hash": "82bd15e5dcae83f52fcfcf824a1fc4bc"
     },
-    "xfrmc.12_months.txt": {
+    "xfrmc_12_months.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "e3b2a6d5fe4c268d7f994b6a3bda9811"
     },
-    "xfrmc.add_buyer.txt": {
+    "xfrmc_add_buyer.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "c6da6693d9de2031be87630c1e6b91d1"
     },
-    "xfrmc.amount.txt": {
+    "xfrmc_amount.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "b2f40690858b404ed10e62bdf422c704"
     },
-    "xfrmc.buy_resource.txt": {
+    "xfrmc_begin_date.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "db670268226fb871e3993829a6df4efd"
+    },
+    "xfrmc_buy_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "920275635e7d5165c0c60496ac2ab013"
     },
-    "xfrmc.buyers.txt": {
+    "xfrmc_buyers.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "573d777ae25da71069204861897481e9"
     },
-    "xfrmc.download_resource.txt": {
+    "xfrmc_coupon_code.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "5290e2630e9d54a0fa82d0d3b69d2139"
+    },
+    "xfrmc_discount.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "104d9898c04874d0fbac36e125fa1369"
+    },
+    "xfrmc_download_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "2d38b1af2197d1717173987c653dc98d"
     },
-    "xfrmc.expire_date.txt": {
+    "xfrmc_edit_coupon.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "45de1ce192f3138424be1c8504c54e2d"
+    },
+    "xfrmc_end_date.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "b7de7e4247d4ab279ef031b7a44c201d"
+    },
+    "xfrmc_expire_date.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "5a787141d53b573ec9b86e900bfe0d79"
     },
-    "xfrmc.expire_date_must_be_great_than_purchased_date.txt": {
+    "xfrmc_expire_date_must_be_great_than_purchased_date.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "9efd5d1168d8316b2b6fa92f86bbd226"
     },
-    "xfrmc.find_buyer.txt": {
+    "xfrmc_find_buyer.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "4bbe1413f0d61e1ed6c80883eac3edcf"
     },
-    "xfrmc.license_duration.txt": {
+    "xfrmc_license_duration.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "64327ffdb5066cee512561e369aae0e7"
     },
-    "xfrmc.price.txt": {
+    "xfrmc_max_use_count.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "30f42d0998894dc934d09c6f8f58aad1"
+    },
+    "xfrmc_price.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "3601146c4e948c32b6424d2c0a7f0118"
     },
-    "xfrmc.purchase_resource.txt": {
+    "xfrmc_purchase_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "250096d7a95a80d06d17bdadc76b71de"
     },
-    "xfrmc.purchase_via.txt": {
+    "xfrmc_purchase_via.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "0bcd134f6f239be9fbb0140c990770f9"
     },
-    "xfrmc.purchased_date.txt": {
+    "xfrmc_purchased_date.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "c7af2887ff24145b0976a580682b4c2d"
     },
-    "xfrmc.receipt_for_your_resource_purchase_at_x.txt": {
+    "xfrmc_receipt_for_your_resource_purchase_at_x.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "581be822e22b8c4ca28875ab4f921fd7"
     },
-    "xfrmc.renew_price.txt": {
+    "xfrmc_renew_price.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "022d2853ee8f1ca7dd7753fb59ea87e4"
     },
-    "xfrmc.renew_purchase_resource.txt": {
+    "xfrmc_renew_purchase_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "37651488479b765863e7ecb2f220eadf"
     },
-    "xfrmc.resource.txt": {
+    "xfrmc_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "be8545ae7ab0276e15898aae7acfbd7a"
     },
-    "xfrmc.sure_you_want_to_purchase_this_resource.txt": {
+    "xfrmc_resource_ids.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "c55ae492c215cb48a6df2d81e9f3f00f"
+    },
+    "xfrmc_sure_you_want_to_purchase_this_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "fdd019bf729793eb71c6cc998765f3a7"
     },
-    "xfrmc.thank_you_for_purchasing_resource_at_x.txt": {
+    "xfrmc_thank_you_for_purchasing_resource_at_x.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "7e1c0061461f15a592175ab9ea6e1e12"
     },
-    "xfrmc.there_are_no_users_bought_this_resource.txt": {
+    "xfrmc_there_are_no_users_bought_this_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "04f2d2d9e5eeb2d949d0b9652d99f78d"
     },
-    "xfrmc.user_x_did_not_bought_this_resource.txt": {
+    "xfrmc_usable_user_group_ids.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "de96d90d83addb8c5bf8af2d9fced80c"
+    },
+    "xfrmc_user_x_did_not_bought_this_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "7cdaea27ff8be65943105339cab662e0"
     },
-    "xfrmc.you_may_purchase_this_resource_to_download.txt": {
+    "xfrmc_you_may_purchase_this_resource_to_download.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "73bc56e27fff1cae96b24b1565039e7e"
     },
-    "xfrmc.your_license_expired_renew_to_download_latest_version.txt": {
+    "xfrmc_your_license_expired_renew_to_download_latest_version.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",

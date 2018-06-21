@@ -162,7 +162,7 @@ class Resource extends AbstractPurchasable
 
     public function getTitle()
     {
-        return \XF::phrase('tl_xfrm_customized.resource');
+        return \XF::phrase('xfrmc_resource');
     }
 
     public function reversePurchase(CallbackState $state)
@@ -233,7 +233,7 @@ class Resource extends AbstractPurchasable
 
         $purchase->title = sprintf(
             '%s: %s (%s)',
-            \XF::phrase('tl_xfrm_customized.buy_resource'),
+            \XF::phrase('xfrmc_buy_resource'),
             $purchasable->title,
             $purchaser->username
         );

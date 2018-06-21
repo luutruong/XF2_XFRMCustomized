@@ -7,31 +7,31 @@
                 <xf:if is="$coupon.canEdit()">
                     <xf:button href="{{ link('resources/coupons/edit', $coupon) }}"
                                overlay="true"
-                               class="button--link" icon="edit">{{ phrase('xfrmc.edit_coupon') }}</xf:button>
+                               class="button--link" icon="edit">{{ phrase('xfrmc_edit_coupon') }}</xf:button>
                 </xf:if>
                 <xf:if is="$coupon.canDelete()">
                     <xf:button href="{{ link('resources/coupons/delete', $coupon) }}"
                                overlay="true"
-                               class="button--link" icon="delete">{{ phrase('xfrmc.delete_coupon') }}</xf:button>
+                               class="button--link" icon="delete">{{ phrase('xfrmc_delete_coupon') }}</xf:button>
                 </xf:if>
             </div>
         </div>
     </div>
     <div class="block-container">
         <div class="block-body">
-            <xf:formrow label="{{ phrase('xfrmc.coupon_code') }}">{$coupon.coupon_code}</xf:formrow>
-            <xf:formrow label="{{ phrase('xfrmc.discount') }}">
+            <xf:formrow label="{{ phrase('xfrmc_coupon_code') }}">{$coupon.coupon_code}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_discount') }}">
                 <xf:if is="$coupon.discount_unit == 'percent'">
                     {$coupon.discount_amount}%
                     <xf:else />
                     {$coupon.discount_amount|currency}
                 </xf:if>
             </xf:formrow>
-            <xf:formrow label="{{ phrase('xfrmc.begin_date') }}">{{ date($coupon.begin_date, 'Y-m-d') }}</xf:formrow>
-            <xf:formrow label="{{ phrase('xfrmc.end_date') }}">{{ date($coupon.end_date, 'Y-m-d') }}</xf:formrow>
-            <xf:formrow label="{{ phrase('xfrmc.used') }}">{$coupon.used_count}/{$coupon.max_use_count}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_begin_date') }}">{{ date($coupon.begin_date, 'Y-m-d') }}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_end_date') }}">{{ date($coupon.end_date, 'Y-m-d') }}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_used') }}">{$coupon.used_count}/{$coupon.max_use_count}</xf:formrow>
 
-            <xf:formrow label="{{ phrase('xfrmc.created_by') }}"><xf:username user="$coupon.User" defaultname="{$coupon.username}" /></xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_created_by') }}"><xf:username user="$coupon.User" defaultname="{$coupon.username}" /></xf:formrow>
         </div>
     </div>
 </div>

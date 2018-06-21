@@ -1,4 +1,4 @@
-<xf:title>{{ phrase('xfrmc.add_buyer') }}</xf:title>
+<xf:title>{{ phrase('xfrmc_add_buyer') }}</xf:title>
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />
 
@@ -6,31 +6,31 @@
     <div class="block-container">
         <div class="block-body">
             <xf:if is="$purchased is not empty">
-                <xf:formrow label="{{ phrase('xfrmc.buyers') }}">
+                <xf:formrow label="{{ phrase('xfrmc_buyers') }}">
                     <xf:username user="{$purchased.User}" defaultname="{$purchase.username}" />
                 </xf:formrow>
 
                 <xf:hiddenval name="user_id">{$purchased.user_id}</xf:hiddenval>
-                <xf:formrow label="{{ phrase('xfrmc.purchased_date') }}">{{ date($purchased.purchased_date, 'Y-m-d') }}</xf:formrow>
+                <xf:formrow label="{{ phrase('xfrmc_purchased_date') }}">{{ date($purchased.purchased_date, 'Y-m-d') }}</xf:formrow>
             <xf:else />
                 <xf:textboxrow name="names"
-                               label="{{ phrase('xfrmc.buyers') }}"
+                               label="{{ phrase('xfrmc_buyers') }}"
                                ac="true" />
                 <xf:dateinputrow name="purchased_date"
                                  value="{{ date($xf.time, 'picker') }}"
-                                 label="{{ phrase('xfrmc.purchased_date') }}"  />
+                                 label="{{ phrase('xfrmc_purchased_date') }}"  />
             </xf:if>
 
             <xf:numberboxrow name="amount"
                              min="0"
                              value="{$purchased.amount}"
-                             label="{{ phrase('xfrmc.price') }}" />
+                             label="{{ phrase('xfrmc_price') }}" />
 
             <xf:dateinputrow name="expire_date"
                              value="{{ $purchased.expire_date ? date($purchased.expire_date, 'picker') : '' }}"
-                             label="{{ phrase('xfrmc.expire_date') }}"  />
+                             label="{{ phrase('xfrmc_expire_date') }}"  />
         </div>
 
-        <xf:submitrow submit="{{ phrase('xfrmc.add_buyer') }}" />
+        <xf:submitrow submit="{{ phrase('xfrmc_add_buyer') }}" />
     </div>
 </xf:form>
