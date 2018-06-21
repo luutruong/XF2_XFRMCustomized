@@ -9,6 +9,11 @@
         "version_string": "1.0.9",
         "hash": "2d867f859c19bc4006477c579c4158ea"
     },
+    "public/xfrm_customized_coupon_list.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "87049363369562db1c9917b84457fb15"
+    },
     "public/xfrm_customized_coupon_view.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",

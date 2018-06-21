@@ -19,6 +19,22 @@ class Coupon extends AbstractController
         if ($params->coupon_id) {
             return $this->rerouteController(__CLASS__,'view', $params);
         }
+
+        $finder = $this->finder('Truonglv\XFRMCustomized:Coupon')
+            ->order('created_date', 'DESC');
+
+        $page = $this->filterPage();
+        $perPage = 20;
+
+        $coupons = $finder->limitByPage($page, $perPage)->fetch();
+        $totalCodes = $finder->total();
+
+        return $this->view('', 'xfrm_customized_coupon_list', [
+            'page' => $page,
+            'perPage' => $perPage,
+            'coupons' => $coupons,
+            'total' => $totalCodes
+        ]);
     }
 
     public function actionView(ParameterBag $params)
