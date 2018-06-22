@@ -1,9 +1,51 @@
 {
+    "nav.xfrmc_coupons.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "cc4616c718d99e1face99b5e46a5755c"
+    },
     "permission.resource_xfrm_customized_addBuyer.txt": {
         "global_cache": false,
         "version_id": 1000470,
         "version_string": "1.0.4",
         "hash": "82bd15e5dcae83f52fcfcf824a1fc4bc"
+    },
+    "permission.xfrmc_add.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "11f3367d948bce8ea51a689df854a792"
+    },
+    "permission.xfrmc_deleteCoupon.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "6216ff635fd807901f5b6f58da2504fc"
+    },
+    "permission.xfrmc_editCoupon.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "45de1ce192f3138424be1c8504c54e2d"
+    },
+    "permission.xfrmc_viewItem.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "f452a1136807c972d58b796a22eeef8a"
+    },
+    "permission.xfrmc_viewList.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "fd9afce112416695a1ab27d74e2c4596"
+    },
+    "permission_interface.XFRMC_Coupons.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "15246702271d8f9ffea728c060a882a1"
     },
     "xfrmc_12_months.txt": {
         "global_cache": false,
@@ -16,6 +58,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "c6da6693d9de2031be87630c1e6b91d1"
+    },
+    "xfrmc_add_coupon.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "11f3367d948bce8ea51a689df854a792"
     },
     "xfrmc_amount.txt": {
         "global_cache": false,
@@ -46,6 +94,24 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "5290e2630e9d54a0fa82d0d3b69d2139"
+    },
+    "xfrmc_coupons.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "cc4616c718d99e1face99b5e46a5755c"
+    },
+    "xfrmc_created_by.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "c8e6a7ed1489c036564b6bc24c92cca4"
+    },
+    "xfrmc_delete_coupon.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "6216ff635fd807901f5b6f58da2504fc"
     },
     "xfrmc_discount.txt": {
         "global_cache": false,
@@ -89,6 +155,12 @@
         "version_string": "1.0.9",
         "hash": "4bbe1413f0d61e1ed6c80883eac3edcf"
     },
+    "xfrmc_fixed.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "4457d440870ad6d42bab9082d9bf9b61"
+    },
     "xfrmc_license_duration.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -100,6 +172,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "30f42d0998894dc934d09c6f8f58aad1"
+    },
+    "xfrmc_percent.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "adaaee4b22041c27198d410c68d952c9"
     },
     "xfrmc_price.txt": {
         "global_cache": false,
@@ -178,6 +256,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "de96d90d83addb8c5bf8af2d9fced80c"
+    },
+    "xfrmc_used.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "019d1ca7d50cc54b995f60d456435e87"
     },
     "xfrmc_user_x_did_not_bought_this_resource.txt": {
         "global_cache": false,

@@ -2,6 +2,8 @@
     ? phrase('xfrmc_edit_coupon')
     : phrase('xfrmc_add_coupon') }}</xf:title>
 
+<xf:breadcrumb href="{{ link('canonical:resources/coupons') }}">{{ phrase('xfrmc_coupons') }}</xf:breadcrumb>
+
 <xf:form action="{{ $coupon.coupon_id ? link('resources/coupons/edit', $coupon) : link('resources/coupons/add') }}"
          ajax="true" class="block">
     <div class="block-container">

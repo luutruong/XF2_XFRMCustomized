@@ -5,6 +5,7 @@
  */
 namespace Truonglv\XFRMCustomized\Pub\Controller;
 
+use Truonglv\XFRMCustomized\GlobalStatic;
 use Truonglv\XFRMCustomized\Service\Coupon\Creator;
 use Truonglv\XFRMCustomized\Service\Coupon\Editor;
 use XF\Mvc\ParameterBag;
@@ -20,6 +21,10 @@ class Coupon extends AbstractController
             return $this->rerouteController(__CLASS__,'view', $params);
         }
 
+        if (!GlobalStatic::hasPermission('viewList')) {
+            return $this->noPermission();
+        }
+
         $finder = $this->finder('Truonglv\XFRMCustomized:Coupon')
             ->order('created_date', 'DESC');
 
@@ -29,7 +34,7 @@ class Coupon extends AbstractController
         $coupons = $finder->limitByPage($page, $perPage)->fetch();
         $totalCodes = $finder->total();
 
-        return $this->view('', 'xfrm_customized_coupon_list', [
+        return $this->view('', 'xfrmc_coupon_list', [
             'page' => $page,
             'perPage' => $perPage,
             'coupons' => $coupons,
@@ -87,6 +92,10 @@ class Coupon extends AbstractController
 
     public function actionAdd()
     {
+        if (!GlobalStatic::hasPermission('add')) {
+            return $this->noPermission();
+        }
+
         if ($this->isPost()) {
             /** @var Creator $creator */
             $creator = $this->service('Truonglv\XFRMCustomized:Coupon\Creator');
@@ -108,6 +117,9 @@ class Coupon extends AbstractController
     public function actionEdit(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
+        if (!$coupon->canEdit($error)) {
+            return $this->noPermission($error);
+        }
 
         $this->assertCanonicalUrl($this->buildLink('resources/coupons/edit', $coupon));
 
@@ -130,6 +142,26 @@ class Coupon extends AbstractController
         }
 
         return $this->getCouponForm($coupon);
+    }
+
+    public function actionDelete(ParameterBag $params)
+    {
+        $coupon = $this->assertCouponViewable($params->coupon_id);
+        if (!$coupon->canDelete($error)) {
+            return $this->noPermission($error);
+        }
+
+        $this->assertCanonicalUrl($this->buildLink('resources/coupons/delete', $coupon));
+
+        if ($this->isPost()) {
+            $coupon->delete();
+
+            return $this->redirect($this->buildLink('resources/coupons'));
+        }
+
+        return $this->view('', 'xfrmc_coupon_delete', [
+            'coupon' => $coupon
+        ]);
     }
 
     protected function assertCouponViewable($id)

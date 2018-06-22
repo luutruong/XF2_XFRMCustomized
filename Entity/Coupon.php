@@ -5,6 +5,7 @@
  */
 namespace Truonglv\XFRMCustomized\Entity;
 
+use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceItem;
@@ -31,17 +32,17 @@ class Coupon extends Entity
 {
     public function canView(&$error = null)
     {
-        return true;
+        return GlobalStatic::hasPermission('viewItem');
     }
 
     public function canEdit(&$error = null)
     {
-        return true;
+        return GlobalStatic::hasPermission('editCoupon');
     }
 
     public function canDelete(&$error = null)
     {
-        return true;
+        return GlobalStatic::hasPermission('deleteCoupon');
     }
 
     public function canUse(ResourceItem $resourceItem)

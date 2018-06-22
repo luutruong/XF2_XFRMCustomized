@@ -1,5 +1,20 @@
 {
     "resource-xfrm_customized_addBuyer.json": {
         "hash": "961a905c182267e98815a86e6683dcae"
+    },
+    "xfrmc-add.json": {
+        "hash": "d14d2fdc5df25ec35f13c071b0dd96d8"
+    },
+    "xfrmc-deleteCoupon.json": {
+        "hash": "23d4e16447f8c5adaad27139fc38dfba"
+    },
+    "xfrmc-editCoupon.json": {
+        "hash": "9d86d657a9809eeaaef63aa7e2ffdfd5"
+    },
+    "xfrmc-viewItem.json": {
+        "hash": "82629765d63ba8899f2a20bd3d77c1ec"
+    },
+    "xfrmc-viewList.json": {
+        "hash": "6b9092d4f771e09d39ea1c8f3ea19fea"
     }
 }

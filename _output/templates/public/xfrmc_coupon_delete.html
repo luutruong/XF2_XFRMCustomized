@@ -1,0 +1,10 @@
+<xf:title>{{ phrase('xfrmc_delete_coupon') }}</xf:title>
+
+<xf:form action="{{ link('resources/coupons/delete', $coupon) }}" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+        </div>
+
+        <xf:submitrow icon="delete" />
+    </div>
+</xf:form>
