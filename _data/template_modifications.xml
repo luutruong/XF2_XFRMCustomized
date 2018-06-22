@@ -21,17 +21,22 @@
   <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="XFRM_Customized_addTab" description="Add tab in resource view" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<xf:if is="$resource.hasViewableDiscussion()">]]></find>
     <replace><![CDATA[<xf:if is="$resource.canEdit()">
-	<a class="tabs-tab {{ $selected == 'buyers' ? 'is-active' : '' }}" href="{{ link('resources/buyers', $resource) }}">{{ phrase('tl_xfrm_customized.buyers') }}</a>
+	<a class="tabs-tab {{ $selected == 'buyers' ? 'is-active' : '' }}" href="{{ link('resources/buyers', $resource) }}">{{ phrase('xfrmc_buyers') }}</a>
 </xf:if>
 
 $0]]></replace>
   </modification>
   <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="XFRM_Customized_replaceBuyBtn" description="Replace buy button" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<xf:button href="{$resource.external_purchase_url}" class="button--cta" icon="purchase">{{ phrase('xfrm_buy_for_x', {'price': $resource.price|currency($resource.currency)}) }}</xf:button>]]></find>
-    <replace><![CDATA[<xf:button href="{$resource.external_purchase_url}" 
-			class="button--cta" 
+    <replace><![CDATA[<xf:if is="$resource.isRenewLicense()">
+	<xf:set var="$purchasePhrase">{{ phrase('xfrmc_renew_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
+<xf:else />
+	<xf:set var="$purchasePhrase">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
+</xf:if>
+<xf:button href="{$resource.external_purchase_url}" 
+		   class="button--cta" 
 		   overlay="true"
-			icon="purchase">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:button>
+		   icon="purchase">{$purchasePhrase}</xf:button>
 ]]></replace>
   </modification>
 </template_modifications>

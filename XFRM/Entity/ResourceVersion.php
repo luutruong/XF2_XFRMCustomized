@@ -6,7 +6,6 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
-use Truonglv\XFRMCustomized\Entity\Purchase;
 use Truonglv\XFRMCustomized\GlobalStatic;
 
 class ResourceVersion extends XFCP_ResourceVersion
@@ -40,6 +39,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             foreach ($purchases as $purchase) {
                 if ($purchase->canDownloadVersion($this)) {
                     $canDownloadThisVersion = true;
+
                     break;
                 }
             }

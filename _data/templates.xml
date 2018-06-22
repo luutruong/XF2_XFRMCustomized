@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="email" title="payment_received_receipt_tl_xfrm_customized_resource" version_id="1000470" version_string="1.0.4"><![CDATA[<mail:subject>{{ phrase('tl_xfrm_customized.receipt_for_your_resource_purchase_at_x', {'board_title': $xf.options.boardTitle}) }}</mail:subject>
+  <template type="email" title="payment_received_receipt_tl_xfrm_customized_resource" version_id="1000970" version_string="1.0.9"><![CDATA[<mail:subject>{{ phrase('xfrmc_receipt_for_your_resource_purchase_at_x', {'board_title': $xf.options.boardTitle}) }}</mail:subject>
 
-<p>{{ phrase('tl_xfrm_customized.thank_you_for_purchasing_resource_at_x', {'board_url': link('canonical:index'), 'board_title': $xf.options.boardTitle}) }}</p>
+<p>{{ phrase('xfrmc_thank_you_for_purchasing_resource_at_x', {'board_url': link('canonical:index'), 'board_title': $xf.options.boardTitle}) }}</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -16,60 +16,160 @@
 </table>
 
 <p><a href="{{ link('canonical:resources', $purchasable.purchasable) }}"
-      class="button">{{ phrase('tl_xfrm_customized.download_resource') }}</a></p>
+      class="button">{{ phrase('xfrmc_download_resource') }}</a></p>
 
 <xf:if is="$xf.toUser.canUseContactForm()">
     <p>{{ phrase('thank_you_for_your_purchase_questions_contact_us', {'contacturl': link('canonical:misc/contact') }) }}</p>
     <xf:else />
     <p>{{ phrase('thank_you_for_your_purchase') }}</p>
 </xf:if>]]></template>
-  <template type="public" title="xfrm_customized_coupon_add" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ $coupon.coupon_id
-    ? phrase('tl_xfrm_customized.edit_coupon')
-    : phrase('tl_xfrm_customized.add_coupon') }}</xf:title>
+  <template type="public" title="xfrmc_coupon_add" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ $coupon.coupon_id
+    ? phrase('xfrmc_edit_coupon')
+    : phrase('xfrmc_add_coupon') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('canonical:resources/coupons') }}">{{ phrase('xfrmc_coupons') }}</xf:breadcrumb>
 
 <xf:form action="{{ $coupon.coupon_id ? link('resources/coupons/edit', $coupon) : link('resources/coupons/add') }}"
          ajax="true" class="block">
     <div class="block-container">
         <div class="block-body">
             <xf:textboxrow name="title" label="{{ phrase('title') }}" value="{$coupon.title}" />
-            <xf:textboxrow name="coupon_code" label="{{ phrase('tl_xfrm_customized.coupon_code') }}"
+            <xf:textboxrow name="coupon_code" label="{{ phrase('xfrmc_coupon_code') }}"
                            value="{$coupon.coupon_code}" />
 
             <xf:dateinputrow name="begin_date" value="{{ $coupon.begin_date ? date($coupon.begin_date, 'Y-m-d') : '' }}"
-                             label="{{ phrase('tl_xfrm_customized.begin_date') }}" />
+                             label="{{ phrase('xfrmc_begin_date') }}" />
             <xf:dateinputrow name="end_date" value="{{ $coupon.end_date ? date($coupon.end_date, 'Y-m-d') : '' }}"
-                             label="{{ phrase('tl_xfrm_customized.end_date') }}" />
+                             label="{{ phrase('xfrmc_end_date') }}" />
 
             <xf:numberboxrow name="max_use_count" value="{{ $coupon.max_use_count ?: 0 }}"
                              min="0"
-                             label="{{ phrase('tl_xfrm_customized.max_use_count') }}" />
+                             label="{{ phrase('xfrmc_max_use_count') }}" />
 
-            <xf:formrow label="{{ phrase('tl_xfrm_customized.discount') }}" rowtype="input">
+            <xf:formrow label="{{ phrase('xfrmc_discount') }}" rowtype="input">
                 <div class="inputGroup">
                     <xf:numberbox name="discount_amount" value="{$coupon.discount_amount}"
                                   min="0" />
                     <span class="inputGroup-splitter"></span>
                     <xf:select name="discount_unit" value="{$coupon.discount_unit}">
-                        <xf:option value="percent">{{ phrase('tl_xfrm_customized.percent') }}</xf:option>
-                        <xf:option value="fixed">{{ phrase('tl_xfrm_customized.fixed') }}</xf:option>
+                        <xf:option value="percent">{{ phrase('xfrmc_percent') }}</xf:option>
+                        <xf:option value="fixed">{{ phrase('xfrmc_fixed') }}</xf:option>
                     </xf:select>
                 </div>
             </xf:formrow>
 
             <xf:checkboxrow name="apply_rules[usable_user_group_ids]"
                             listclass="listColumns"
-                            label="{{ phrase('tl_xfrm_customized.usable_user_group_ids') }}">
+                            value="{$coupon.apply_rules.usable_user_group_ids}"
+                            label="{{ phrase('xfrmc_usable_user_group_ids') }}">
                 <xf:options source="$userGroups" />
             </xf:checkboxrow>
 
+            <xf:selectrow name="apply_rules[category_ids]" value="{$coupon.apply_rules.category_ids}"
+                          multiple="true"
+                          label="{{ phrase('xfrmc_all_resources_in_categories') }}">
+                <xf:foreach loop="$xfrmCategoryTree" value="$entry">
+                    <xf:option value="{$entry.record.resource_category_id}">{{ repeat('-- ', $entry.record.depth) }}{$entry.record.title}</xf:option>
+                </xf:foreach>
+            </xf:selectrow>
+
             <xf:textboxrow name="apply_rules[resource_ids]" value="{$coupon.apply_rules.resource_ids|join(', ')}"
-                           label="{{ phrase('tl_xfrm_customized.resource_ids') }}" />
+                           explain="{{ phrase('xfrmc_resource_ids_explain') }}"
+                           label="{{ phrase('xfrmc_resource_ids') }}" />
         </div>
 
         <xf:submitrow icon="save" />
     </div>
 </xf:form>]]></template>
-  <template type="public" title="xfrm_customized_resource_add_buyer" version_id="1000870" version_string="1.0.8"><![CDATA[<xf:title>{{ phrase('tl_xfrm_customized.add_buyer') }}</xf:title>
+  <template type="public" title="xfrmc_coupon_delete" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_delete_coupon') }}</xf:title>
+
+<xf:form action="{{ link('resources/coupons/delete', $coupon) }}" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+        </div>
+
+        <xf:submitrow icon="delete" />
+    </div>
+</xf:form>]]></template>
+  <template type="public" title="xfrmc_coupon_list" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_coupons') }}</xf:title>
+
+<xf:pageaction>
+    <xf:button class="button--link"
+               href="{{ link('resources/coupons/add') }}"
+               overlay="true"
+               icon="add">{{ phrase('xfrmc_add_coupon') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:datalist>
+                <xf:datarow rowclass="dataList-row--subSection">
+                    <xf:cell>{{ phrase('xfrmc_coupon_code') }}</xf:cell>
+                    <xf:cell>{{ phrase('title') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_begin_date') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_end_date') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_used') }}</xf:cell>
+                </xf:datarow>
+                <xf:foreach loop="$coupons" value="$coupon">
+                    <xf:datarow>
+                        <xf:cell>{$coupon.coupon_code}</xf:cell>
+                        <xf:cell><a href="{{ link('resources/coupons', $coupon) }}">{$coupon.title}</a></xf:cell>
+                        <xf:cell>{{ date($coupon.begin_date) }}</xf:cell>
+                        <xf:cell>{{ date($coupon.end_date) }}</xf:cell>
+                        <xf:cell>{$coupon.used_count}/{$coupon.max_use_count}</xf:cell>
+                    </xf:datarow>
+                </xf:foreach>
+            </xf:datalist>
+        </div>
+
+        <div class="block-outer block-outer--after">
+            <xf:pagenav link="resources/coupons" page="{$page}"
+                        perpage="{$perPage}" total="{$total}" />
+        </div>
+    </div>
+</div>]]></template>
+  <template type="public" title="xfrmc_coupon_view" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{$coupon.title}</xf:title>
+
+<xf:breadcrumb href="{{ link('canonical:resources/coupons') }}">{{ phrase('xfrmc_coupons') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('canonical:resources/coupons', $coupon) }}">{$coupon.title}</xf:breadcrumb>
+
+<div class="block">
+    <div class="block-outer">
+        <div class="block-outer-opposite">
+            <div class="buttonGroup">
+                <xf:if is="$coupon.canEdit()">
+                    <xf:button href="{{ link('resources/coupons/edit', $coupon) }}"
+                               overlay="true"
+                               class="button--link" icon="edit">{{ phrase('xfrmc_edit_coupon') }}</xf:button>
+                </xf:if>
+                <xf:if is="$coupon.canDelete()">
+                    <xf:button href="{{ link('resources/coupons/delete', $coupon) }}"
+                               overlay="true"
+                               class="button--link" icon="delete">{{ phrase('xfrmc_delete_coupon') }}</xf:button>
+                </xf:if>
+            </div>
+        </div>
+    </div>
+    <div class="block-container">
+        <div class="block-body">
+            <xf:formrow label="{{ phrase('xfrmc_coupon_code') }}">{$coupon.coupon_code}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_discount') }}">
+                <xf:if is="$coupon.discount_unit == 'percent'">
+                    {$coupon.discount_amount}%
+                    <xf:else />
+                    {$coupon.discount_amount|currency}
+                </xf:if>
+            </xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_begin_date') }}">{{ date($coupon.begin_date, 'Y-m-d') }}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_end_date') }}">{{ date($coupon.end_date, 'Y-m-d') }}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_used') }}">{$coupon.used_count}/{$coupon.max_use_count}</xf:formrow>
+
+            <xf:formrow label="{{ phrase('xfrmc_created_by') }}"><xf:username user="$coupon.User" defaultname="{$coupon.username}" /></xf:formrow>
+        </div>
+    </div>
+</div>]]></template>
+  <template type="public" title="xfrmc_resource_add_buyer" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_add_buyer') }}</xf:title>
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />
 
@@ -77,35 +177,35 @@
     <div class="block-container">
         <div class="block-body">
             <xf:if is="$purchased is not empty">
-                <xf:formrow label="{{ phrase('tl_xfrm_customized.buyers') }}">
+                <xf:formrow label="{{ phrase('xfrmc_buyers') }}">
                     <xf:username user="{$purchased.User}" defaultname="{$purchase.username}" />
                 </xf:formrow>
 
                 <xf:hiddenval name="user_id">{$purchased.user_id}</xf:hiddenval>
-                <xf:formrow label="{{ phrase('tl_xfrm_customized.purchased_date') }}">{{ date($purchased.purchased_date, 'Y-m-d') }}</xf:formrow>
+                <xf:formrow label="{{ phrase('xfrmc_purchased_date') }}">{{ date($purchased.purchased_date, 'Y-m-d') }}</xf:formrow>
             <xf:else />
                 <xf:textboxrow name="names"
-                               label="{{ phrase('tl_xfrm_customized.buyers') }}"
+                               label="{{ phrase('xfrmc_buyers') }}"
                                ac="true" />
                 <xf:dateinputrow name="purchased_date"
                                  value="{{ date($xf.time, 'picker') }}"
-                                 label="{{ phrase('tl_xfrm_customized.purchased_date') }}"  />
+                                 label="{{ phrase('xfrmc_purchased_date') }}"  />
             </xf:if>
 
             <xf:numberboxrow name="amount"
                              min="0"
                              value="{$purchased.amount}"
-                             label="{{ phrase('tl_xfrm_customized.price') }}" />
+                             label="{{ phrase('xfrmc_price') }}" />
 
             <xf:dateinputrow name="expire_date"
                              value="{{ $purchased.expire_date ? date($purchased.expire_date, 'picker') : '' }}"
-                             label="{{ phrase('tl_xfrm_customized.expire_date') }}"  />
+                             label="{{ phrase('xfrmc_expire_date') }}"  />
         </div>
 
-        <xf:submitrow submit="{{ phrase('tl_xfrm_customized.add_buyer') }}" />
+        <xf:submitrow submit="{{ phrase('xfrmc_add_buyer') }}" />
     </div>
 </xf:form>]]></template>
-  <template type="public" title="xfrm_customized_resource_buyers" version_id="1000870" version_string="1.0.8"><![CDATA[<xf:title>{{ phrase('tl_xfrm_customized.buyers') }}</xf:title>
+  <template type="public" title="xfrmc_resource_buyers" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_buyers') }}</xf:title>
 
 <xf:wrap template="xfrm_resource_wrapper">
     <xf:set var="$pageSelected" value="buyers" />
@@ -119,16 +219,16 @@
             <xf:if is="$resource.canAddBuyer()">
                 <xf:button href="{{ link('resources/add-buyer', $resource) }}"
                            class="button--link"
-                           overlay="true"><i class="fa fa-plus"></i> {{ phrase('tl_xfrm_customized.add_buyer') }}</xf:button>
+                           overlay="true"><i class="fa fa-plus"></i> {{ phrase('xfrmc_add_buyer') }}</xf:button>
             </xf:if>
 
             <xf:button class="button--link menuTrigger" data-xf-click="menu"
                        aria-haspopup="true"
-                       aria-expanded="false">{{ phrase('tl_xfrm_customized.find_buyer') }}</xf:button>
+                       aria-expanded="false">{{ phrase('xfrmc_find_buyer') }}</xf:button>
             <div class="menu" data-menu="menu" aria-hidden="true">
                 <xf:form action="{{ link('resources/buyers', $resource) }}" method="get" class="menu-content">
                     <div class="menu-row">
-                        {{ phrase('tl_xfrm_customized.find_buyer:') }}
+                        {{ phrase('xfrmc_find_buyer:') }}
                         <xf:textbox name="username" ac="single"
                                     value="{{ $user ? $user.username : '' }}"
                                     maxlength="{{ max_length($xf.visitor, 'username') }}" />
@@ -146,9 +246,9 @@
             <xf:foreach loop="{$buyers}" key="$userId" value="$data">
                 <xf:set var="$extraHtml">
                     <ol class="listPlain" style="min-width: 200px">
-                        <li><span>{{ phrase('tl_xfrm_customized.amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
-                        <li><span>{{ phrase('tl_xfrm_customized.purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
-                        <li><span>{{ phrase('tl_xfrm_customized.expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
+                        <li><span>{{ phrase('xfrmc_amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
+                        <li><span>{{ phrase('xfrmc_purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
+                        <li><span>{{ phrase('xfrmc_expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
 
                         <xf:if is="$resource.canAddBuyer()">
                         <li><xf:button class="button--small button--link"
@@ -166,7 +266,7 @@
                               arg-extraDataBig="{{ false }}" />
                 </li>
             <xf:else />
-                <li class="block-row">{{ phrase('tl_xfrm_customized.there_are_no_users_bought_this_resource') }}</li>
+                <li class="block-row">{{ phrase('xfrmc_there_are_no_users_bought_this_resource') }}</li>
             </xf:foreach>
         </ol>
     </div>
@@ -177,7 +277,7 @@
                     page="{$page}" />
     </div>
 </div>]]></template>
-  <template type="public" title="xfrm_customized_resource_macros" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:macro name="type"
+  <template type="public" title="xfrmc_resource_macros" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:macro name="type"
 	arg-currentType="!"
 	arg-resource="!"
 	arg-category="!"
@@ -213,42 +313,82 @@
     </xf:if>
 
     <xf:textboxrow name="renew_price"
-                   label="{{ phrase('tl_xfrm_customized.renew_price') }}"
+                   label="{{ phrase('xfrmc_renew_price') }}"
                    value="{{ $resource.renew_price ?: '' }}"
-                   placeholder="{{ phrase('tl_xfrm_customized.renew_price') }}" style="width: 120px" />
+                   placeholder="{{ phrase('xfrmc_renew_price') }}" style="width: 120px" />
     <hr class="formRowSep" />
 </xf:macro>]]></template>
-  <template type="public" title="xfrm_customized_resource_purchase" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ $isRenewPurchase
-    ? phrase('tl_xfrm_customized.renew_purchase_resource')
-    : phrase('tl_xfrm_customized.purchase_resource') }}</xf:title>
+  <template type="public" title="xfrmc_resource_purchase" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ $isRenewPurchase
+    ? phrase('xfrmc_renew_license')
+    : phrase('xfrmc_buy_license') }}</xf:title>
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />
+
+<xf:js src="Truonglv/XFRMCustomized/coupon.js"
+       addon="Truonglv/XFRMCustomized" min="1" />
 
 <xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
     <div class="block-container">
         <div class="block-body">
             <xf:if is="!$isRenewPurchase">
                 <xf:inforow rowtype="confirm">
-                    {{ phrase('tl_xfrm_customized.sure_you_want_to_purchase_this_resource') }}
+                    {{ phrase('xfrmc_sure_you_want_to_purchase_this_resource') }}
                     <strong><a href="{{ link('resources', $resource) }}">{$resource.title}</a></strong>
                 </xf:inforow>
             </xf:if>
 
-            <xf:formrow label="{{ phrase('price') }}">{$purchasePrice|currency($resource.currency)}</xf:formrow>
-            <xf:formrow label="{{ phrase('tl_xfrm_customized.license_duration') }}">{{ phrase('tl_xfrm_customized.12_months') }}</xf:formrow>
+            <xf:formrow label="{{ phrase('price') }}">
+                <span id="final-price">{$purchasePrice|currency($resource.currency)}</span>
+                <span id="original-price" style="text-decoration: line-through;display: none">{$purchasePrice|currency($resource.currency)}</span>
+            </xf:formrow>
 
-            <xf:selectrow label="{{ phrase('tl_xfrm_customized.purchase_via') }}" name="payment_profile_id">
+            <xf:formrow label="{{ phrase('xfrmc_license_duration') }}">{{ phrase('xfrmc_12_months') }}</xf:formrow>
+
+            <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id">
                 <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
-                    <xf:option value="{$paymentProfile.payment_profile_id}">{$paymentProfile.display_title}</xf:option>
+                    <xf:option value="{$paymentProfile.payment_profile_id}">{{ $paymentProfile.display_title . ' - ' . $paymentProfile.title }}</xf:option>
                 </xf:foreach>
-            </xf:selectrow>
+            </xf:radiorow>
+
+            <xf:formrow label="{{ phrase('xfrmc_coupon_code') }}" rowtype="input"
+                        explain="{{ phrase('xfrmc_enter_coupon_code_to_receive_discount') }}">
+                <div class="inputGroup">
+                    <xf:textbox name="coupon_code" value="" class="input--couponCode" />
+                    <span class="inputGroup-splitter"></span>
+                    <xf:button data-xf-click="xfrmc-check-coupon-code"
+                               data-href="{{ link('resources/coupons/check') }}"
+                               data-resource-id="{$resource.resource_id}"
+                               data-coupon-input="< .inputGroup | .input--couponCode"
+                               data-final-price="#final-price"
+                               data-original-price="#original-price"
+                               type="button">{{ phrase('xfrmc_check_available') }}</xf:button>
+                </div>
+            </xf:formrow>
         </div>
 
         <xf:hiddenval name="resource_id">{$resource.resource_id}</xf:hiddenval>
 
-        <xf:submitrow submit="{{ phrase('tl_xfrm_customized.purchase_resource') }}"
+        <xf:submitrow submit="{{ phrase('xfrmc_purchase_resource') }}"
                       rowtype="simple"
                       icon="purchase" />
     </div>
 </xf:form>]]></template>
+  <template type="public" title="xfrmc_resource_purchased" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_purchased_resources') }}</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <div class="structItemContainer">
+                <xf:foreach loop="$resources" value="$resource">
+                    <xf:macro template="xfrm_resource_list_macros"
+                              name="resource"
+                              arg-resource="{$resource}"
+                              arg-allowInlineMod="{{ false }}" />
+                <xf:else />
+                    <div class="block-row">{{ phrase('xfrmc_you_did_not_bought_any_resources_yet') }}</div>
+                </xf:foreach>
+            </div>
+        </div>
+    </div>
+</div>]]></template>
 </templates>

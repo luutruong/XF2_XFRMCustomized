@@ -6,8 +6,8 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
-use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Mvc\Entity\Structure;
+use Truonglv\XFRMCustomized\GlobalStatic;
 
 /**
  * Class ResourceItem
@@ -66,6 +66,13 @@ class ResourceItem extends XFCP_ResourceItem
     public function canPurchase(&$error = null)
     {
         return $this->price > 0;
+    }
+
+    public function isRenewLicense()
+    {
+        $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($this);
+
+        return $purchases->count() > 0;
     }
 
     public function getPurchasePrice()

@@ -6,11 +6,12 @@
 
 namespace Truonglv\XFRMCustomized\Purchasable;
 
-use Truonglv\XFRMCustomized\Entity\Coupon;
 use XF\Purchasable\Purchase;
 use XF\Entity\PaymentProfile;
 use XF\Payment\CallbackState;
 use XF\Purchasable\AbstractPurchasable;
+use Truonglv\XFRMCustomized\Entity\Coupon;
+use Truonglv\XFRMCustomized\Entity\CouponUser;
 
 class Resource extends AbstractPurchasable
 {
@@ -47,8 +48,14 @@ class Resource extends AbstractPurchasable
                 'coupon_code' => $couponCode
             ]);
 
-            if (!$coupon || !$coupon->canUseWith($resource, $purchaser)) {
-                $error = \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
+            if (!$coupon) {
+                $error = \XF::phrase('xfrmc_requested_coupon_not_found');
+
+                return false;
+            }
+
+            if (!$coupon->canUseWith($resource, $error, $purchaser)) {
+                $error = $error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
 
                 return false;
             }
@@ -122,17 +129,33 @@ class Resource extends AbstractPurchasable
                     $purchase->purchase_request_key = substr($purchaseRequest->request_key, 0, 32);
                 }
 
+                $couponUser = null;
                 if ($coupon) {
                     $purchase->note = 'Using coupon code: ' . $coupon->coupon_code;
                     $purchase->amount = $coupon->getFinalPrice($resource);
+
+                    /** @var CouponUser $couponUser */
+                    $couponUser = \XF::em()->create('Truonglv\XFRMCustomized:CouponUser');
+                    $couponUser->resource_id = $resource->resource_id;
+                    $couponUser->user_id = $purchaser->user_id;
+                    $couponUser->username = $purchaser->username;
+                    $couponUser->coupon_id = $coupon->coupon_id;
+                    $couponUser->purchase_id = 0;
+
+                    $purchase->addCascadedSave($couponUser);
                 } else {
                     $purchase->amount = $resource->getPurchasePrice();
                 }
 
                 $purchase->save();
 
+                if ($couponUser) {
+                    $couponUser->fastUpdate('purchase_id', $purchase->purchase_id);
+                }
+
                 $state->logType = 'payment';
-                $state->logMessage = sprintf('User (%s) bought resource (%s) with coupon code (%s)',
+                $state->logMessage = sprintf(
+                    'User (%s) bought resource (%s) with coupon code (%s)',
                     $purchaser->username,
                     $resource->resource_id . ' - ' . $resource->title,
                     $coupon ? $coupon->coupon_code : ''
@@ -147,18 +170,23 @@ class Resource extends AbstractPurchasable
                         $purchase->save();
 
                         $state->logType = 'payment';
-                        $state->logMessage = sprintf('Update existing purchase record. $purchaseId=%d',
+                        $state->logMessage = sprintf(
+                            'Update existing purchase record. $purchaseId=%d',
                             $purchaseId
                         );
                     } else {
                         $state->logType = 'info';
-                        $state->logMessage = sprintf('No purchase record. $purchaseId=%d',
-                            $purchaseId);
+                        $state->logMessage = sprintf(
+                            'No purchase record. $purchaseId=%d',
+                            $purchaseId
+                        );
                     }
                 } else {
                     $state->logType = 'info';
-                    $state->logMessage = sprintf('No purchase record. $purchaseId=%d',
-                        $purchaseId);
+                    $state->logMessage = sprintf(
+                        'No purchase record. $purchaseId=%d',
+                        $purchaseId
+                    );
                 }
 
                 break;
@@ -195,8 +223,14 @@ class Resource extends AbstractPurchasable
         if (!empty($extraData['coupon_id'])) {
             /** @var Coupon $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $extraData['coupon_id']);
-            if (!$coupon || !$coupon->canUseWith($data['purchasable'])) {
-                $error = \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
+            if (!$coupon) {
+                $error = \XF::phrase('xfrmc_requested_coupon_not_found');
+
+                return false;
+            }
+
+            if (!$coupon->canUseWith($data['purchasable'], $error)) {
+                $error = $error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
 
                 return false;
             }
@@ -237,8 +271,10 @@ class Resource extends AbstractPurchasable
             $state->logMessage = 'Deleted purchase record. $purchaseId=' . $purchaseId;
         } else {
             $state->logType = 'info';
-            $state->logMessage = sprintf('No purchase record. $purchaseId=%d',
-                $purchaseId);
+            $state->logMessage = sprintf(
+                'No purchase record. $purchaseId=%d',
+                $purchaseId
+            );
         }
     }
 

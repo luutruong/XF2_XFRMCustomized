@@ -3,13 +3,14 @@
  * @license
  * Copyright 2018 TruongLuu. All Rights Reserved.
  */
+
 namespace Truonglv\XFRMCustomized\Entity;
 
-use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceItem;
+use Truonglv\XFRMCustomized\GlobalStatic;
 
 /**
  * Class Coupon
@@ -46,7 +47,7 @@ class Coupon extends Entity
         return GlobalStatic::hasPermission('deleteCoupon');
     }
 
-    public function canUseWith(ResourceItem $resourceItem, User $purchaser = null)
+    public function canUseWith(ResourceItem $resourceItem, &$error = null, User $purchaser = null)
     {
         $purchaser = $purchaser ?: \XF::visitor();
 
@@ -62,6 +63,18 @@ class Coupon extends Entity
             return false;
         }
 
+        $couponUser = $this->em()->findOne('Truonglv\XFRMCustomized:CouponUser', [
+            'coupon_id' => $this->coupon_id,
+            'resource_id' => $resourceItem->resource_id,
+            'user_id' => $purchaser->user_id
+        ]);
+
+        if ($couponUser) {
+            $error = \XF::phrase('xfrmc_this_code_is_only_valid_once_per_resource');
+
+            return false;
+        }
+
         $rules = $this->apply_rules;
         if (empty($rules['usable_user_group_ids']) && empty($rules['resource_ids'])) {
             // no rules.
@@ -74,11 +87,16 @@ class Coupon extends Entity
             return false;
         }
 
-        if (!empty($rules['resource_ids'])
-//            && strpos($rules['resource_ids'], strval($resourceItem->resource_id)) === false
+        if (!empty($rules['category_ids'])
+            && !in_array($resourceItem->resource_category_id, $rules['category_ids'])
         ) {
+            return false;
+        }
 
-//            return false;
+        if (!empty($rules['resource_ids'])
+            && !in_array($resourceItem->resource_id, $rules['resource_ids'])
+        ) {
+            return false;
         }
 
         return true;

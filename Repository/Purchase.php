@@ -3,6 +3,7 @@
  * @license
  * Copyright 2018 TruongLuu. All Rights Reserved.
  */
+
 namespace Truonglv\XFRMCustomized\Repository;
 
 use XF\Entity\User;
@@ -36,6 +37,7 @@ class Purchase extends Repository
                 ->fetchOne();
 
         $this->activePurchases[$cacheKey] = $purchase;
+
         return $purchase;
     }
 

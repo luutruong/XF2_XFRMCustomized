@@ -114,17 +114,20 @@ class Setup extends AbstractSetup
         });
 
         try {
-            $this->query("ALTER TABLE tl_xfrm_resource_purchase DROP PRIMARY KEY");
-        } catch (\XF\Db\Exception $e) {}
+            $this->query('ALTER TABLE tl_xfrm_resource_purchase DROP PRIMARY KEY');
+        } catch (\XF\Db\Exception $e) {
+        }
 
         try {
-            $this->query("ALTER TABLE tl_xfrm_resource_purchase 
-                ADD COLUMN purchase_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY");
-        } catch (\XF\Db\Exception $e) {}
+            $this->query('ALTER TABLE tl_xfrm_resource_purchase 
+                ADD COLUMN purchase_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY');
+        } catch (\XF\Db\Exception $e) {
+        }
 
         try {
             $this->query("ALTER TABLE tl_xfrm_resource_purchase
                 ADD COLUMN note VARCHAR(255) NOT NULL DEFAULT ''");
-        } catch (\XF\Db\Exception $e) {}
+        } catch (\XF\Db\Exception $e) {
+        }
     }
 }

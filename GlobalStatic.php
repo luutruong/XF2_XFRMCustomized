@@ -6,8 +6,8 @@
 
 namespace Truonglv\XFRMCustomized;
 
-use Truonglv\XFRMCustomized\Repository\Purchase;
 use XF\Entity\User;
+use Truonglv\XFRMCustomized\Repository\Purchase;
 
 class GlobalStatic
 {

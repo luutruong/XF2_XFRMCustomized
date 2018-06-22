@@ -3,12 +3,13 @@
  * @license
  * Copyright 2018 TruongLuu. All Rights Reserved.
  */
+
 namespace Truonglv\XFRMCustomized\Service\Coupon;
 
-use Truonglv\XFRMCustomized\Entity\Coupon;
 use XF\Entity\User;
 use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
+use Truonglv\XFRMCustomized\Entity\Coupon;
 
 class Creator extends AbstractService
 {

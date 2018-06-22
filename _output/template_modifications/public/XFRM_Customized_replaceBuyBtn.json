@@ -5,5 +5,5 @@
     "enabled": true,
     "action": "str_replace",
     "find": "<xf:button href=\"{$resource.external_purchase_url}\" class=\"button--cta\" icon=\"purchase\">{{ phrase('xfrm_buy_for_x', {'price': $resource.price|currency($resource.currency)}) }}</xf:button>",
-    "replace": "<xf:button href=\"{$resource.external_purchase_url}\" \n\t\t\tclass=\"button--cta\" \n\t\t   overlay=\"true\"\n\t\t\ticon=\"purchase\">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:button>\n"
+    "replace": "<xf:if is=\"$resource.isRenewLicense()\">\n\t<xf:set var=\"$purchasePhrase\">{{ phrase('xfrmc_renew_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>\n<xf:else />\n\t<xf:set var=\"$purchasePhrase\">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>\n</xf:if>\n<xf:button href=\"{$resource.external_purchase_url}\" \n\t\t   class=\"button--cta\" \n\t\t   overlay=\"true\"\n\t\t   icon=\"purchase\">{$purchasePhrase}</xf:button>\n"
 }

@@ -3,23 +3,24 @@
  * @license
  * Copyright 2018 TruongLuu. All Rights Reserved.
  */
+
 namespace Truonglv\XFRMCustomized\Pub\Controller;
 
-use Truonglv\XFRMCustomized\GlobalStatic;
-use Truonglv\XFRMCustomized\Service\Coupon\Creator;
-use Truonglv\XFRMCustomized\Service\Coupon\Editor;
 use XF\Mvc\ParameterBag;
-use XF\Pub\Controller\AbstractController;
 use XF\Repository\UserGroup;
 use XFRM\Entity\ResourceItem;
 use XFRM\Repository\Category;
+use Truonglv\XFRMCustomized\GlobalStatic;
+use XF\Pub\Controller\AbstractController;
+use Truonglv\XFRMCustomized\Service\Coupon\Editor;
+use Truonglv\XFRMCustomized\Service\Coupon\Creator;
 
 class Coupon extends AbstractController
 {
     public function actionIndex(ParameterBag $params)
     {
         if ($params->coupon_id) {
-            return $this->rerouteController(__CLASS__,'view', $params);
+            return $this->rerouteController(__CLASS__, 'view', $params);
         }
 
         if (!GlobalStatic::hasPermission('viewList')) {
@@ -68,7 +69,7 @@ class Coupon extends AbstractController
             'coupon_code' => $input['coupon_code']
         ]);
 
-        if (!$coupon || !$coupon->canView()) {
+        if (!$coupon) {
             return $this->error(\XF::phrase('xfrmc_requested_coupon_not_found'));
         }
 
@@ -78,8 +79,8 @@ class Coupon extends AbstractController
             return $this->error(\XF::phrase('xfrm_requested_resource_not_found'));
         }
 
-        if (!$coupon->canUseWith($resource)) {
-            return $this->error(\XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
+        if (!$coupon->canUseWith($resource, $error)) {
+            return $this->error($error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
         }
 
         $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
@@ -112,6 +113,7 @@ class Coupon extends AbstractController
         }
 
         $coupon = $this->em()->create('Truonglv\XFRMCustomized:Coupon');
+
         return $this->getCouponForm($coupon);
     }
 
@@ -192,7 +194,8 @@ class Coupon extends AbstractController
             'discount_unit' => 'str',
             'apply_rules' => [
                 'usable_user_group_ids' => 'array-uint',
-                'resource_ids' => 'str'
+                'resource_ids' => 'str',
+                'category_ids' => 'array-uint'
             ]
         ]);
 

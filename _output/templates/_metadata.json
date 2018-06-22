@@ -4,30 +4,15 @@
         "version_string": "1.0.9",
         "hash": "92c521a13bb2b2eee2c2b85720ecfa14"
     },
-    "public/xfrm_customized_coupon_view.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "1eb3c1cb02e3ad576b6b1a4fc71df950"
-    },
-    "public/xfrm_customized_resource_add_buyer.html": {
-        "version_id": 1000870,
-        "version_string": "1.0.8",
-        "hash": "f4690e16bd26cd7b635632b2aa48a70d"
-    },
-    "public/xfrm_customized_resource_buyers.html": {
-        "version_id": 1000870,
-        "version_string": "1.0.8",
-        "hash": "407dbbf30efd51debd1047262fcac2af"
-    },
-    "public/xfrm_customized_resource_purchase.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "938b1fbf350fc1ab0f4f298a5ad510e9"
-    },
     "public/xfrmc_coupon_add.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "9e89cf5360e1a998829770a1a9095563"
+    },
+    "public/xfrmc_coupon_delete.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "2e143557de717498e1bf59d3232c964d"
     },
     "public/xfrmc_coupon_list.html": {
         "version_id": 1000970,
@@ -39,10 +24,25 @@
         "version_string": "1.0.9",
         "hash": "de0673f762054db0e9b89c9154121c11"
     },
+    "public/xfrmc_resource_add_buyer.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "f72b4a1c8518baba337c97b34162dd32"
+    },
+    "public/xfrmc_resource_buyers.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "59b8c2fb14bb99d1325f3368da5eb632"
+    },
+    "public/xfrmc_resource_macros.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "4000b1af3524082794270abbf953fe38"
+    },
     "public/xfrmc_resource_purchase.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",
-        "hash": "db37841940e8bff15bb4d19e04badbd8"
+        "hash": "8d2dd1d436940e4ee95d2d5868e6d36f"
     },
     "public/xfrmc_resource_purchased.html": {
         "version_id": 1000970,
