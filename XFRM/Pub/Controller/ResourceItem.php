@@ -211,6 +211,10 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission($error);
         }
 
+        if (GlobalStatic::purchaseRepo()->getActivePurchase($resource)) {
+            return $this->redirect($this->buildLink('resources', $resource));
+        }
+
         /** @var \XF\Repository\Payment $paymentRepo */
         $paymentRepo = \XF::repository('XF:Payment');
         $paymentProfiles = $paymentRepo->findPaymentProfilesForList()
@@ -231,6 +235,24 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Purchase',
             'xfrmc_resource_purchase',
+            $viewParams
+        );
+    }
+
+    public function actionPurchased()
+    {
+        $this->assertRegistrationRequired();
+
+        $visitor = \XF::visitor();
+        $resources = GlobalStatic::purchaseRepo()->getPurchasedResources($visitor);
+
+        $viewParams = [
+            'resources' => $resources
+        ];
+
+        return $this->view(
+            'Truonglv\XFRMCustomized:Resource\Purchased',
+            'xfrmc_resource_purchased',
             $viewParams
         );
     }

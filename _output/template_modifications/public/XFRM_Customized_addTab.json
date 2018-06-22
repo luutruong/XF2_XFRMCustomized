@@ -5,5 +5,5 @@
     "enabled": true,
     "action": "str_replace",
     "find": "<xf:if is=\"$resource.hasViewableDiscussion()\">",
-    "replace": "<xf:if is=\"$resource.canEdit()\">\n\t<a class=\"tabs-tab {{ $selected == 'buyers' ? 'is-active' : '' }}\" href=\"{{ link('resources/buyers', $resource) }}\">{{ phrase('tl_xfrm_customized.buyers') }}</a>\n</xf:if>\n\n$0"
+    "replace": "<xf:if is=\"$resource.canEdit()\">\n\t<a class=\"tabs-tab {{ $selected == 'buyers' ? 'is-active' : '' }}\" href=\"{{ link('resources/buyers', $resource) }}\">{{ phrase('xfrmc_buyers') }}</a>\n</xf:if>\n\n$0"
 }

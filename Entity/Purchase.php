@@ -8,6 +8,7 @@ namespace Truonglv\XFRMCustomized\Entity;
 
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
+use XFRM\Entity\ResourceVersion;
 
 /**
  * Class Purchase
@@ -23,12 +24,18 @@ use XF\Mvc\Entity\Structure;
  * @property int purchased_date
  * @property string purchase_request_key
  * @property array purchase_request_keys
+ * @property string note
  */
 class Purchase extends Entity
 {
     public function isExpired()
     {
         return $this->expire_date <= \XF::$time;
+    }
+
+    public function canDownloadVersion(ResourceVersion $version)
+    {
+        return $version->resource_version_id <= $this->resource_version_id;
     }
 
     public static function getStructure(Structure $structure)
@@ -38,6 +45,7 @@ class Purchase extends Entity
         $structure->shortName = 'Truonglv\XFRMCustomized:Purchase';
 
         $structure->columns = [
+            'purchase_id' => ['type' => self::UINT, 'nullable' => true, 'autoIncrement' => true],
             'resource_id' => ['type' => self::UINT, 'required' => true],
             'user_id' => ['type' => self::UINT, 'required' => true],
             'username' => ['type' => self::STR, 'required' => true, 'maxLength' => 50],
@@ -46,7 +54,8 @@ class Purchase extends Entity
             'expire_date' => ['type' => self::UINT, 'default' => 0],
             'purchased_date' => ['type' => self::UINT, 'default' => \XF::$time],
             'purchase_request_key' => ['type' => self::STR, 'default' => '', 'maxLength' => 32],
-            'purchase_request_keys' => ['type' => self::JSON_ARRAY, 'default' => []]
+            'purchase_request_keys' => ['type' => self::JSON_ARRAY, 'default' => []],
+            'note' => ['type' => self::STR, 'default' => '', 'maxLength' => 255]
         ];
 
         $structure->relations = [

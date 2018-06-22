@@ -5,6 +5,12 @@
         "version_string": "1.0.9",
         "hash": "cc4616c718d99e1face99b5e46a5755c"
     },
+    "nav.xfrmc_purchasedResources.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "d79a7cca14728c47cbb322a40aaa2bc5"
+    },
     "permission.resource_xfrm_customized_addBuyer.txt": {
         "global_cache": false,
         "version_id": 1000470,
@@ -89,11 +95,35 @@
         "version_string": "1.0.9",
         "hash": "573d777ae25da71069204861897481e9"
     },
+    "xfrmc_check_available.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "bcdfd535f2e382cfbf2e19a746d72d99"
+    },
     "xfrmc_coupon_code.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "5290e2630e9d54a0fa82d0d3b69d2139"
+    },
+    "xfrmc_coupon_code_available_for_use.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "2f9c504b2b50e6b793afabda286a3c6f"
+    },
+    "xfrmc_coupon_code_x_not_available.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "84a27467560fc0fe2c27baf85d186054"
+    },
+    "xfrmc_coupon_has_been_expired_or_deleted.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "c609f9895fdc2ae8854a30ad3395376c"
     },
     "xfrmc_coupons.txt": {
         "global_cache": false,
@@ -136,6 +166,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "b7de7e4247d4ab279ef031b7a44c201d"
+    },
+    "xfrmc_enter_coupon_code_to_receive_discount.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "81e32d4102080d34bf71c4aafb4f37b6"
     },
     "xfrmc_expire_date.txt": {
         "global_cache": false,
@@ -221,6 +257,12 @@
         "version_string": "1.0.9",
         "hash": "37651488479b765863e7ecb2f220eadf"
     },
+    "xfrmc_requested_coupon_not_found.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "8e6e0c157d51dc4828959408a6ed54c4"
+    },
     "xfrmc_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -232,6 +274,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "c55ae492c215cb48a6df2d81e9f3f00f"
+    },
+    "xfrmc_resource_ids_explain.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "d6299ad9947ba5ef498d37cf64488eee"
     },
     "xfrmc_sure_you_want_to_purchase_this_resource.txt": {
         "global_cache": false,

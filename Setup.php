@@ -107,6 +107,7 @@ class Setup extends AbstractSetup
             $create->addColumn('username', 'varchar', 50);
             $create->addColumn('resource_id', 'int')->unsigned();
             $create->addColumn('coupon_id', 'int')->unsigned();
+            $create->addColumn('purchase_id', 'int')->unsigned()->setDefault(0);
             $create->addColumn('created_date', 'int')->unsigned();
 
             $create->addUniqueKey(['user_id', 'resource_id', 'coupon_id']);

@@ -6,6 +6,7 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
+use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Mvc\Entity\Structure;
 
 /**
@@ -69,8 +70,8 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function getPurchasePrice()
     {
-        $visitor = \XF::visitor();
-        if ($this->renew_price > 0 && $this->Purchases[$visitor->user_id]) {
+        $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($this);
+        if ($this->renew_price > 0 && $purchases->count() > 0) {
             return $this->renew_price;
         }
 
@@ -92,14 +93,6 @@ class ResourceItem extends XFCP_ResourceItem
         ];
 
         $structure->getters['external_purchase_url'] = true;
-
-        $structure->relations['Purchases'] = [
-            'type' => self::TO_MANY,
-            'entity' => 'Truonglv\XFRMCustomized:Purchase',
-            'conditions' => 'resource_id',
-            'key' => 'user_id',
-            'order' => 'expire_date'
-        ];
 
         return $structure;
     }

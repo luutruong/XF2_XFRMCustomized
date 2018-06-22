@@ -1,0 +1,11 @@
+{
+    "parent_navigation_id": "xfrm",
+    "display_order": 1510,
+    "navigation_type_id": "basic",
+    "type_config": {
+        "link": "{{ link('resources/purchased') }}",
+        "display_condition": "",
+        "extra_attributes": []
+    },
+    "enabled": true
+}

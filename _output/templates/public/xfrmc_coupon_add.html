@@ -40,7 +40,16 @@
                 <xf:options source="$userGroups" />
             </xf:checkboxrow>
 
-            <xf:textboxrow name="apply_rules[resource_ids]" value="{$coupon.apply_rules.resource_ids}"
+            <xf:selectrow name="apply_rules[category_ids]" value="{$coupon.apply_rules.category_ids}"
+                          multiple="true"
+                          label="{{ phrase('xfrmc_all_resources_in_categories') }}">
+                <xf:foreach loop="$xfrmCategoryTree" value="$entry">
+                    <xf:option value="{$entry.record.resource_category_id}">{{ repeat('-- ', $entry.record.depth) }}{$entry.record.title}</xf:option>
+                </xf:foreach>
+            </xf:selectrow>
+
+            <xf:textboxrow name="apply_rules[resource_ids]" value="{$coupon.apply_rules.resource_ids|join(', ')}"
+                           explain="{{ phrase('xfrmc_resource_ids_explain') }}"
                            label="{{ phrase('xfrmc_resource_ids') }}" />
         </div>
 

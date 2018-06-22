@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized;
 
+use Truonglv\XFRMCustomized\Repository\Purchase;
 use XF\Entity\User;
 
 class GlobalStatic
@@ -17,5 +18,14 @@ class GlobalStatic
         $user = $user ?: \XF::visitor();
 
         return $user->hasPermission('xfrmc', $permission);
+    }
+
+    /**
+     * @return Purchase
+     */
+    public static function purchaseRepo()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return \XF::repository('Truonglv\XFRMCustomized:Purchase');
     }
 }

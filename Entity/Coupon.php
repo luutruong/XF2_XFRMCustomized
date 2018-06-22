@@ -75,9 +75,10 @@ class Coupon extends Entity
         }
 
         if (!empty($rules['resource_ids'])
-            && strpos($rules['resource_ids'], strval($resourceItem->resource_id)) === false
+//            && strpos($rules['resource_ids'], strval($resourceItem->resource_id)) === false
         ) {
-            return false;
+
+//            return false;
         }
 
         return true;
@@ -157,5 +158,10 @@ class Coupon extends Entity
         if ($this->end_date <= $this->begin_date) {
             throw new \LogicException('End-date must be great than begin-date');
         }
+    }
+
+    protected function _postDelete()
+    {
+        $this->db()->delete('tl_xfrm_coupon_user', 'coupon_id = ?', $this->coupon_id);
     }
 }

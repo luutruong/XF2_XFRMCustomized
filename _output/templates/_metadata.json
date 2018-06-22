@@ -1,8 +1,8 @@
 {
     "email/payment_received_receipt_tl_xfrm_customized_resource.html": {
-        "version_id": 1000470,
-        "version_string": "1.0.4",
-        "hash": "6fa8191df3c2e07317cfb018ae3bbe8e"
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "92c521a13bb2b2eee2c2b85720ecfa14"
     },
     "public/xfrm_customized_coupon_view.html": {
         "version_id": 1000970,
@@ -19,11 +19,6 @@
         "version_string": "1.0.8",
         "hash": "407dbbf30efd51debd1047262fcac2af"
     },
-    "public/xfrm_customized_resource_macros.html": {
-        "version_id": 1000070,
-        "version_string": "1.0.0",
-        "hash": "d48bf048ea91292441254e0b79254d4f"
-    },
     "public/xfrm_customized_resource_purchase.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",
@@ -32,7 +27,7 @@
     "public/xfrmc_coupon_add.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",
-        "hash": "1bb2d8b9cec9ec613e3d2f6a8151addc"
+        "hash": "9e89cf5360e1a998829770a1a9095563"
     },
     "public/xfrmc_coupon_list.html": {
         "version_id": 1000970,
@@ -43,5 +38,15 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "de0673f762054db0e9b89c9154121c11"
+    },
+    "public/xfrmc_resource_purchase.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "db37841940e8bff15bb4d19e04badbd8"
+    },
+    "public/xfrmc_resource_purchased.html": {
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "34f5564089ad684aeacbf86de536083f"
     }
 }

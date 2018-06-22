@@ -1,5 +1,8 @@
 {
     "xfrmc_coupons.json": {
         "hash": "f643aa2069816334abe0c2d592e65a47"
+    },
+    "xfrmc_purchasedResources.json": {
+        "hash": "19cf1327fae1599c1884a86f66d99ed9"
     }
 }

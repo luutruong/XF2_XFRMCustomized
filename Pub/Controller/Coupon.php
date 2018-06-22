@@ -12,6 +12,7 @@ use XF\Mvc\ParameterBag;
 use XF\Pub\Controller\AbstractController;
 use XF\Repository\UserGroup;
 use XFRM\Entity\ResourceItem;
+use XFRM\Repository\Category;
 
 class Coupon extends AbstractController
 {
@@ -195,6 +196,18 @@ class Coupon extends AbstractController
             ]
         ]);
 
+        $resourceIds = explode(',', $input['apply_rules']['resource_ids']);
+        $resourceIds = array_map('intval', $resourceIds);
+
+        $resources = \XF::em()->findByIds('XFRM:ResourceItem', $resourceIds);
+        $validResourceIds = [];
+
+        foreach ($resources as $resource) {
+            $validResourceIds[] = $resource->resource_id;
+        }
+
+        $input['apply_rules']['resource_ids'] = $validResourceIds;
+
         return $input;
     }
 
@@ -203,9 +216,13 @@ class Coupon extends AbstractController
         /** @var UserGroup $userGroupRepo */
         $userGroupRepo = $this->repository('XF:UserGroup');
 
+        /** @var Category $xfrmCategoryRepo */
+        $xfrmCategoryRepo = $this->repository('XFRM:Category');
+
         $viewParams = [
             'coupon' => $coupon,
-            'userGroups' => $userGroupRepo->getUserGroupTitlePairs()
+            'userGroups' => $userGroupRepo->getUserGroupTitlePairs(),
+            'xfrmCategoryTree' => $xfrmCategoryRepo->createCategoryTree()
         ];
 
         return $this->view(
