@@ -6,6 +6,7 @@
 namespace Truonglv\XFRMCustomized\Entity;
 
 use Truonglv\XFRMCustomized\GlobalStatic;
+use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceItem;
@@ -45,9 +46,9 @@ class Coupon extends Entity
         return GlobalStatic::hasPermission('deleteCoupon');
     }
 
-    public function canUse(ResourceItem $resourceItem)
+    public function canUseWith(ResourceItem $resourceItem, User $purchaser = null)
     {
-        $visitor = \XF::visitor();
+        $purchaser = $purchaser ?: \XF::visitor();
 
         if ($this->begin_date >= \XF::$time
             || $this->end_date <= \XF::$time
@@ -68,7 +69,7 @@ class Coupon extends Entity
         }
 
         if (!empty($rules['usable_user_group_ids'])
-            && !$visitor->isMemberOf($rules['usable_user_group_ids'])
+            && !$purchaser->isMemberOf($rules['usable_user_group_ids'])
         ) {
             return false;
         }

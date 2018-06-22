@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized\Purchasable;
 
+use Truonglv\XFRMCustomized\Entity\Coupon;
 use XF\Purchasable\Purchase;
 use XF\Entity\PaymentProfile;
 use XF\Payment\CallbackState;
@@ -32,6 +33,20 @@ class Resource extends AbstractPurchasable
             $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
 
             return false;
+        }
+
+        $couponCode = $request->filter('coupon_code', 'str');
+        if (!empty($couponCode)) {
+            /** @var Coupon $coupon */
+            $coupon = \XF::em()->findOne('Truonglv\XFRMCustomized:Coupon', [
+                'coupon_code' => $couponCode
+            ]);
+
+            if (!$coupon || !$coupon->canUseWith($resource, $purchaser)) {
+                $error = \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
+
+                return false;
+            }
         }
 
         if (!in_array($profileId, $resource->payment_profile_ids)) {
@@ -218,16 +233,16 @@ class Resource extends AbstractPurchasable
         \XF\Entity\User $purchaser
     ) {
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchased */
-        $purchased = \XF::finder('Truonglv\XFRMCustomized:Purchase')
-            ->with('Resource')
-            ->where('resource_id', $purchasable->resource_id)
-            ->where('user_id', $purchaser->user_id)
-            ->fetchOne();
+//        $purchased = \XF::finder('Truonglv\XFRMCustomized:Purchase')
+//            ->with('Resource')
+//            ->where('resource_id', $purchasable->resource_id)
+//            ->where('user_id', $purchaser->user_id)
+//            ->fetchOne();
 
         $cost = $purchasable->price;
-        if ($purchased && $purchased->isExpired()) {
-            $cost = $purchasable->renew_price ?: $purchasable->price;
-        }
+//        if ($purchased && $purchased->isExpired()) {
+//            $cost = $purchasable->renew_price ?: $purchasable->price;
+//        }
 
         $purchase = new Purchase();
 
@@ -255,7 +270,8 @@ class Resource extends AbstractPurchasable
 
         $purchase->purchasableTitle = $purchasable->title;
         $purchase->extraData = [
-            'resource_id' => $purchasable->resource_id
+            'resource_id' => $purchasable->resource_id,
+            'coupon_code' => ''
         ];
 
         $router = \XF::app()->router('public');

@@ -77,7 +77,7 @@ class Coupon extends AbstractController
             return $this->error(\XF::phrase('xfrm_requested_resource_not_found'));
         }
 
-        if (!$coupon->canUse($resource)) {
+        if (!$coupon->canUseWith($resource)) {
             return $this->error(\XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
         }
 

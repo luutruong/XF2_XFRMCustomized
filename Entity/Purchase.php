@@ -31,15 +31,10 @@ class Purchase extends Entity
         return $this->expire_date <= \XF::$time;
     }
 
-    public function getPurchaseId()
-    {
-        return $this->resource_id . '-' . $this->user_id;
-    }
-
     public static function getStructure(Structure $structure)
     {
         $structure->table = 'tl_xfrm_resource_purchase';
-        $structure->primaryKey = ['resource_id', 'user_id'];
+        $structure->primaryKey = 'purchase_id';
         $structure->shortName = 'Truonglv\XFRMCustomized:Purchase';
 
         $structure->columns = [
@@ -52,10 +47,6 @@ class Purchase extends Entity
             'purchased_date' => ['type' => self::UINT, 'default' => \XF::$time],
             'purchase_request_key' => ['type' => self::STR, 'default' => '', 'maxLength' => 32],
             'purchase_request_keys' => ['type' => self::JSON_ARRAY, 'default' => []]
-        ];
-
-        $structure->getters = [
-            'purchase_id' => true
         ];
 
         $structure->relations = [

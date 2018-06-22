@@ -15,7 +15,7 @@ use XF\Mvc\Entity\Structure;
  *
  * @property array payment_profile_ids
  * @property float renew_price
- * @property \Truonglv\XFRMCustomized\Entity\Purchase Purchase
+ * @property \Truonglv\XFRMCustomized\Entity\Purchase[] Purchases
  */
 class ResourceItem extends XFCP_ResourceItem
 {
@@ -69,8 +69,9 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function getPurchasePrice()
     {
-        if ($this->renew_price > 0 && $this->Purchase) {
-            return $this->Purchase->isExpired() ? $this->renew_price : $this->price;
+        $visitor = \XF::visitor();
+        if ($this->renew_price > 0 && $this->Purchases[$visitor->user_id]) {
+            return $this->renew_price;
         }
 
         return $this->price;
@@ -92,16 +93,12 @@ class ResourceItem extends XFCP_ResourceItem
 
         $structure->getters['external_purchase_url'] = true;
 
-        $structure->relations += [
-            'Purchase' => [
-                'type' => self::TO_ONE,
-                'entity' => 'Truonglv\XFRMCustomized:Purchase',
-                'conditions' => [
-                    ['resource_id', '=', '$resource_id'],
-                    ['user_id', '=', \XF::visitor()->user_id]
-                ],
-                'primary' => true
-            ]
+        $structure->relations['Purchases'] = [
+            'type' => self::TO_MANY,
+            'entity' => 'Truonglv\XFRMCustomized:Purchase',
+            'conditions' => 'resource_id',
+            'key' => 'user_id',
+            'order' => 'expire_date'
         ];
 
         return $structure;

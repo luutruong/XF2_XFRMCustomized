@@ -78,33 +78,52 @@ class Setup extends AbstractSetup
     {
         $sm = $this->schemaManager();
         $sm->createTable('tl_xfrm_coupon', function (Create $create) {
-           $create->addColumn('coupon_id', 'int')->unsigned()->autoIncrement();
-           $create->addColumn('coupon_code', 'varchar', 25);
-           $create->addColumn('title', 'varchar', 100);
-           $create->addColumn('created_date', 'int')->unsigned()->setDefault(0);
-           $create->addColumn('begin_date', 'int')->unsigned()->setDefault(0);
-           $create->addColumn('end_date', 'int')->unsigned()->setDefault(0);
-           $create->addColumn('max_use_count', 'int')->unsigned()->setDefault(0);
-           $create->addColumn('used_count', 'int')->unsigned()->setDefault(0);
-           $create->addColumn('apply_rules', 'blob');
-           $create->addColumn('discount_unit', 'enum', ['percent', 'fixed'])->setDefault('percent');
-           $create->addColumn('discount_amount', 'int')->unsigned()->setDefault(0);
-           $create->addColumn('user_id', 'int')->unsigned();
-           $create->addColumn('username', 'varchar', 50);
+            $create->checkExists(true);
 
-           $create->addKey('user_id');
-           $create->addUniqueKey('coupon_code');
-           $create->addKey(['begin_date', 'end_date']);
+            $create->addColumn('coupon_id', 'int')->unsigned()->autoIncrement();
+            $create->addColumn('coupon_code', 'varchar', 25);
+            $create->addColumn('title', 'varchar', 100);
+            $create->addColumn('created_date', 'int')->unsigned()->setDefault(0);
+            $create->addColumn('begin_date', 'int')->unsigned()->setDefault(0);
+            $create->addColumn('end_date', 'int')->unsigned()->setDefault(0);
+            $create->addColumn('max_use_count', 'int')->unsigned()->setDefault(0);
+            $create->addColumn('used_count', 'int')->unsigned()->setDefault(0);
+            $create->addColumn('apply_rules', 'blob');
+            $create->addColumn('discount_unit', 'enum', ['percent', 'fixed'])->setDefault('percent');
+            $create->addColumn('discount_amount', 'int')->unsigned()->setDefault(0);
+            $create->addColumn('user_id', 'int')->unsigned();
+            $create->addColumn('username', 'varchar', 50);
+
+            $create->addKey('user_id');
+            $create->addUniqueKey('coupon_code');
+            $create->addKey(['begin_date', 'end_date']);
         });
 
         $sm->createTable('tl_xfrm_coupon_user', function (Create $create) {
+            $create->checkExists(true);
+
+            $create->addColumn('coupon_user_id', 'int')->unsigned()->autoIncrement();
             $create->addColumn('user_id', 'int')->unsigned();
             $create->addColumn('username', 'varchar', 50);
             $create->addColumn('resource_id', 'int')->unsigned();
             $create->addColumn('coupon_id', 'int')->unsigned();
             $create->addColumn('created_date', 'int')->unsigned();
 
-            $create->addPrimaryKey(['user_id', 'resource_id', 'coupon_id']);
+            $create->addUniqueKey(['user_id', 'resource_id', 'coupon_id']);
         });
+
+        try {
+            $this->query("ALTER TABLE tl_xfrm_resource_purchase DROP PRIMARY KEY");
+        } catch (\XF\Db\Exception $e) {}
+
+        try {
+            $this->query("ALTER TABLE tl_xfrm_resource_purchase 
+                ADD COLUMN purchase_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY");
+        } catch (\XF\Db\Exception $e) {}
+
+        try {
+            $this->query("ALTER TABLE tl_xfrm_resource_purchase
+                ADD COLUMN note VARCHAR(255) NOT NULL DEFAULT ''");
+        } catch (\XF\Db\Exception $e) {}
     }
 }
