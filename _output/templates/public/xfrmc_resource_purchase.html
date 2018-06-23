@@ -17,14 +17,25 @@
                 </xf:inforow>
             </xf:if>
 
-            <xf:formrow label="{{ phrase('price') }}">
-                <span id="final-price">{$purchasePrice|currency($resource.currency)}</span>
-                <span id="original-price" style="text-decoration: line-through;display: none">{$purchasePrice|currency($resource.currency)}</span>
+            <xf:formrow label="{{ phrase('price') }}"
+                        explain="{{ phrase('xfrmc_price_without_payment_fees') }}">
+                <span id="xfrmc-price" style="font-size: 17px">{$purchasePrice|currency($resource.currency)}</span>
             </xf:formrow>
+
+            <xf:formrow label="{{ phrase('xfrmc_fee') }}">
+                <span id="xfrmc-fee">{$fee|currency($resource.currency)}</span>
+            </xf:formrow>
+
+            <hr class="formRowSep" />
+            <xf:formrow label="{{ phrase('xfrmc_total') }}">
+                <span id="xfrmc-total" style="font-size: 20px">{{ ($purchasePrice + $fee)|currency($resource.currency) }}</span>
+            </xf:formrow>
+            <hr class="formRowSep" />
 
             <xf:formrow label="{{ phrase('xfrmc_license_duration') }}">{{ phrase('xfrmc_12_months') }}</xf:formrow>
 
-            <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id">
+            <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id"
+                         value="{{ $selPaymentProfile ? $selPaymentProfile.payment_profile_id : 0 }}">
                 <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
                     <xf:option value="{$paymentProfile.payment_profile_id}">{{ $paymentProfile.display_title . ' - ' . $paymentProfile.title }}</xf:option>
                 </xf:foreach>
@@ -35,12 +46,14 @@
                 <div class="inputGroup">
                     <xf:textbox name="coupon_code" value="" class="input--couponCode" />
                     <span class="inputGroup-splitter"></span>
-                    <xf:button data-xf-click="xfrmc-check-coupon-code"
+                    <xf:button data-xf-init="xfrmc-check-coupon-code"
+                               class="is-disabled"
                                data-href="{{ link('resources/coupons/check') }}"
                                data-resource-id="{$resource.resource_id}"
                                data-coupon-input="< .inputGroup | .input--couponCode"
-                               data-final-price="#final-price"
-                               data-original-price="#original-price"
+                               data-price="#xfrmc-price"
+                               data-fee="#xfrmc-fee"
+                               data-total="#xfrmc-total"
                                type="button">{{ phrase('xfrmc_check_available') }}</xf:button>
                 </div>
             </xf:formrow>

@@ -222,14 +222,21 @@ class ResourceItem extends XFCP_ResourceItem
             ->fetch();
 
         $purchasePrice = $resource->getPurchasePrice();
-        $isRenewPurchase = $purchasePrice < $resource->price;
+        $isRenewPurchase = $resource->isRenewLicense();
+
+        $selPaymentProfile = null;
+        if ($paymentProfiles->count() === 1) {
+            $selPaymentProfile = $paymentProfiles->first();
+        }
 
         $viewParams = [
             'resource' => $resource,
             'purchasable' => $this->em()->find('XF:Purchasable', GlobalStatic::PURCHASABLE_ID),
             'paymentProfiles' => $paymentProfiles,
             'isRenewPurchase' => $isRenewPurchase,
-            'purchasePrice' => $purchasePrice
+            'purchasePrice' => $purchasePrice,
+            'fee' => GlobalStatic::getFee($purchasePrice),
+            'selPaymentProfile' => $selPaymentProfile
         ];
 
         return $this->view(

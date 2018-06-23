@@ -11,6 +11,18 @@
         "version_string": "1.0.9",
         "hash": "d79a7cca14728c47cbb322a40aaa2bc5"
     },
+    "option.xfrmc_enableFee.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "a86239011b22801ee6ae304b764ad39f"
+    },
+    "option_explain.xfrmc_enableFee.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "5f4a77ca7181f8dd5dee82c0ac8fd8cc"
+    },
     "permission.resource_xfrm_customized_addBuyer.txt": {
         "global_cache": false,
         "version_id": 1000470,
@@ -197,6 +209,12 @@
         "version_string": "1.0.9",
         "hash": "9efd5d1168d8316b2b6fa92f86bbd226"
     },
+    "xfrmc_fee.txt": {
+        "global_cache": false,
+        "version_id": 1000971,
+        "version_string": "1.0.9.1",
+        "hash": "eb7297e94e2cb86e90a6ead067666717"
+    },
     "xfrmc_find_buyer.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -232,6 +250,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "3601146c4e948c32b6424d2c0a7f0118"
+    },
+    "xfrmc_price_without_payment_fees.txt": {
+        "global_cache": false,
+        "version_id": 1000971,
+        "version_string": "1.0.9.1",
+        "hash": "0e8115630b429486da87d7bb44a72c71"
     },
     "xfrmc_purchase_resource.txt": {
         "global_cache": false,
@@ -329,6 +353,12 @@
         "version_string": "1.0.9",
         "hash": "354c930da954242a5f9f88016d8e018c"
     },
+    "xfrmc_total.txt": {
+        "global_cache": false,
+        "version_id": 1000971,
+        "version_string": "1.0.9.1",
+        "hash": "96b0141273eabab320119c467cdcaf17"
+    },
     "xfrmc_usable_user_group_ids.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -340,6 +370,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "019d1ca7d50cc54b995f60d456435e87"
+    },
+    "xfrmc_used_date.txt": {
+        "global_cache": false,
+        "version_id": 1000970,
+        "version_string": "1.0.9",
+        "hash": "5bb1531ef58e521f6d6dc31200621f4b"
     },
     "xfrmc_user_x_did_not_bought_this_resource.txt": {
         "global_cache": false,

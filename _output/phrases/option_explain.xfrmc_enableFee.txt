@@ -1,0 +1,1 @@
+If enabled, payer may pay extra fee: 4.4% * {price} + 0.3 USD. See: <a href="https://www.paypal.com/vn/webapps/mpp/paypal-seller-fees" target="_blank">https://www.paypal.com/vn/webapps/mpp/paypal-seller-fees</a>

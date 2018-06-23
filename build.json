@@ -1,0 +1,8 @@
+{
+  "additional_files": [
+    "js/Truonglv/XFRMCustomized"
+  ],
+  "minify": [
+    "js/Truonglv/XFRMCustomized/coupon.js"
+  ]
+}

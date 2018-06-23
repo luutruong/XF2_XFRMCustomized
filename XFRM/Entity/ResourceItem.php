@@ -77,8 +77,7 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function getPurchasePrice()
     {
-        $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($this);
-        if ($this->renew_price > 0 && $purchases->count() > 0) {
+        if ($this->renew_price > 0 && $this->isRenewLicense()) {
             return $this->renew_price;
         }
 

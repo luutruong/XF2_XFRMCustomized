@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized\Purchasable;
 
+use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Purchasable\Purchase;
 use XF\Entity\PaymentProfile;
 use XF\Payment\CallbackState;
@@ -312,6 +313,8 @@ class Resource extends AbstractPurchasable
         } else {
             $cost = $purchasable->price;
         }
+
+        $cost += GlobalStatic::getFee($cost);
 
         $purchase = new Purchase();
 

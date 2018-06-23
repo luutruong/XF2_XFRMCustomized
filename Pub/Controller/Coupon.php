@@ -48,8 +48,27 @@ class Coupon extends AbstractController
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
 
+        $this->assertCanonicalUrl($this->buildLink('resources/coupons', $coupon));
+
+        $page = $this->filterPage();
+        $perPage = 20;
+
+        $finder = $this->finder('Truonglv\XFRMCustomized:CouponUser')
+            ->with(['User', 'Resource'])
+            ->where('coupon_id', $coupon->coupon_id)
+            ->order('created_date', 'desc');
+
+        $users = $finder->limitByPage($page, $perPage)->fetch();
+        $total = $finder->total();
+
+        $this->assertValidPage($page, $perPage, $total, 'resources/coupons', $coupon);
+
         $viewParams = [
-            'coupon' => $coupon
+            'coupon' => $coupon,
+            'users' => $users,
+            'total' => $total,
+            'page' => $page,
+            'perPage' => $perPage
         ];
 
         return $this->view('Truonglv\XFRMCustomized:Coupon\View', 'xfrmc_coupon_view', $viewParams);
@@ -86,8 +105,23 @@ class Coupon extends AbstractController
         $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
 
         $price = $coupon->getFinalPrice($resource);
-        $price = $this->app()->templater()->filter($price, [['currency', [$resource->currency]]]);
-        $message->setJsonParam('newPrice', $price);
+        $fee = GlobalStatic::getFee($price);
+
+        $total = $price + $fee;
+
+        $message->setJsonParam(
+            'newPrice',
+            $this->app()->templater()->filter($price, [['currency', [$resource->currency]]])
+        );
+        $message->setJsonParam(
+            'newFee',
+            $this->app()->templater()->filter($fee, [['currency', [$resource->currency]]])
+        );
+
+        $message->setJsonParam(
+            'newTotal',
+            $this->app()->templater()->filter($total, [['currency', [$resource->currency]]])
+        );
 
         return $message;
     }

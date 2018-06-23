@@ -1,0 +1,12 @@
+{
+    "edit_format": "radio",
+    "edit_format_params": "0={{ phrase('no') }}\n1={{ phrase('yes') }}",
+    "data_type": "unsigned_integer",
+    "sub_options": [],
+    "validation_class": "",
+    "validation_method": "",
+    "default_value": "1",
+    "relations": {
+        "xfrm": 4000
+    }
+}

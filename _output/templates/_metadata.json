@@ -22,7 +22,7 @@
     "public/xfrmc_coupon_view.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",
-        "hash": "de0673f762054db0e9b89c9154121c11"
+        "hash": "9e3008879b1b0e1fb4992d3f6757dfef"
     },
     "public/xfrmc_resource_add_buyer.html": {
         "version_id": 1000970,
@@ -40,9 +40,9 @@
         "hash": "4000b1af3524082794270abbf953fe38"
     },
     "public/xfrmc_resource_purchase.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "8d2dd1d436940e4ee95d2d5868e6d36f"
+        "version_id": 1000971,
+        "version_string": "1.0.9.1",
+        "hash": "df4c2f93b2d8283458bacfd53c49cbd3"
     },
     "public/xfrmc_resource_purchased.html": {
         "version_id": 1000970,

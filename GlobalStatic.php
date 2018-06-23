@@ -20,6 +20,15 @@ class GlobalStatic
         return $user->hasPermission('xfrmc', $permission);
     }
 
+    public static function getFee($amount)
+    {
+        if (!\XF::options()->xfrmc_enableFee) {
+            return 0;
+        }
+
+        return round((4.4 * $amount)/100 + 0.3, 2);
+    }
+
     /**
      * @return Purchase
      */

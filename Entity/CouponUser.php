@@ -47,6 +47,18 @@ class CouponUser extends Entity
                 'entity' => 'Truonglv\XFRMCustomized:Coupon',
                 'conditions' => 'coupon_id',
                 'primary' => true
+            ],
+            'User' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XF:User',
+                'conditions' => 'user_id',
+                'primary' => true
+            ],
+            'Resource' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XFRM:ResourceItem',
+                'conditions' => 'resource_id',
+                'primary' => true
             ]
         ];
 

@@ -2,6 +2,8 @@
 <phrases>
   <phrase title="nav.xfrmc_coupons" version_id="1000970" version_string="1.0.9"><![CDATA[Coupons]]></phrase>
   <phrase title="nav.xfrmc_purchasedResources" version_id="1000970" version_string="1.0.9"><![CDATA[Purchased Resources]]></phrase>
+  <phrase title="option.xfrmc_enableFee" version_id="1000970" version_string="1.0.9"><![CDATA[Enable payment fee]]></phrase>
+  <phrase title="option_explain.xfrmc_enableFee" version_id="1000970" version_string="1.0.9"><![CDATA[If enabled, payer may pay extra fee: 4.4% * {price} + 0.3 USD. See: <a href="https://www.paypal.com/vn/webapps/mpp/paypal-seller-fees" target="_blank">https://www.paypal.com/vn/webapps/mpp/paypal-seller-fees</a>]]></phrase>
   <phrase title="permission.resource_xfrm_customized_addBuyer" version_id="1000470" version_string="1.0.4"><![CDATA[Manual add buyer]]></phrase>
   <phrase title="permission.xfrmc_add" version_id="1000970" version_string="1.0.9"><![CDATA[Add coupon]]></phrase>
   <phrase title="permission.xfrmc_deleteCoupon" version_id="1000970" version_string="1.0.9"><![CDATA[Delete coupon]]></phrase>
@@ -33,12 +35,14 @@
   <phrase title="xfrmc_enter_coupon_code_to_receive_discount" version_id="1000970" version_string="1.0.9"><![CDATA[Enter coupon code to receive a discount.]]></phrase>
   <phrase title="xfrmc_expire_date" version_id="1000970" version_string="1.0.9"><![CDATA[Expire Date]]></phrase>
   <phrase title="xfrmc_expire_date_must_be_great_than_purchased_date" version_id="1000970" version_string="1.0.9"><![CDATA[Expire date must be great than purchased date.]]></phrase>
+  <phrase title="xfrmc_fee" version_id="1000971" version_string="1.0.9.1"><![CDATA[Fee]]></phrase>
   <phrase title="xfrmc_find_buyer" version_id="1000970" version_string="1.0.9"><![CDATA[Find Buyer]]></phrase>
   <phrase title="xfrmc_fixed" version_id="1000970" version_string="1.0.9"><![CDATA[Fixed]]></phrase>
   <phrase title="xfrmc_license_duration" version_id="1000970" version_string="1.0.9"><![CDATA[License Duration]]></phrase>
   <phrase title="xfrmc_max_use_count" version_id="1000970" version_string="1.0.9"><![CDATA[Max use count]]></phrase>
   <phrase title="xfrmc_percent" version_id="1000970" version_string="1.0.9"><![CDATA[Percent]]></phrase>
   <phrase title="xfrmc_price" version_id="1000970" version_string="1.0.9"><![CDATA[Price]]></phrase>
+  <phrase title="xfrmc_price_without_payment_fees" version_id="1000971" version_string="1.0.9.1"><![CDATA[Price without payment fees.]]></phrase>
   <phrase title="xfrmc_purchase_resource" version_id="1000970" version_string="1.0.9"><![CDATA[Purchase Resource]]></phrase>
   <phrase title="xfrmc_purchase_via" version_id="1000970" version_string="1.0.9"><![CDATA[Purchase via]]></phrase>
   <phrase title="xfrmc_purchased_date" version_id="1000970" version_string="1.0.9"><![CDATA[Purchased Date]]></phrase>
@@ -55,8 +59,10 @@
   <phrase title="xfrmc_thank_you_for_purchasing_resource_at_x" version_id="1000970" version_string="1.0.9"><![CDATA[Thank you for purchasing an resource at <a href="{board_url}">{board_title}</a>.]]></phrase>
   <phrase title="xfrmc_there_are_no_users_bought_this_resource" version_id="1000970" version_string="1.0.9"><![CDATA[There are no users bought this resource.]]></phrase>
   <phrase title="xfrmc_this_code_is_only_valid_once_per_resource" version_id="1000970" version_string="1.0.9"><![CDATA[This code is only valid once per resource.]]></phrase>
+  <phrase title="xfrmc_total" version_id="1000971" version_string="1.0.9.1"><![CDATA[Total]]></phrase>
   <phrase title="xfrmc_usable_user_group_ids" version_id="1000970" version_string="1.0.9"><![CDATA[Usable user group IDs]]></phrase>
   <phrase title="xfrmc_used" version_id="1000970" version_string="1.0.9"><![CDATA[Used]]></phrase>
+  <phrase title="xfrmc_used_date" version_id="1000970" version_string="1.0.9"><![CDATA[Used Date]]></phrase>
   <phrase title="xfrmc_user_x_did_not_bought_this_resource" version_id="1000970" version_string="1.0.9"><![CDATA[The user {name} did not bought this resource.]]></phrase>
   <phrase title="xfrmc_you_did_not_bought_any_resources_yet" version_id="1000970" version_string="1.0.9"><![CDATA[You did not bought any resources yet.]]></phrase>
   <phrase title="xfrmc_you_may_purchase_this_resource_to_download" version_id="1000970" version_string="1.0.9"><![CDATA[You may purchase this resource to download.]]></phrase>
