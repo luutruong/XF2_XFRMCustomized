@@ -36,7 +36,7 @@
             <xf:checkboxrow name="apply_rules[usable_user_group_ids]"
                             listclass="listColumns"
                             value="{$coupon.apply_rules.usable_user_group_ids}"
-                            label="{{ phrase('xfrmc_usable_user_group_ids') }}">
+                            label="{{ phrase('xfrmc_usable_user_groups') }}">
                 <xf:options source="$userGroups" />
             </xf:checkboxrow>
 
@@ -53,6 +53,6 @@
                            label="{{ phrase('xfrmc_resource_ids') }}" />
         </div>
 
-        <xf:submitrow icon="save" />
+        <xf:submitrow icon="save" sticky="true" />
     </div>
 </xf:form>

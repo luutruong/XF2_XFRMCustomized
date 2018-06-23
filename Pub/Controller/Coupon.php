@@ -63,12 +63,31 @@ class Coupon extends AbstractController
 
         $this->assertValidPage($page, $perPage, $total, 'resources/coupons', $coupon);
 
+        $userGroups = null;
+        $categories = null;
+        $resources = null;
+
+        if (!empty($coupon->apply_rules['usable_user_group_ids'])) {
+            $userGroups = \XF::em()->findByIds('XF:UserGroup', $coupon->apply_rules['usable_user_group_ids']);
+        }
+
+        if (!empty($coupon->apply_rules['category_ids'])) {
+            $categories = \XF::em()->findByIds('XFRM:Category', $coupon->apply_rules['category_ids']);
+        }
+
+        if (!empty($coupon->apply_rules['resource_ids'])) {
+            $resources = \XF::em()->findByIds('XFRM:ResourceItem', $coupon->apply_rules['resource_ids']);
+        }
+
         $viewParams = [
             'coupon' => $coupon,
             'users' => $users,
             'total' => $total,
             'page' => $page,
-            'perPage' => $perPage
+            'perPage' => $perPage,
+            'userGroups' => $userGroups,
+            'categories' => $categories,
+            'resources' => $resources
         ];
 
         return $this->view('Truonglv\XFRMCustomized:Coupon\View', 'xfrmc_coupon_view', $viewParams);

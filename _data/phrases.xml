@@ -60,7 +60,7 @@
   <phrase title="xfrmc_there_are_no_users_bought_this_resource" version_id="1000970" version_string="1.0.9"><![CDATA[There are no users bought this resource.]]></phrase>
   <phrase title="xfrmc_this_code_is_only_valid_once_per_resource" version_id="1000970" version_string="1.0.9"><![CDATA[This code is only valid once per resource.]]></phrase>
   <phrase title="xfrmc_total" version_id="1000971" version_string="1.0.9.1"><![CDATA[Total]]></phrase>
-  <phrase title="xfrmc_usable_user_group_ids" version_id="1000970" version_string="1.0.9"><![CDATA[Usable user group IDs]]></phrase>
+  <phrase title="xfrmc_usable_user_groups" version_id="1000971" version_string="1.0.9a"><![CDATA[Usable user groups]]></phrase>
   <phrase title="xfrmc_used" version_id="1000970" version_string="1.0.9"><![CDATA[Used]]></phrase>
   <phrase title="xfrmc_used_date" version_id="1000970" version_string="1.0.9"><![CDATA[Used Date]]></phrase>
   <phrase title="xfrmc_user_x_did_not_bought_this_resource" version_id="1000970" version_string="1.0.9"><![CDATA[The user {name} did not bought this resource.]]></phrase>

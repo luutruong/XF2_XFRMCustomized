@@ -359,11 +359,11 @@
         "version_string": "1.0.9.1",
         "hash": "96b0141273eabab320119c467cdcaf17"
     },
-    "xfrmc_usable_user_group_ids.txt": {
+    "xfrmc_usable_user_groups.txt": {
         "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "de96d90d83addb8c5bf8af2d9fced80c"
+        "version_id": 1000971,
+        "version_string": "1.0.9a",
+        "hash": "6f4ec4989634bb0c3012afc01ed67bf2"
     },
     "xfrmc_used.txt": {
         "global_cache": false,

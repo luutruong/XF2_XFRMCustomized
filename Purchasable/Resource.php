@@ -6,11 +6,11 @@
 
 namespace Truonglv\XFRMCustomized\Purchasable;
 
-use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Purchasable\Purchase;
 use XF\Entity\PaymentProfile;
 use XF\Payment\CallbackState;
 use XF\Purchasable\AbstractPurchasable;
+use Truonglv\XFRMCustomized\GlobalStatic;
 use Truonglv\XFRMCustomized\Entity\Coupon;
 use Truonglv\XFRMCustomized\Entity\CouponUser;
 

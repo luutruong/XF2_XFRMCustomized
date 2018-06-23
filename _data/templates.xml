@@ -23,7 +23,7 @@
     <xf:else />
     <p>{{ phrase('thank_you_for_your_purchase') }}</p>
 </xf:if>]]></template>
-  <template type="public" title="xfrmc_coupon_add" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ $coupon.coupon_id
+  <template type="public" title="xfrmc_coupon_add" version_id="1000971" version_string="1.0.9a"><![CDATA[<xf:title>{{ $coupon.coupon_id
     ? phrase('xfrmc_edit_coupon')
     : phrase('xfrmc_add_coupon') }}</xf:title>
 
@@ -61,7 +61,7 @@
             <xf:checkboxrow name="apply_rules[usable_user_group_ids]"
                             listclass="listColumns"
                             value="{$coupon.apply_rules.usable_user_group_ids}"
-                            label="{{ phrase('xfrmc_usable_user_group_ids') }}">
+                            label="{{ phrase('xfrmc_usable_user_groups') }}">
                 <xf:options source="$userGroups" />
             </xf:checkboxrow>
 
@@ -78,7 +78,7 @@
                            label="{{ phrase('xfrmc_resource_ids') }}" />
         </div>
 
-        <xf:submitrow icon="save" />
+        <xf:submitrow icon="save" sticky="true" />
     </div>
 </xf:form>]]></template>
   <template type="public" title="xfrmc_coupon_delete" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_delete_coupon') }}</xf:title>
@@ -129,7 +129,7 @@
         </div>
     </div>
 </div>]]></template>
-  <template type="public" title="xfrmc_coupon_view" version_id="1000971" version_string="1.0.9.1"><![CDATA[<xf:title>{$coupon.title}</xf:title>
+  <template type="public" title="xfrmc_coupon_view" version_id="1000971" version_string="1.0.9a"><![CDATA[<xf:title>{$coupon.title}</xf:title>
 
 <xf:breadcrumb href="{{ link('canonical:resources/coupons') }}">{{ phrase('xfrmc_coupons') }}</xf:breadcrumb>
 <xf:breadcrumb href="{{ link('canonical:resources/coupons', $coupon) }}">{$coupon.title}</xf:breadcrumb>
@@ -164,6 +164,36 @@
             <xf:formrow label="{{ phrase('xfrmc_begin_date') }}">{{ date($coupon.begin_date, 'Y-m-d') }}</xf:formrow>
             <xf:formrow label="{{ phrase('xfrmc_end_date') }}">{{ date($coupon.end_date, 'Y-m-d') }}</xf:formrow>
             <xf:formrow label="{{ phrase('xfrmc_used') }}">{$coupon.used_count}/{$coupon.max_use_count}</xf:formrow>
+
+            <xf:if is="$userGroups">
+                <xf:formrow label="{{ phrase('xfrmc_usable_user_groups') }}">
+                    <ul style="margin: 0;padding-left: 20px">
+                        <xf:foreach loop="$userGroups" value="$userGroup">
+                            <li>{$userGroup.title}</li>
+                        </xf:foreach>
+                    </ul>
+                </xf:formrow>
+            </xf:if>
+
+            <xf:if is="$categories">
+                <xf:formrow label="{{ phrase('xfrmc_all_resources_in_categories') }}">
+                    <ul style="margin: 0;padding-left: 20px">
+                        <xf:foreach loop="$categories" value="$category">
+                            <li><a href="{{ link('resources/categories', $category) }}">{$category.title}</a></li>
+                        </xf:foreach>
+                    </ul>
+                </xf:formrow>
+            </xf:if>
+
+            <xf:if is="$resources">
+                <xf:formrow label="{{ phrase('xfrm_resources') }}">
+                    <ul style="margin: 0;padding-left: 20px">
+                        <xf:foreach loop="$resources" value="$resource">
+                            <li><a href="{{ link('resources', $resource) }}">{$resource.title}</a></li>
+                        </xf:foreach>
+                    </ul>
+                </xf:formrow>
+            </xf:if>
 
             <xf:formrow label="{{ phrase('xfrmc_created_by') }}"><xf:username user="$coupon.User" defaultname="{$coupon.username}" /></xf:formrow>
         </div>
