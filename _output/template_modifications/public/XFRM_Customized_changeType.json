@@ -5,5 +5,5 @@
     "enabled": true,
     "action": "str_replace",
     "find": "<xf:macro template=\"xfrm_resource_edit_macros\" name=\"type\"",
-    "replace": "<xf:macro template=\"xfrm_customized_resource_macros\" name=\"type\""
+    "replace": "<xf:macro template=\"xfrmc_resource_macros\" name=\"type\""
 }
