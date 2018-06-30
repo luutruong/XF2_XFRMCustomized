@@ -9,12 +9,12 @@
   </modification>
   <modification type="public" template="xfrm_category_add_resource" modification_key="XFRM_Customized_changeType" description="Change resource type inputs." execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<xf:macro template="xfrm_resource_edit_macros" name="type"]]></find>
-    <replace><![CDATA[<xf:macro template="xfrm_customized_resource_macros" name="type"]]></replace>
+    <replace><![CDATA[<xf:macro template="xfrmc_resource_macros" name="type"]]></replace>
   </modification>
   <modification type="public" template="xfrm_resource_edit" modification_key="XFRM_Customized_removeExtUrl" description="Remove external purchase URL." execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<xf:textboxrow name="external_purchase_url" value="{$resource.external_purchase_url}"
 					label="{{ phrase('xfrm_external_purchase_url') }}" />]]></find>
-    <replace><![CDATA[<xf:macro template="xfrm_customized_resource_macros"
+    <replace><![CDATA[<xf:macro template="xfrmc_resource_macros"
 		  name="purchase_inputs"
 		  arg-resource="{$resource}" />]]></replace>
   </modification>
