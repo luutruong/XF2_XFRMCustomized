@@ -317,9 +317,9 @@ class Resource extends AbstractPurchasable
         if ($this->coupon) {
             $cost = $this->coupon->getFinalPrice($purchasable);
         } else {
-            $cost = $purchasable->price;
+            $cost = $purchasable->getPurchasePrice();
         }
-
+        
         $cost += GlobalStatic::getFee($cost);
 
         $purchase = new Purchase();
