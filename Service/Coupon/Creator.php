@@ -24,7 +24,10 @@ class Creator extends AbstractService
     {
         parent::__construct($app);
 
-        $this->coupon = $app->em()->create('Truonglv\XFRMCustomized:Coupon');
+        /** @var Coupon $coupon */
+        $coupon = $app->em()->create('Truonglv\XFRMCustomized:Coupon');
+        $this->coupon = $coupon;
+
         $this->setUser(\XF::visitor());
     }
 

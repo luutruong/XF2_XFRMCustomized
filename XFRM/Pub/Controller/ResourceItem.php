@@ -6,6 +6,7 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
+use XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use Truonglv\XFRMCustomized\GlobalStatic;
 
@@ -37,7 +38,11 @@ class ResourceItem extends XFCP_ResourceItem
             /** @var \XF\Repository\User $userRepo */
             $userRepo = $this->repository('XF:User');
 
-            $names = preg_split('/,/', $names, -1, PREG_SPLIT_NO_EMPTY);
+            $names = preg_split("/\s*,\s*/", $names, -1, PREG_SPLIT_NO_EMPTY);
+            if ($names === false) {
+                throw new \InvalidArgumentException('Cannot parse names. $names=' . $names);
+            }
+
             $users = $userRepo->getUsersByNames($names, $notFound);
 
             if ($notFound) {
@@ -46,7 +51,7 @@ class ResourceItem extends XFCP_ResourceItem
                 ]));
             }
 
-            if (!$users) {
+            if ($users->count() === 0) {
                 return $this->error(\XF::phrase('please_enter_valid_name'));
             }
 
@@ -110,12 +115,13 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission($error);
         }
 
+        /** @var User|null $user */
         $user = $this->em()->find('XF:User', $this->filter('user_id', 'uint'));
         if (!$user) {
             return $this->notFound(\XF::phrase('requested_member_not_found'));
         }
 
-        /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchased */
+        /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchased */
         $purchased = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $user->user_id)
@@ -174,6 +180,7 @@ class ResourceItem extends XFCP_ResourceItem
         if ($username) {
             /** @var \XF\Repository\User $userRepo */
             $userRepo = $this->repository('XF:User');
+            /** @var User|null $user */
             $user = $userRepo->getUserByNameOrEmail($username);
 
             $finder->where('user_id', $user ? $user->user_id : 0);
@@ -265,14 +272,16 @@ class ResourceItem extends XFCP_ResourceItem
     }
 
     /**
-     * @param $resourceId
+     * @param int $resourceId
      * @param array $extraWith
      * @return \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem
      * @throws \XF\Mvc\Reply\Exception
      */
     protected function assertViewableResource($resourceId, array $extraWith = [])
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return parent::assertViewableResource($resourceId, $extraWith);
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resourceItem */
+        $resourceItem = parent::assertViewableResource($resourceId, $extraWith);
+
+        return $resourceItem;
     }
 }

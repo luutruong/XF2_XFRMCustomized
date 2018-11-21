@@ -12,7 +12,7 @@ class ResourceVersion extends XFCP_ResourceVersion
 {
     public function canDownload(&$error = null)
     {
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = $this->Resource;
         $visitor = \XF::visitor();
 

@@ -51,13 +51,14 @@ class MigrateBDPaygate extends AbstractRebuildJob
             $paygatePurchase['purchase_date']
         ]);
 
-        /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchase */
+        /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
         $purchase = \XF::finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $paygatePurchase['content_id'])
                 ->where('user_id', $paygatePurchase['user_id'])
                 ->fetchOne();
 
         if (!$purchase) {
+            /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchase */
             $purchase = \XF::em()->create('Truonglv\XFRMCustomized:Purchase');
         }
 
@@ -66,7 +67,9 @@ class MigrateBDPaygate extends AbstractRebuildJob
         $purchase->resource_version_id = $versionId;
         $purchase->username = $paygatePurchase['username'] ?? 'Guest';
         $purchase->purchased_date = $paygatePurchase['purchase_date'];
-        $purchase->expire_date = max($purchase->expire_date, $paygatePurchase['purchase_date'] + 365 * 86400);
+
+        $expireDate = max($purchase->expire_date, $paygatePurchase['purchase_date'] + 365 * 86400);
+        $purchase->expire_date = intval($expireDate);
         $purchase->amount = $purchase->amount + $paygatePurchase['purchased_amount'];
 
         $purchase->save();

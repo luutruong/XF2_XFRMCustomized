@@ -8,7 +8,6 @@ namespace Truonglv\XFRMCustomized\Pub\Controller;
 
 use XF\Mvc\ParameterBag;
 use XF\Repository\UserGroup;
-use XFRM\Entity\ResourceItem;
 use XFRM\Repository\Category;
 use Truonglv\XFRMCustomized\GlobalStatic;
 use XF\Pub\Controller\AbstractController;
@@ -102,7 +101,7 @@ class Coupon extends AbstractController
             'coupon_code' => 'str'
         ]);
 
-        /** @var \Truonglv\XFRMCustomized\Entity\Coupon $coupon */
+        /** @var \Truonglv\XFRMCustomized\Entity\Coupon|null $coupon */
         $coupon = $this->em()->findOne('Truonglv\XFRMCustomized:Coupon', [
             'coupon_code' => $input['coupon_code']
         ]);
@@ -111,7 +110,7 @@ class Coupon extends AbstractController
             return $this->error(\XF::phrase('xfrmc_requested_coupon_not_found'));
         }
 
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = $this->em()->find('XFRM:ResourceItem', $input['resource_id']);
         if (!$resource || !$resource->canView()) {
             return $this->error(\XF::phrase('xfrm_requested_resource_not_found'));
@@ -164,7 +163,7 @@ class Coupon extends AbstractController
 
             return $this->redirect($this->buildLink('resources/coupons', $coupon));
         }
-
+        /** @var \Truonglv\XFRMCustomized\Entity\Coupon $coupon */
         $coupon = $this->em()->create('Truonglv\XFRMCustomized:Coupon');
 
         return $this->getCouponForm($coupon);
@@ -173,6 +172,7 @@ class Coupon extends AbstractController
     public function actionEdit(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
+        $error = null;
         if (!$coupon->canEdit($error)) {
             return $this->noPermission($error);
         }
@@ -203,6 +203,7 @@ class Coupon extends AbstractController
     public function actionDelete(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
+        $error = null;
         if (!$coupon->canDelete($error)) {
             return $this->noPermission($error);
         }
@@ -222,12 +223,13 @@ class Coupon extends AbstractController
 
     protected function assertCouponViewable($id)
     {
-        /** @var \Truonglv\XFRMCustomized\Entity\Coupon $coupon */
+        /** @var \Truonglv\XFRMCustomized\Entity\Coupon|null $coupon */
         $coupon = $this->em()->find('Truonglv\XFRMCustomized:Coupon', $id);
         if (!$coupon) {
             throw $this->exception($this->notFound(\XF::phrase('xfrmc_requested_coupon_not_found')));
         }
 
+        $error = null;
         if (!$coupon->canView($error)) {
             throw $this->exception($this->noPermission($error));
         }

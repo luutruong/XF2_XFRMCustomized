@@ -34,7 +34,9 @@ class GlobalStatic
      */
     public static function purchaseRepo()
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return \XF::repository('Truonglv\XFRMCustomized:Purchase');
+        /** @var Purchase $repo */
+        $repo = \XF::repository('Truonglv\XFRMCustomized:Purchase');
+
+        return $repo;
     }
 }

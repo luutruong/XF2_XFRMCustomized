@@ -9,6 +9,7 @@ namespace Truonglv\XFRMCustomized\Purchasable;
 use XF\Purchasable\Purchase;
 use XF\Entity\PaymentProfile;
 use XF\Payment\CallbackState;
+use XFRM\Entity\ResourceItem;
 use XF\Purchasable\AbstractPurchasable;
 use Truonglv\XFRMCustomized\GlobalStatic;
 use Truonglv\XFRMCustomized\Entity\Coupon;
@@ -24,7 +25,7 @@ class Resource extends AbstractPurchasable
     public function getPurchaseFromRequest(\XF\Http\Request $request, \XF\Entity\User $purchaser, &$error = null)
     {
         $profileId = $request->filter('payment_profile_id', 'uint');
-        /** @var PaymentProfile $paymentProfile*/
+        /** @var PaymentProfile|null $paymentProfile */
         $paymentProfile = \XF::em()->find('XF:PaymentProfile', $profileId);
 
         if (!$paymentProfile || !$paymentProfile->active) {
@@ -34,7 +35,7 @@ class Resource extends AbstractPurchasable
         }
 
         $resourceId = $request->filter('resource_id', 'uint');
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = \XF::em()->find('XFRM:ResourceItem', $resourceId);
         if (!$resource || !$resource->canPurchase()) {
             $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
@@ -44,7 +45,7 @@ class Resource extends AbstractPurchasable
 
         $couponCode = $request->filter('coupon_code', 'str');
         if (!empty($couponCode)) {
-            /** @var Coupon $coupon */
+            /** @var Coupon|null $coupon */
             $coupon = \XF::em()->findOne('Truonglv\XFRMCustomized:Coupon', [
                 'coupon_code' => $couponCode
             ]);
@@ -81,6 +82,7 @@ class Resource extends AbstractPurchasable
             'purchasable' => null
         ];
 
+        /** @var ResourceItem|null $resource */
         $resource = \XF::em()->find('XFRM:ResourceItem', $extraData['resource_id']);
         if ($resource) {
             $output['link'] = \XF::app()->router('public')->buildLink('resources/edit', $resource);
@@ -114,8 +116,11 @@ class Resource extends AbstractPurchasable
         /** @var Coupon|null $coupon */
         $coupon = null;
         if (!empty($purchaseRequest->extra_data['coupon_id'])) {
+            /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $purchaseRequest->extra_data['coupon_id']);
         }
+
+        $purchase = null;
 
         switch ($paymentResult) {
             case CallbackState::PAYMENT_RECEIVED:
@@ -165,6 +170,7 @@ class Resource extends AbstractPurchasable
                 break;
             case CallbackState::PAYMENT_REINSTATED:
                 if ($purchaseId) {
+                    /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
                     $purchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $purchaseId);
                     if ($purchase) {
                         $purchase->expire_date = $purchase->purchased_date + 365 * 86400;
@@ -222,7 +228,7 @@ class Resource extends AbstractPurchasable
         }
 
         if (!empty($extraData['coupon_id'])) {
-            /** @var Coupon $coupon */
+            /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $extraData['coupon_id']);
             if (!$coupon) {
                 $error = \XF::phrase('xfrmc_requested_coupon_not_found');
@@ -338,7 +344,7 @@ class Resource extends AbstractPurchasable
         $purchase->paymentProfile = $paymentProfile;
 
         $purchase->purchasableTypeId = $this->purchasableTypeId;
-        $purchase->purchasableId = $purchasable->resource_id;
+        $purchase->purchasableId = strval($purchasable->resource_id);
 
         $purchase->purchasableTitle = $purchasable->title;
         $purchase->extraData = [

@@ -104,8 +104,9 @@ class Coupon extends Entity
 
     public function getFinalPrice(ResourceItem $resourceItem)
     {
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resourceItem */
-        $price = $resourceItem->getPurchasePrice();
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $mixed */
+        $mixed = $resourceItem;
+        $price = $mixed->getPurchasePrice();
 
         if ($this->discount_unit === 'fixed') {
             $price = max(0, $price - $this->discount_amount);
@@ -122,12 +123,12 @@ class Coupon extends Entity
             return true;
         }
 
-        /** @var static $existCoupon */
+        /** @var static|null $existCoupon */
         $existCoupon = $this->em()->findOne('Truonglv\XFRMCustomized:Coupon', [
             'coupon_code' => $value
         ]);
 
-        if ($existCoupon || ($existCoupon && $existCoupon->coupon_id != $this->coupon_id)) {
+        if (!$existCoupon || $existCoupon->coupon_id !== $this->coupon_id) {
             $this->error(\XF::phrase('xfrmc_coupon_code_x_not_available', [
                 'code' => $value
             ]));
