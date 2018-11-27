@@ -128,7 +128,7 @@ class Coupon extends Entity
             'coupon_code' => $value
         ]);
 
-        if (!$existCoupon || $existCoupon->coupon_id !== $this->coupon_id) {
+        if ($existCoupon && $existCoupon->coupon_id !== $this->coupon_id) {
             $this->error(\XF::phrase('xfrmc_coupon_code_x_not_available', [
                 'code' => $value
             ]));
