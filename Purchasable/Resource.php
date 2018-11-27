@@ -319,7 +319,7 @@ class Resource extends AbstractPurchasable
         } else {
             $cost = $purchasable->getPurchasePrice();
         }
-        
+
         $cost += GlobalStatic::getFee($cost);
 
         $purchase = new Purchase();

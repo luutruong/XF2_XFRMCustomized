@@ -1,6 +1,6 @@
 <xf:title>{{ phrase('xfrmc_coupons') }}</xf:title>
 
-<xf:pageaction>
+<xf:pageaction if="$xf.visitor.hasPermission('xfrmc', 'add')">
     <xf:button class="button--link"
                href="{{ link('resources/coupons/add') }}"
                overlay="true"
