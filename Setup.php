@@ -2,13 +2,13 @@
 
 namespace Truonglv\XFRMCustomized;
 
-use Truonglv\XFRMCustomized\DevHelper\SetupTrait;
 use XF\Db\Schema\Alter;
 use XF\Db\Schema\Create;
 use XF\AddOn\AbstractSetup;
 use XF\AddOn\StepRunnerInstallTrait;
 use XF\AddOn\StepRunnerUpgradeTrait;
 use XF\AddOn\StepRunnerUninstallTrait;
+use Truonglv\XFRMCustomized\DevHelper\SetupTrait;
 
 class Setup extends AbstractSetup
 {
@@ -53,7 +53,7 @@ class Setup extends AbstractSetup
             'payment_profile_ids' => function (Alter $table) {
                 $table->addColumn('payment_profile_ids', 'VARCHAR', 255)->setDefault('');
             },
-            'renew_price' => function(Alter $table) {
+            'renew_price' => function (Alter $table) {
                 $table->addColumn('renew_price', 'DECIMAL', '10,2')->setDefault(0);
             }
         ];
@@ -66,10 +66,10 @@ class Setup extends AbstractSetup
         $alters = [];
 
         $alters['tl_xfrm_resource_purchase'] = [
-            'purchase_request_key' => function(Alter $table) {
+            'purchase_request_key' => function (Alter $table) {
                 $table->addColumn('purchase_request_key', 'VARBINARY', 32)->setDefault('');
             },
-            'purchase_request_keys' => function(Alter $table) {
+            'purchase_request_keys' => function (Alter $table) {
                 $table->addColumn('purchase_request_keys', 'MEDIUMBLOB')->nullable();
             }
         ];
