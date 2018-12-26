@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<options>
-  <option option_id="xfrmc_enableFee" edit_format="radio" data_type="unsigned_integer">
-    <default_value>1</default_value>
-    <edit_format_params>0={{ phrase('no') }}
-1={{ phrase('yes') }}</edit_format_params>
-    <relation group_id="xfrm" display_order="4000"/>
-  </option>
-</options>

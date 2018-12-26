@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<permissions>
-  <permission permission_group_id="resource" permission_id="xfrm_customized_addBuyer" permission_type="flag" interface_group_id="resourceModeratorPermissions" display_order="1999"/>
-  <permission permission_group_id="xfrmc" permission_id="add" permission_type="flag" interface_group_id="XFRMC_Coupons" display_order="12"/>
-  <permission permission_group_id="xfrmc" permission_id="deleteCoupon" permission_type="flag" interface_group_id="XFRMC_Coupons" display_order="50"/>
-  <permission permission_group_id="xfrmc" permission_id="editCoupon" permission_type="flag" interface_group_id="XFRMC_Coupons" display_order="30"/>
-  <permission permission_group_id="xfrmc" permission_id="viewItem" permission_type="flag" interface_group_id="XFRMC_Coupons" display_order="20"/>
-  <permission permission_group_id="xfrmc" permission_id="viewList" permission_type="flag" interface_group_id="XFRMC_Coupons" display_order="10"/>
-</permissions>

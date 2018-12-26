@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<routes>
-  <route route_type="public" route_prefix="resources" sub_name="coupons" format="coupons/:int&lt;coupon_id,title&gt;" controller="Truonglv\XFRMCustomized:Coupon" context="xfrm"/>
-</routes>
