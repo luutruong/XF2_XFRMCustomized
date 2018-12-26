@@ -90,12 +90,16 @@ class Coupon extends Entity
         if (!empty($rules['category_ids'])
             && !in_array($resourceItem->resource_category_id, $rules['category_ids'])
         ) {
+            $error = \XF::phrase('xfrmc_resource_category_not_discountable');
+
             return false;
         }
 
         if (!empty($rules['resource_ids'])
             && !in_array($resourceItem->resource_id, $rules['resource_ids'])
         ) {
+            $error = \XF::phrase('xfrmc_resource_not_discountable');
+
             return false;
         }
 

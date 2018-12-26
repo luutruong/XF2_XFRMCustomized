@@ -317,6 +317,12 @@
         "version_string": "1.0.9",
         "hash": "be8545ae7ab0276e15898aae7acfbd7a"
     },
+    "xfrmc_resource_category_not_discountable.txt": {
+        "global_cache": false,
+        "version_id": 1010000,
+        "version_string": "1.1.0",
+        "hash": "597fb05a3959f5303fe21dae70d69bf0"
+    },
     "xfrmc_resource_ids.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -328,6 +334,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "d6299ad9947ba5ef498d37cf64488eee"
+    },
+    "xfrmc_resource_not_discountable.txt": {
+        "global_cache": false,
+        "version_id": 1010000,
+        "version_string": "1.1.0",
+        "hash": "b2e561482aa6f6199dcdbedd6b811edf"
     },
     "xfrmc_sure_you_want_to_purchase_this_resource.txt": {
         "global_cache": false,

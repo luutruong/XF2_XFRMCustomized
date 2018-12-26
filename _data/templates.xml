@@ -91,9 +91,9 @@
         <xf:submitrow icon="delete" />
     </div>
 </xf:form>]]></template>
-  <template type="public" title="xfrmc_coupon_list" version_id="1000970" version_string="1.0.9"><![CDATA[<xf:title>{{ phrase('xfrmc_coupons') }}</xf:title>
+  <template type="public" title="xfrmc_coupon_list" version_id="1000972" version_string="1.0.9b"><![CDATA[<xf:title>{{ phrase('xfrmc_coupons') }}</xf:title>
 
-<xf:pageaction>
+<xf:pageaction if="$xf.visitor.hasPermission('xfrmc', 'add')">
     <xf:button class="button--link"
                href="{{ link('resources/coupons/add') }}"
                overlay="true"
