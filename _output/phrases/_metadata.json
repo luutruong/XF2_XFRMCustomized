@@ -11,6 +11,12 @@
         "version_string": "1.0.9",
         "hash": "d79a7cca14728c47cbb322a40aaa2bc5"
     },
+    "nav.xfrmc_reports.txt": {
+        "global_cache": false,
+        "version_id": 1010100,
+        "version_string": "1.1.1",
+        "hash": "c91c7b93c28cd18741b71f727ee81ee3"
+    },
     "option.xfrmc_enableFee.txt": {
         "global_cache": false,
         "version_id": 1000970,

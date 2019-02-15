@@ -1,0 +1,11 @@
+{
+    "parent_navigation_id": "xfrmc_purchasedResources",
+    "display_order": 10,
+    "navigation_type_id": "basic",
+    "type_config": {
+        "link": "{{ link('xfrmc-reports') }}",
+        "display_condition": "$xf.visitor.hasPermission('general', 'xfrmc_viewReports')",
+        "extra_attributes": []
+    },
+    "enabled": true
+}
