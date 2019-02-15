@@ -86,7 +86,7 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function canAddBuyer(&$error = null)
     {
-        return $this->hasPermission('xfrm_customized_addBuyer');
+        return $this->hasPermission('xfrmc_addBuyer');
     }
 
     public static function getStructure(Structure $structure)

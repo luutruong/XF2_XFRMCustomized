@@ -1,6 +1,6 @@
 {
     "permission_type": "flag",
-    "interface_group_id": "resourceModeratorPermissions",
+    "interface_group_id": "xfrmcPermsInterface",
     "display_order": 1999,
     "depend_permission_id": ""
 }

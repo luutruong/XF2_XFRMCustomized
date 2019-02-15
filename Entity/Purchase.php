@@ -43,6 +43,7 @@ class Purchase extends Entity
         $structure->table = 'tl_xfrm_resource_purchase';
         $structure->primaryKey = 'purchase_id';
         $structure->shortName = 'Truonglv\XFRMCustomized:Purchase';
+        $structure->contentType = 'xfrmc_purchase';
 
         $structure->columns = [
             'purchase_id' => ['type' => self::UINT, 'nullable' => true, 'autoIncrement' => true],
