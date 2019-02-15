@@ -3,10 +3,11 @@
  * @license
  * Copyright 2018 TruongLuu. All Rights Reserved.
  */
+
 namespace Truonglv\XFRMCustomized\DevHelper;
 
 /**
- * @version 2018092301
+ * @version 2019011701
  * @see \DevHelper\Autogen\SetupTrait
  */
 trait SetupTrait
@@ -15,7 +16,7 @@ trait SetupTrait
     {
         $sm = \XF::db()->getSchemaManager();
 
-        foreach ($tables as $tableName => $apply) {
+        foreach($tables as $tableName => $apply) {
             $sm->createTable($tableName, $apply);
         }
     }
@@ -23,8 +24,18 @@ trait SetupTrait
     protected function doAlterTables(array $alters)
     {
         $sm = \XF::db()->getSchemaManager();
-        foreach ($alters as $tableName => $applies) {
-            foreach ($applies as $apply) {
+        foreach($alters as $tableName => $applies) {
+            if (!$sm->tableExists($tableName)) {
+                \XF::logException(
+                    new \Exception(sprintf('Table (%s) does not exists. So cannot be altered', $tableName)),
+                    false,
+                    '[doAlterTables] '
+                );
+
+                continue;
+            }
+
+            foreach($applies as $apply) {
                 $sm->alterTable($tableName, $apply);
             }
         }
@@ -33,7 +44,7 @@ trait SetupTrait
     protected function doDropTables(array $tables)
     {
         $sm = \XF::db()->getSchemaManager();
-        foreach (array_keys($tables) as $tableName) {
+        foreach(array_keys($tables) as $tableName) {
             $sm->dropTable($tableName);
         }
     }
@@ -41,8 +52,12 @@ trait SetupTrait
     protected function doDropColumns(array $alters)
     {
         $sm = \XF::db()->getSchemaManager();
-        foreach ($alters as $tableName => $applies) {
-            $sm->alterTable( $tableName, function(\XF\Db\Schema\Alter $table) use($applies) {
+        foreach($alters as $tableName => $applies) {
+            if (!$sm->tableExists($tableName)) {
+                continue;
+            }
+
+            $sm->alterTable($tableName, function(\XF\Db\Schema\Alter $table) use($applies) {
                 $table->dropColumns(array_keys($applies));
             });
         }
@@ -84,8 +99,7 @@ trait SetupTrait
                 break;
             }
 
-            $alters += call_user_func($callable);
-
+            $alters = array_merge_recursive($alters, call_user_func($callable));
             $index++;
         }
 

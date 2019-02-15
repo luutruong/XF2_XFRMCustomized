@@ -1,4 +1,4 @@
-!function ($, window, document, _undefined) {
+!(function($, window, document, _undefined) {
     XF.XFRMCustomized_CouponCheck = XF.Element.newHandler({
         options: {
             resourceId: null,
@@ -6,7 +6,7 @@
             href: null,
             price: null,
             fee: null,
-            total: null
+            total: null,
         },
 
         $input: null,
@@ -21,7 +21,7 @@
         orgData: null,
         cacheData: {},
 
-        init: function () {
+        init: function() {
             if (!this.options.href) {
                 throw new Error('Must have data-href attribute.');
             }
@@ -39,21 +39,27 @@
             this.$target.bind('click', XF.proxy(this, 'click'));
         },
 
-        setup: function () {
+        setup: function() {
             this.$price0 = $(this.options.price);
-            this.$price1 = this.$price0.clone().attr('id', '')
+            this.$price1 = this.$price0
+                .clone()
+                .attr('id', '')
                 .css({ fontSize: 15, marginLeft: 10, textDecoration: 'line-through' })
                 .hide();
             this.$price1.insertAfter(this.$price0);
 
             this.$fee0 = $(this.options.fee);
-            this.$fee1 = this.$fee0.clone().attr('id', '')
+            this.$fee1 = this.$fee0
+                .clone()
+                .attr('id', '')
                 .css({ marginLeft: 10, textDecoration: 'line-through' })
                 .hide();
             this.$fee1.insertAfter(this.$fee0);
 
             this.$total0 = $(this.options.total);
-            this.$total1 = this.$total0.clone().attr('id', '')
+            this.$total1 = this.$total0
+                .clone()
+                .attr('id', '')
                 .css({ fontSize: 15, marginLeft: 10, textDecoration: 'line-through' })
                 .hide();
             this.$total1.insertAfter(this.$total0);
@@ -61,7 +67,7 @@
             this.$total0.css({ color: 'green' });
         },
 
-        onInputKeyup: function () {
+        onInputKeyup: function() {
             var value = this.$input.val().trim();
 
             if (value.length) {
@@ -82,7 +88,7 @@
             }
         },
 
-        click: function (e) {
+        click: function(e) {
             e.preventDefault();
 
             if (this.loading) {
@@ -101,21 +107,20 @@
             this.loading = true;
             _this.$input.prop('disabled', true);
 
-            XF.ajax('POST', this.options.href, data, XF.proxy(this, 'onResponse'))
-                .always(function () {
-                    _this.loading = false;
-                    _this.$input.prop('disabled', false);
-                });
+            XF.ajax('POST', this.options.href, data, XF.proxy(this, 'onResponse')).always(function() {
+                _this.loading = false;
+                _this.$input.prop('disabled', false);
+            });
         },
 
-        onResponse: function (data) {
+        onResponse: function(data) {
             this.cacheData[this.$input.val()] = data;
 
             if (this.orgData === null) {
                 this.orgData = {
                     price: this.$price0.text(),
                     fee: this.$fee0.text(),
-                    total: this.$total0.text()
+                    total: this.$total0.text(),
                 };
             }
 
@@ -127,9 +132,8 @@
 
             this.$fee0.text(data.newFee);
             this.$fee1.text(this.orgData.fee).show();
-        }
+        },
     });
 
     XF.Click.register('xfrmc-check-coupon-code', 'XF.XFRMCustomized_CouponCheck');
-}
-(jQuery, this, document);
+})(jQuery, this, document);
