@@ -3,6 +3,7 @@
  * @license
  * Copyright 2019 TruongLuu. All Rights Reserved.
  */
+
 namespace Truonglv\XFRMCustomized\Repository;
 
 use XF\Mvc\Entity\Repository;
@@ -25,7 +26,7 @@ class Report extends Repository
         $maxDate = floor($toDate / 86400) * 86400;
 
         while ($nextDate <= $maxDate) {
-            $date = date('Y-m-d', $nextDate);
+            $date = date('Y-m-d', (int) $nextDate);
 
             $results[] = [
                 'date' => $date,
