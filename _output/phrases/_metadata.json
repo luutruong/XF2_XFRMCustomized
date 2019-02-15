@@ -23,6 +23,12 @@
         "version_string": "1.0.9",
         "hash": "5f4a77ca7181f8dd5dee82c0ac8fd8cc"
     },
+    "permission.general_xfrmc_viewReports.txt": {
+        "global_cache": false,
+        "version_id": 1010100,
+        "version_string": "1.1.1",
+        "hash": "94aa9dc7e2488fdf523fa464cb4c393f"
+    },
     "permission.resource_xfrmc_addBuyer.txt": {
         "global_cache": false,
         "version_id": 1010100,

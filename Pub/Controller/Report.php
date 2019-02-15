@@ -11,6 +11,10 @@ class Report extends AbstractController
 {
     public function actionIndex()
     {
+        if (!\XF::visitor()->hasPermission('general', 'xfrmc_viewReports')) {
+            return $this->noPermission();
+        }
+
         $fromDate = $this->filter('from', 'datetime');
         $toDate = $this->filter('to', 'datetime');
 
