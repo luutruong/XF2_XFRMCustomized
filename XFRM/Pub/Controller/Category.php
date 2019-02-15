@@ -15,6 +15,7 @@ class Category extends XFCP_Category
         $creator->getResource()->bulkSet($this->filter([
             'price' => 'str',
             'currency' => 'str',
+            'renew_price' => 'float',
             'payment_profile_ids' => 'array-uint'
         ]));
 
