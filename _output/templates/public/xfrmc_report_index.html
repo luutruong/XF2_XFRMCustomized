@@ -1,11 +1,11 @@
 <xf:title>{{ phrase('xfrmc_report_data_from_x_to_y', {
-    'from': date($fromDate, 'picker'),
-    'to': date($toDate, 'picker')}) }}</xf:title>
+    'from': $fromDate,
+    'to': $toDate}) }}</xf:title>
 
 <xf:js src="https://www.gstatic.com/charts/loader.js"/>
 <xf:js>
     $(document).ready(function() {
-        google.charts.load('current', {'packages':['line']});
+        google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
@@ -18,15 +18,15 @@
 
             var options = {
                 chart: {
-                    title: '{{ phrase('xfrmc_report_data_from_x_to_y', {'from': date($fromDate, 'picker'), 'to': date($toDate, 'picker')}) }}'
+                    title: '{{ phrase('xfrmc_report_data_from_x_to_y', {'from': $fromDate, 'to': $toDate}) }}'
                 },
                 width: '100%',
                 height: 500,
                 legend: { position: 'bottom' }
             };
 
-            var chart = new google.charts.Line(document.getElementById('xfrmc-reports-chart'));
-            chart.draw(data, google.charts.Line.convertOptions(options));
+            var chart = new google.visualization.LineChart(document.getElementById('xfrmc-reports-chart'));
+            chart.draw(data, options);
         }
     });
 </xf:js>
@@ -40,10 +40,11 @@
             <xf:form method="GET" action="{{ link('xfrmc-reports') }}">
                 <div class="xfrmc-filterDates">
                     <div class="xfrmc-filterDates--input">
-                        <span>{{ phrase('xfrmc_from_date') }}:</span><xf:dateinput name="from" value="{{ date($fromDate, 'picker') }}" /></div>
+                        <span>{{ phrase('xfrmc_from_date') }}:</span><xf:dateinput name="from" value="{$fromDate}" /></div>
                     <div class="xfrmc-filterDates--input">
-                        <span>{{ phrase('xfrmc_to_date') }}:</span><xf:dateinput name="to" value="{{ date($toDate, 'picker') }}" /></div>
+                        <span>{{ phrase('xfrmc_to_date') }}:</span><xf:dateinput name="to" value="{$toDate}" /></div>
                 </div>
+                <xf:formrow label="{{ phrase('xfrmc_total_amount') }}">{$totalAmount|currency('USD')}</xf:formrow>
                 <xf:submitrow icon="search" rowtype="simple" submit="{{ phrase('xfrmc_apply_filters') }}"/>
             </xf:form>
         </div>

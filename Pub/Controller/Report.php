@@ -16,8 +16,16 @@ class Report extends AbstractController
             return $this->noPermission();
         }
 
-        $fromDate = $this->filter('from', 'datetime');
-        $toDate = $this->filter('to', 'datetime');
+        $dateStringToTimestamp = function ($date) {
+            $dt = \DateTime::createFromFormat('Y-m-d', $date);
+            if ($dt) {
+                return $dt->format('U');
+            }
+
+            return 0;
+        };
+        $fromDate = $dateStringToTimestamp($this->filter('from', 'str'));
+        $toDate = $dateStringToTimestamp($this->filter('to', 'str'));
 
         if (!$toDate) {
             $toDate = floor(\XF::$time / 86400) * 86400 - 1;
@@ -31,15 +39,18 @@ class Report extends AbstractController
         $data = $reportRepo->getReportsData($fromDate, $toDate);
 
         $dataJs = [];
+        $totalAmount = 0;
         foreach ($data as $item) {
             $dataJs[] = [$item['date'], (int) $item['amount']];
+            $totalAmount += $item['amount'];
         }
 
         $params = [
             'reports' => $data,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
-            'dataJs' => $dataJs
+            'fromDate' => date('Y-m-d', $fromDate),
+            'toDate' => date('Y-m-d', $toDate),
+            'dataJs' => $dataJs,
+            'totalAmount' => $totalAmount
         ];
 
         return $this->view('Truonglv\XFRMCustomized:Report\Index', 'xfrmc_report_index', $params);
