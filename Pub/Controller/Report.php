@@ -20,7 +20,7 @@ class Report extends AbstractController
         $toDate = $this->filter('to', 'datetime');
 
         if (!$toDate) {
-            $toDate = strtotime('-1 days');
+            $toDate = \XF::$time;
         }
         if (!$fromDate) {
             $fromDate = $toDate - 30 * 86400;
