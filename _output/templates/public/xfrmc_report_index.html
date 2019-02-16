@@ -21,7 +21,8 @@
                     title: '{{ phrase('xfrmc_report_data_from_x_to_y', {'from': date($fromDate, 'picker'), 'to': date($toDate, 'picker')}) }}'
                 },
                 width: '100%',
-                height: 500
+                height: 500,
+                legend: { position: 'bottom' }
             };
 
             var chart = new google.charts.Line(document.getElementById('xfrmc-reports-chart'));
