@@ -213,6 +213,8 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function actionPurchase(ParameterBag $params)
     {
+        $this->assertRegistrationRequired();
+
         $resource = $this->assertViewableResource($params->resource_id);
         if (!$resource->canPurchase($error)) {
             return $this->noPermission($error);
