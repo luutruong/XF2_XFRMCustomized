@@ -21,6 +21,10 @@ class ResourceVersion extends XFCP_ResourceVersion
             && $this->file_count > 0
             && $resource->user_id != $visitor->user_id
         ) {
+            if ($resource->canDownload()) {
+                return true;
+            }
+
             $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($resource, $visitor);
             if (!$purchases->count()) {
                 $error = \XF::phrase('xfrmc_you_may_purchase_this_resource_to_download');

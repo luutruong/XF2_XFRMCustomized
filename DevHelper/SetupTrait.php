@@ -24,19 +24,19 @@ trait SetupTrait
     protected function doAlterTables(array $alters)
     {
         $sm = \XF::db()->getSchemaManager();
-        foreach($alters as $tableName => $applies) {
+        foreach($alters as $tableName => $columns) {
             if (!$sm->tableExists($tableName)) {
-                \XF::logException(
-                    new \Exception(sprintf('Table (%s) does not exists. So cannot be altered', $tableName)),
-                    false,
-                    '[doAlterTables] '
-                );
-
                 continue;
             }
 
-            foreach($applies as $apply) {
-                $sm->alterTable($tableName, $apply);
+            foreach($columns as $applies) {
+                if (!is_array($applies)) {
+                    $applies = [$applies];
+                }
+
+                foreach ($applies as $apply) {
+                    $sm->alterTable($tableName, $apply);
+                }
             }
         }
     }
@@ -52,13 +52,13 @@ trait SetupTrait
     protected function doDropColumns(array $alters)
     {
         $sm = \XF::db()->getSchemaManager();
-        foreach($alters as $tableName => $applies) {
+        foreach($alters as $tableName => $columns) {
             if (!$sm->tableExists($tableName)) {
                 continue;
             }
 
-            $sm->alterTable($tableName, function(\XF\Db\Schema\Alter $table) use($applies) {
-                $table->dropColumns(array_keys($applies));
+            $sm->alterTable($tableName, function(\XF\Db\Schema\Alter $table) use($columns) {
+                $table->dropColumns(array_keys($columns));
             });
         }
     }
@@ -86,6 +86,19 @@ trait SetupTrait
     }
 
     /**
+     * Data template:
+     *
+     * [
+     *      xf_example_table => [
+     *          example_column => [
+     *              function () {...},
+     *              function () {...},
+     *              ...
+     *          ]
+     *      ],
+     *      ...
+     * ]
+     *
      * @return array
      */
     protected function getAlters()
@@ -99,7 +112,21 @@ trait SetupTrait
                 break;
             }
 
-            $alters = array_merge_recursive($alters, call_user_func($callable));
+            $versionAlters = call_user_func($callable);
+            foreach ($versionAlters as $tableName => $columns) {
+                if (!isset($alters[$tableName])) {
+                    $alters[$tableName] = [];
+                }
+
+                foreach ($columns as $columnName => $apply) {
+                    if (!isset($alters[$tableName][$columnName])) {
+                        $alters[$tableName][$columnName] = [];
+                    }
+
+                    $alters[$tableName][$columnName][] = $apply;
+                }
+            }
+
             $index++;
         }
 

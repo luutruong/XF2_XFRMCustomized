@@ -39,3 +39,19 @@
                    placeholder="{{ phrase('xfrmc_renew_price') }}" style="width: 120px" />
     <hr class="formRowSep" />
 </xf:macro>
+
+<xf:macro name="buy_button" arg-resource="!">
+	<xf:if is="$resource.canDownload()">
+		<xf:button href="{{ link('resources/download', $resource) }}">{{ phrase('download') }}</xf:button>
+	<xf:else />
+		<xf:if is="$resource.isRenewLicense()">
+			<xf:set var="$purchasePhrase">{{ phrase('xfrmc_renew_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
+		<xf:else />
+			<xf:set var="$purchasePhrase">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
+		</xf:if>
+		<xf:button href="{$resource.external_purchase_url}"
+				   class="button--cta"
+				   overlay="true"
+				   icon="purchase">{$purchasePhrase}</xf:button>
+	</xf:if>
+</xf:macro>
