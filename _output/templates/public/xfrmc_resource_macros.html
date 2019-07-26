@@ -41,7 +41,7 @@
 </xf:macro>
 
 <xf:macro name="buy_button" arg-resource="!">
-	<xf:if is="$resource.canDownload()">
+	<xf:if is="$resource.CurrentVersion.canDownload()">
 		<xf:button href="{{ link('resources/download', $resource) }}">{{ phrase('download') }}</xf:button>
 	<xf:else />
 		<xf:if is="$resource.isRenewLicense()">

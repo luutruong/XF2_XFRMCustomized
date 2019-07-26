@@ -45,6 +45,11 @@ class ResourceItem extends XFCP_ResourceItem
         return false;
     }
 
+    public function isXFRMCCommerceItem()
+    {
+        return $this->price > 0;
+    }
+
     public function isDownloadable()
     {
         if (\XF::visitor()->user_id == $this->user_id) {

@@ -26,6 +26,10 @@ class GlobalStatic
             return 0;
         }
 
+        if ($amount < 1) {
+            return 0;
+        }
+
         return round((4.4 * $amount)/100 + 0.3, 2);
     }
 

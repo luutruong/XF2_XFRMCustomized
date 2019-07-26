@@ -4,6 +4,6 @@
     "execution_order": 10,
     "enabled": true,
     "action": "str_replace",
-    "find": "<xf:button href=\"{$resource.external_purchase_url}\" class=\"button--cta\" icon=\"purchase\">{{ phrase('xfrm_buy_for_x', {'price': $resource.price|currency($resource.currency)}) }}</xf:button>",
-    "replace": "<xf:macro template=\"xfrmc_resource_macros\" name=\"buy_button\" \n\t\t  arg-resource=\"{$resource}\" />"
+    "find": "<xf:if is=\"$resource.isDownloadable()\">",
+    "replace": "<xf:if is=\"$resource.isXFRMCCommerceItem()\">\n\t<xf:macro template=\"xfrmc_resource_macros\" name=\"buy_button\" \n\t\t  arg-resource=\"{$resource}\" />\n<xf:elseif is=\"$resource.isDownloadable()\" />"
 }

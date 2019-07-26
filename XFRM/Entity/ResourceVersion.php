@@ -34,7 +34,7 @@ class ResourceVersion extends XFCP_ResourceVersion
 
             foreach ($purchases as $purchase) {
                 if (!$purchase->isExpired()) {
-                    return parent::canDownload($error);
+                    return true;
                 }
             }
 
