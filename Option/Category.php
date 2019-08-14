@@ -6,6 +6,11 @@ use XF\Option\AbstractOption;
 
 class Category extends AbstractOption
 {
+    /**
+     * @param \XF\Entity\Option $option
+     * @param array $htmlParams
+     * @return string
+     */
     public static function renderSelectMultiple(\XF\Entity\Option $option, array $htmlParams)
     {
         /** @var \XFRM\Repository\Category $categoryRepo */
@@ -23,7 +28,9 @@ class Category extends AbstractOption
         $data['controlOptions']['size'] = 8;
 
         return self::getTemplater()->formSelectRow(
-            $data['controlOptions'], $choices, $data['rowOptions']
+            $data['controlOptions'],
+            $choices,
+            $data['rowOptions']
         );
     }
 }

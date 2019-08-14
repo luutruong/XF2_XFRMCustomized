@@ -9,7 +9,6 @@ namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use Truonglv\XFRMCustomized\GlobalStatic;
-use XF\Mvc\Reply\View;
 
 class ResourceItem extends XFCP_ResourceItem
 {

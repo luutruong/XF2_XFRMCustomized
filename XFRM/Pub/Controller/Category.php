@@ -6,9 +6,9 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
-use Truonglv\XFRMCustomized\GlobalStatic;
-use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\View;
+use XF\Mvc\ParameterBag;
+use Truonglv\XFRMCustomized\GlobalStatic;
 
 class Category extends XFCP_Category
 {
