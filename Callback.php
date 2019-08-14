@@ -7,6 +7,7 @@
 namespace Truonglv\XFRMCustomized;
 
 use XF\Template\Templater;
+use XFRM\Entity\ResourceItem;
 
 class Callback
 {
@@ -18,7 +19,7 @@ class Callback
      */
     public static function renderPaymentProfiles($value, array $params, Templater $templater)
     {
-        if (empty($params['resource'])) {
+        if (!isset($params['resource']) || !$params['resource'] instanceof ResourceItem) {
             throw new \InvalidArgumentException('Missing resource data in callback.');
         }
 
