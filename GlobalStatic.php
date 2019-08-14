@@ -26,6 +26,18 @@ class GlobalStatic
     }
 
     /**
+     * @param int $categoryId
+     * @return bool
+     */
+    public static function isDisabledCategory($categoryId)
+    {
+        $disabled = \XF::options()->xfrmc_disableCategories;
+        $disabled = array_map('intval', $disabled);
+
+        return in_array($categoryId, $disabled, true);
+    }
+
+    /**
      * @param float $amount
      * @return float|int
      */

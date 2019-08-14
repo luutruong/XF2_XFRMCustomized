@@ -17,17 +17,41 @@
         "version_string": "1.1.1",
         "hash": "c91c7b93c28cd18741b71f727ee81ee3"
     },
+    "option.xfrmc_disableCategories.txt": {
+        "global_cache": false,
+        "version_id": 2000200,
+        "version_string": "2.0.2",
+        "hash": "da1907d2eee0c0e1e3a8345a493df790"
+    },
     "option.xfrmc_enableFee.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "a86239011b22801ee6ae304b764ad39f"
     },
+    "option_explain.xfrmc_disableCategories.txt": {
+        "global_cache": false,
+        "version_id": 2000200,
+        "version_string": "2.0.2",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
     "option_explain.xfrmc_enableFee.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "5f4a77ca7181f8dd5dee82c0ac8fd8cc"
+    },
+    "option_group.xfrmc.txt": {
+        "global_cache": false,
+        "version_id": 2000200,
+        "version_string": "2.0.2",
+        "hash": "920e7ce46431c7a03acbd6c6cc6d1826"
+    },
+    "option_group_description.xfrmc.txt": {
+        "global_cache": false,
+        "version_id": 2000200,
+        "version_string": "2.0.2",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "permission.general_xfrmc_viewReports.txt": {
         "global_cache": false,

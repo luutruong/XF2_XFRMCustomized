@@ -1,0 +1,14 @@
+{
+    "edit_format": "callback",
+    "edit_format_params": "Truonglv\\XFRMCustomized\\Option\\Category::renderSelectMultiple",
+    "data_type": "array",
+    "sub_options": [
+        "*"
+    ],
+    "validation_class": "",
+    "validation_method": "",
+    "default_value": "[]",
+    "relations": {
+        "xfrmc": 10
+    }
+}

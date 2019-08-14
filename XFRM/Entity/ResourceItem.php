@@ -44,6 +44,10 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isExternalPurchasable()
     {
+        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+            return parent::isExternalPurchasable();
+        }
+
         if ($this->price > 0) {
             return true;
         }
@@ -56,6 +60,10 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isExternalDownload()
     {
+        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+            return parent::isExternalDownload();
+        }
+
         return false;
     }
 
@@ -72,6 +80,10 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isDownloadable()
     {
+        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+            return parent::isDownloadable();
+        }
+
         if (\XF::visitor()->user_id == $this->user_id) {
             return true;
         }

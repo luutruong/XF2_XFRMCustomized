@@ -18,6 +18,10 @@ class ResourceVersion extends XFCP_ResourceVersion
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = $this->Resource;
+        if (GlobalStatic::isDisabledCategory($resource->resource_category_id)) {
+            return parent::canDownload($error);
+        }
+
         $visitor = \XF::visitor();
 
         if ($resource
