@@ -72,6 +72,10 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isXFRMCCommerceItem()
     {
+        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+            return false;
+        }
+
         return $this->price > 0;
     }
 
