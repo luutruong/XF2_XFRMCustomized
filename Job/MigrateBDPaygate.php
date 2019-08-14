@@ -10,6 +10,11 @@ use XF\Job\AbstractRebuildJob;
 
 class MigrateBDPaygate extends AbstractRebuildJob
 {
+    /**
+     * @param mixed $start
+     * @param mixed $batch
+     * @return array
+     */
     protected function getNextIds($start, $batch)
     {
         $db = $this->app->db();
@@ -22,11 +27,19 @@ class MigrateBDPaygate extends AbstractRebuildJob
         ', $batch), $start);
     }
 
+    /**
+     * @return string
+     */
     public function getStatusType()
     {
         return 'Import data from add-on [bd] Paygate...';
     }
 
+    /**
+     * @param mixed $id
+     * @throws \XF\PrintableException
+     * @return void
+     */
     protected function rebuildById($id)
     {
         $db = $this->app->db();

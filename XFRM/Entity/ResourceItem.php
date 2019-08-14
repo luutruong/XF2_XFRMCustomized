@@ -6,6 +6,7 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
+use XF\Phrase;
 use XF\Mvc\Entity\Structure;
 use Truonglv\XFRMCustomized\GlobalStatic;
 
@@ -20,9 +21,16 @@ use Truonglv\XFRMCustomized\GlobalStatic;
  */
 class ResourceItem extends XFCP_ResourceItem
 {
+    /**
+     * @param mixed $message
+     * @param null|string $key
+     * @param mixed $specificError
+     * @return void
+     */
     public function error($message, $key = null, $specificError = true)
     {
         if ($key === 'currency'
+            && $message instanceof Phrase
             && $message->getName() === 'xfrm_non_purchasable_resources_may_not_define_purchasable_components'
         ) {
             return;
@@ -31,6 +39,9 @@ class ResourceItem extends XFCP_ResourceItem
         parent::error($message, $key, $specificError);
     }
 
+    /**
+     * @return bool
+     */
     public function isExternalPurchasable()
     {
         if ($this->price > 0) {
@@ -40,16 +51,25 @@ class ResourceItem extends XFCP_ResourceItem
         return parent::isExternalPurchasable();
     }
 
+    /**
+     * @return bool
+     */
     public function isExternalDownload()
     {
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function isXFRMCCommerceItem()
     {
         return $this->price > 0;
     }
 
+    /**
+     * @return bool
+     */
     public function isDownloadable()
     {
         if (\XF::visitor()->user_id == $this->user_id) {
@@ -63,16 +83,26 @@ class ResourceItem extends XFCP_ResourceItem
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getExternalPurchaseUrl()
     {
         return $this->app()->router('public')->buildLink('canonical:resources/purchase', $this);
     }
 
+    /**
+     * @param null|string $error
+     * @return bool
+     */
     public function canPurchase(&$error = null)
     {
         return $this->price > 0;
     }
 
+    /**
+     * @return bool
+     */
     public function isRenewLicense()
     {
         $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($this);
@@ -80,6 +110,9 @@ class ResourceItem extends XFCP_ResourceItem
         return $purchases->count() > 0;
     }
 
+    /**
+     * @return float
+     */
     public function getPurchasePrice()
     {
         if ($this->renew_price > 0 && $this->isRenewLicense()) {
@@ -89,6 +122,10 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->price;
     }
 
+    /**
+     * @param null|string $error
+     * @return bool
+     */
     public function canAddBuyer(&$error = null)
     {
         return $this->hasPermission('xfrmc_addBuyer');

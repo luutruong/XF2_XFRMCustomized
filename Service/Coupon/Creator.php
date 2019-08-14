@@ -31,6 +31,10 @@ class Creator extends AbstractService
         $this->setUser(\XF::visitor());
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
     protected function setUser(User $user)
     {
         $this->coupon->user_id = $user->user_id;
@@ -45,16 +49,27 @@ class Creator extends AbstractService
         return $this->coupon;
     }
 
-    public function setTitle($title)
+    /**
+     * @param string $title
+     * @return void
+     */
+    public function setTitle(string $title)
     {
         $this->coupon->title = $title;
     }
 
-    public function setCouponCode($couponCode)
+    /**
+     * @param string $couponCode
+     * @return void
+     */
+    public function setCouponCode(string $couponCode)
     {
         $this->coupon->coupon_code = $couponCode;
     }
 
+    /**
+     * @return array
+     */
     protected function _validate()
     {
         $coupon = $this->coupon;
@@ -63,6 +78,10 @@ class Creator extends AbstractService
         return $coupon->getErrors();
     }
 
+    /**
+     * @return Coupon
+     * @throws \XF\PrintableException
+     */
     protected function _save()
     {
         $coupon = $this->coupon;

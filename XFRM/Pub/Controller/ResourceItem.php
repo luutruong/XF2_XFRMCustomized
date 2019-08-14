@@ -177,7 +177,7 @@ class ResourceItem extends XFCP_ResourceItem
         $username = $this->filter('username', 'str');
         $user = null;
 
-        if ($username) {
+        if ($username !== '') {
             /** @var \XF\Repository\User $userRepo */
             $userRepo = $this->repository('XF:User');
             /** @var User|null $user */
@@ -274,7 +274,7 @@ class ResourceItem extends XFCP_ResourceItem
     }
 
     /**
-     * @param int $resourceId
+     * @param int|string|mixed $resourceId
      * @param array $extraWith
      * @return \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem
      * @throws \XF\Mvc\Reply\Exception

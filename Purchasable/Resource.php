@@ -22,6 +22,12 @@ class Resource extends AbstractPurchasable
      */
     protected $coupon;
 
+    /**
+     * @param \XF\Http\Request $request
+     * @param \XF\Entity\User $purchaser
+     * @param null|string $error
+     * @return Purchase|mixed
+     */
     public function getPurchaseFromRequest(\XF\Http\Request $request, \XF\Entity\User $purchaser, &$error = null)
     {
         $profileId = $request->filter('payment_profile_id', 'uint');
@@ -44,7 +50,7 @@ class Resource extends AbstractPurchasable
         }
 
         $couponCode = $request->filter('coupon_code', 'str');
-        if (!empty($couponCode)) {
+        if ($couponCode !== '') {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->findOne('Truonglv\XFRMCustomized:Coupon', [
                 'coupon_code' => $couponCode
@@ -65,7 +71,7 @@ class Resource extends AbstractPurchasable
             $this->coupon = $coupon;
         }
 
-        if (!in_array($profileId, $resource->payment_profile_ids)) {
+        if (!in_array($profileId, $resource->payment_profile_ids, true)) {
             $error = \XF::phrase('selected_payment_profile_is_not_valid_for_this_purchase');
 
             return false;
@@ -74,6 +80,10 @@ class Resource extends AbstractPurchasable
         return $this->getPurchaseObject($paymentProfile, $resource, $purchaser);
     }
 
+    /**
+     * @param array $extraData
+     * @return array
+     */
     public function getPurchasableFromExtraData(array $extraData)
     {
         $output = [
@@ -93,6 +103,11 @@ class Resource extends AbstractPurchasable
         return $output;
     }
 
+    /**
+     * @param CallbackState $state
+     * @return void
+     * @throws \XF\PrintableException
+     */
     public function completePurchase(CallbackState $state)
     {
         if ($state->legacy) {
@@ -115,7 +130,7 @@ class Resource extends AbstractPurchasable
 
         /** @var Coupon|null $coupon */
         $coupon = null;
-        if (!empty($purchaseRequest->extra_data['coupon_id'])) {
+        if (isset($purchaseRequest->extra_data['coupon_id'])) {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $purchaseRequest->extra_data['coupon_id']);
         }
@@ -208,6 +223,13 @@ class Resource extends AbstractPurchasable
         }
     }
 
+    /**
+     * @param array $extraData
+     * @param PaymentProfile $paymentProfile
+     * @param \XF\Entity\User $purchaser
+     * @param null|string $error
+     * @return bool|mixed|Purchase
+     */
     public function getPurchaseFromExtraData(
         array $extraData,
         PaymentProfile $paymentProfile,
@@ -215,19 +237,21 @@ class Resource extends AbstractPurchasable
         &$error = null
     ) {
         $data = $this->getPurchasableFromExtraData($extraData);
-        if (!$data['purchasable'] || !$data['purchasable']->canPurchase()) {
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $purchasable */
+        $purchasable = $data['purchasable'];
+        if ($purchasable === null || !$purchasable->canPurchase()) {
             $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
 
             return false;
         }
 
-        if (!in_array($paymentProfile->payment_profile_id, $data['purchasable']->payment_profile_ids)) {
+        if (!in_array($paymentProfile->payment_profile_id, $purchasable->payment_profile_ids, true)) {
             $error = \XF::phrase('selected_payment_profile_is_not_valid_for_this_purchase');
 
             return false;
         }
 
-        if (!empty($extraData['coupon_id'])) {
+        if (isset($extraData['coupon_id'])) {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $extraData['coupon_id']);
             if (!$coupon) {
@@ -236,7 +260,7 @@ class Resource extends AbstractPurchasable
                 return false;
             }
 
-            if (!$coupon->canUseWith($data['purchasable'], $error)) {
+            if (!$coupon->canUseWith($purchasable, $error)) {
                 $error = $error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
 
                 return false;
@@ -245,14 +269,22 @@ class Resource extends AbstractPurchasable
             $this->coupon = $coupon;
         }
 
-        return $this->getPurchaseObject($paymentProfile, $data['purchasable'], $purchaser);
+        return $this->getPurchaseObject($paymentProfile, $purchasable, $purchaser);
     }
 
+    /**
+     * @return \XF\Phrase
+     */
     public function getTitle()
     {
         return \XF::phrase('xfrmc_resource');
     }
 
+    /**
+     * @param CallbackState $state
+     * @return void
+     * @throws \XF\PrintableException
+     */
     public function reversePurchase(CallbackState $state)
     {
         if ($state->legacy) {
@@ -285,6 +317,10 @@ class Resource extends AbstractPurchasable
         }
     }
 
+    /**
+     * @param mixed $profileId
+     * @return array
+     */
     public function getPurchasablesByProfileId($profileId)
     {
         $finder = \XF::finder('XFRM:ResourceItem');
@@ -305,9 +341,9 @@ class Resource extends AbstractPurchasable
 
     /**
      * @param PaymentProfile $paymentProfile
-     * @param \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $purchasable
+     * @param mixed $purchasable
      * @param \XF\Entity\User $purchaser
-     * @return mixed|Purchase
+     * @return Purchase
      */
     public function getPurchaseObject(
         PaymentProfile $paymentProfile,

@@ -32,21 +32,39 @@ use Truonglv\XFRMCustomized\GlobalStatic;
  */
 class Coupon extends Entity
 {
+    /**
+     * @param null|string $error
+     * @return bool
+     */
     public function canView(&$error = null)
     {
         return GlobalStatic::hasPermission('viewItem');
     }
 
+    /**
+     * @param null|string $error
+     * @return bool
+     */
     public function canEdit(&$error = null)
     {
         return GlobalStatic::hasPermission('editCoupon');
     }
 
+    /**
+     * @param null|string $error
+     * @return bool
+     */
     public function canDelete(&$error = null)
     {
         return GlobalStatic::hasPermission('deleteCoupon');
     }
 
+    /**
+     * @param ResourceItem $resourceItem
+     * @param null|string $error
+     * @param User|null $purchaser
+     * @return bool
+     */
     public function canUseWith(ResourceItem $resourceItem, &$error = null, User $purchaser = null)
     {
         $purchaser = $purchaser ?: \XF::visitor();
@@ -76,27 +94,29 @@ class Coupon extends Entity
         }
 
         $rules = $this->apply_rules;
-        if (empty($rules['usable_user_group_ids']) && empty($rules['resource_ids'])) {
+        if (count($rules['usable_user_group_ids']) === 0
+            && count($rules['resource_ids']) === 0
+        ) {
             // no rules.
             return false;
         }
 
-        if (!empty($rules['usable_user_group_ids'])
+        if (count($rules['usable_user_group_ids']) > 0
             && !$purchaser->isMemberOf($rules['usable_user_group_ids'])
         ) {
             return false;
         }
 
-        if (!empty($rules['category_ids'])
-            && !in_array($resourceItem->resource_category_id, $rules['category_ids'])
+        if (count($rules['category_ids']) > 0
+            && !in_array($resourceItem->resource_category_id, $rules['category_ids'], true)
         ) {
             $error = \XF::phrase('xfrmc_resource_category_not_discountable');
 
             return false;
         }
 
-        if (!empty($rules['resource_ids'])
-            && !in_array($resourceItem->resource_id, $rules['resource_ids'])
+        if (count($rules['resource_ids']) > 0
+            && !in_array($resourceItem->resource_id, $rules['resource_ids'], true)
         ) {
             $error = \XF::phrase('xfrmc_resource_not_discountable');
 
@@ -106,6 +126,10 @@ class Coupon extends Entity
         return true;
     }
 
+    /**
+     * @param ResourceItem $resourceItem
+     * @return float
+     */
     public function getFinalPrice(ResourceItem $resourceItem)
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $mixed */
@@ -121,6 +145,10 @@ class Coupon extends Entity
         return $price;
     }
 
+    /**
+     * @param mixed $value
+     * @return bool
+     */
     public function verifyCouponCode(&$value)
     {
         if ($value === $this->getExistingValue('coupon_code') && $this->isUpdate()) {

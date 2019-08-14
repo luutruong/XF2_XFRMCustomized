@@ -10,6 +10,11 @@ use XF\Mvc\Entity\Repository;
 
 class Report extends Repository
 {
+    /**
+     * @param int $fromDate
+     * @param int $toDate
+     * @return array
+     */
     public function getReportsData($fromDate, $toDate)
     {
         $db = $this->db();

@@ -10,6 +10,10 @@ use Truonglv\XFRMCustomized\GlobalStatic;
 
 class ResourceVersion extends XFCP_ResourceVersion
 {
+    /**
+     * @param null|string $error
+     * @return bool
+     */
     public function canDownload(&$error = null)
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */

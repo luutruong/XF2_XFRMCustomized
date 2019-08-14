@@ -45,6 +45,9 @@ class Setup extends AbstractSetup
         $this->doDropColumns($this->getAlters1());
     }
 
+    /**
+     * @return array
+     */
     protected function getAlters1()
     {
         $alters = [];
@@ -61,6 +64,9 @@ class Setup extends AbstractSetup
         return $alters;
     }
 
+    /**
+     * @return array
+     */
     protected function getAlters2()
     {
         $alters = [];
@@ -77,6 +83,9 @@ class Setup extends AbstractSetup
         return $alters;
     }
 
+    /**
+     * @return array
+     */
     protected function getTables1()
     {
         $tables = [];
@@ -100,6 +109,9 @@ class Setup extends AbstractSetup
         return $tables;
     }
 
+    /**
+     * @return array
+     */
     protected function getTables2()
     {
         $tables = [];

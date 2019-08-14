@@ -14,6 +14,9 @@ class Editor extends AbstractService
 {
     use ValidateAndSavableTrait;
 
+    /**
+     * @var Coupon
+     */
     protected $coupon;
 
     public function __construct(\XF\App $app, Coupon $coupon)
@@ -31,6 +34,9 @@ class Editor extends AbstractService
         return $this->coupon;
     }
 
+    /**
+     * @return array
+     */
     protected function _validate()
     {
         $coupon = $this->coupon;
@@ -39,6 +45,10 @@ class Editor extends AbstractService
         return $coupon->getErrors();
     }
 
+    /**
+     * @return Coupon
+     * @throws \XF\PrintableException
+     */
     protected function _save()
     {
         $coupon = $this->coupon;

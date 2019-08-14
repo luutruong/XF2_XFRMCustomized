@@ -18,7 +18,7 @@ class Report extends AbstractController
 
         $dateStringToTimestamp = function ($date) {
             $dt = \DateTime::createFromFormat('Y-m-d', $date);
-            if ($dt) {
+            if ($dt !== false) {
                 return $dt->format('U');
             }
 

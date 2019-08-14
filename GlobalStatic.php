@@ -13,13 +13,22 @@ class GlobalStatic
 {
     const PURCHASABLE_ID = 'tl_xfrm_customized_resource';
 
-    public static function hasPermission($permission, User $user = null)
+    /**
+     * @param string $permission
+     * @param User|null $user
+     * @return bool
+     */
+    public static function hasPermission(string $permission, User $user = null)
     {
         $user = $user ?: \XF::visitor();
 
         return $user->hasPermission('xfrmc', $permission);
     }
 
+    /**
+     * @param float $amount
+     * @return float|int
+     */
     public static function getFee($amount)
     {
         if (!\XF::options()->xfrmc_enableFee) {

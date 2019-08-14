@@ -16,6 +16,10 @@ use Truonglv\XFRMCustomized\Service\Coupon\Creator;
 
 class Coupon extends AbstractController
 {
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\Reroute|\XF\Mvc\Reply\View
+     */
     public function actionIndex(ParameterBag $params)
     {
         if ($params->coupon_id) {
@@ -43,6 +47,11 @@ class Coupon extends AbstractController
         ]);
     }
 
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\View
+     * @throws \XF\Mvc\Reply\Exception
+     */
     public function actionView(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
@@ -66,15 +75,15 @@ class Coupon extends AbstractController
         $categories = null;
         $resources = null;
 
-        if (!empty($coupon->apply_rules['usable_user_group_ids'])) {
+        if (count($coupon->apply_rules['usable_user_group_ids']) > 0) {
             $userGroups = \XF::em()->findByIds('XF:UserGroup', $coupon->apply_rules['usable_user_group_ids']);
         }
 
-        if (!empty($coupon->apply_rules['category_ids'])) {
+        if (count($coupon->apply_rules['category_ids']) > 0) {
             $categories = \XF::em()->findByIds('XFRM:Category', $coupon->apply_rules['category_ids']);
         }
 
-        if (!empty($coupon->apply_rules['resource_ids'])) {
+        if (count($coupon->apply_rules['resource_ids']) > 0) {
             $resources = \XF::em()->findByIds('XFRM:ResourceItem', $coupon->apply_rules['resource_ids']);
         }
 
@@ -92,6 +101,10 @@ class Coupon extends AbstractController
         return $this->view('Truonglv\XFRMCustomized:Coupon\View', 'xfrmc_coupon_view', $viewParams);
     }
 
+    /**
+     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Message
+     * @throws \XF\Mvc\Reply\Exception
+     */
     public function actionCheck()
     {
         $this->assertPostOnly();
@@ -144,6 +157,9 @@ class Coupon extends AbstractController
         return $message;
     }
 
+    /**
+     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
+     */
     public function actionAdd()
     {
         if (!GlobalStatic::hasPermission('add')) {
@@ -169,6 +185,11 @@ class Coupon extends AbstractController
         return $this->getCouponForm($coupon);
     }
 
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
+     * @throws \XF\Mvc\Reply\Exception
+     */
     public function actionEdit(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
@@ -200,6 +221,12 @@ class Coupon extends AbstractController
         return $this->getCouponForm($coupon);
     }
 
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
+     * @throws \XF\Mvc\Reply\Exception
+     * @throws \XF\PrintableException
+     */
     public function actionDelete(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
@@ -221,6 +248,11 @@ class Coupon extends AbstractController
         ]);
     }
 
+    /**
+     * @param int $id
+     * @return \Truonglv\XFRMCustomized\Entity\Coupon|null
+     * @throws \XF\Mvc\Reply\Exception
+     */
     protected function assertCouponViewable($id)
     {
         /** @var \Truonglv\XFRMCustomized\Entity\Coupon|null $coupon */
@@ -237,6 +269,9 @@ class Coupon extends AbstractController
         return $coupon;
     }
 
+    /**
+     * @return array
+     */
     protected function getCouponInput()
     {
         $input = $this->filter([
@@ -269,6 +304,10 @@ class Coupon extends AbstractController
         return $input;
     }
 
+    /**
+     * @param \Truonglv\XFRMCustomized\Entity\Coupon $coupon
+     * @return \XF\Mvc\Reply\View
+     */
     protected function getCouponForm(\Truonglv\XFRMCustomized\Entity\Coupon $coupon)
     {
         /** @var UserGroup $userGroupRepo */

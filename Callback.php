@@ -10,6 +10,12 @@ use XF\Template\Templater;
 
 class Callback
 {
+    /**
+     * @param string $value
+     * @param array $params
+     * @param Templater $templater
+     * @return string
+     */
     public static function renderPaymentProfiles($value, array $params, Templater $templater)
     {
         if (empty($params['resource'])) {
@@ -32,7 +38,7 @@ class Callback
             $choices[] = [
                 'value' => $paymentProfile->payment_profile_id,
                 'label' => $paymentProfile->title,
-                'selected' => in_array($paymentProfile->payment_profile_id, $resource->payment_profile_ids)
+                'selected' => in_array($paymentProfile->payment_profile_id, $resource->payment_profile_ids, true)
             ];
         }
 

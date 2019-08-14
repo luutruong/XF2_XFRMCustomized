@@ -28,11 +28,18 @@ use XFRM\Entity\ResourceVersion;
  */
 class Purchase extends Entity
 {
+    /**
+     * @return bool
+     */
     public function isExpired()
     {
         return $this->expire_date <= \XF::$time;
     }
 
+    /**
+     * @param ResourceVersion $version
+     * @return bool
+     */
     public function canDownloadVersion(ResourceVersion $version)
     {
         return $version->resource_version_id <= $this->resource_version_id;

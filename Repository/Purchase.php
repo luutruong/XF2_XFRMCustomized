@@ -12,7 +12,13 @@ use XFRM\Entity\ResourceItem;
 
 class Purchase extends Repository
 {
+    /**
+     * @var array
+     */
     protected $activePurchases = [];
+    /**
+     * @var array
+     */
     protected $purchases = [];
 
     /**
@@ -44,7 +50,7 @@ class Purchase extends Repository
     /**
      * @param ResourceItem $resource
      * @param User|null $user
-     * @return \XF\Mvc\Entity\ArrayCollection|\Truonglv\XFRMCustomized\Entity\Purchase[]
+     * @return \XF\Mvc\Entity\ArrayCollection
      */
     public function getAllPurchases(ResourceItem $resource, User $user = null)
     {
@@ -66,6 +72,10 @@ class Purchase extends Repository
         return $purchases;
     }
 
+    /**
+     * @param User $user
+     * @return \XF\Mvc\Entity\ArrayCollection
+     */
     public function getPurchasedResources(User $user)
     {
         $db = $this->db();
@@ -75,8 +85,8 @@ class Purchase extends Repository
             WHERE user_id = ?
         ', $user->user_id);
 
-        if (empty($resourceIds)) {
-            return [];
+        if (count($resourceIds) === 0) {
+            return $this->em->getEmptyCollection();
         }
 
         return $this->finder('XFRM:ResourceItem')
