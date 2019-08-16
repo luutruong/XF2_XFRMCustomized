@@ -139,6 +139,17 @@ class ResourceItem extends XFCP_ResourceItem
     }
 
     /**
+     * @return array
+     */
+    public function getPaymentProfileIds()
+    {
+        $ids = $this->get('payment_profile_ids_');
+        $ids = array_map('intval', $ids);
+
+        return $ids;
+    }
+
+    /**
      * @param null|string $error
      * @return bool
      */
@@ -156,6 +167,7 @@ class ResourceItem extends XFCP_ResourceItem
             'renew_price' => ['type' => self::FLOAT, 'default' => 0]
         ];
 
+        $structure->getters['payment_profile_ids'] = true;
         $structure->getters['external_purchase_url'] = true;
 
         return $structure;
