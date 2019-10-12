@@ -149,6 +149,12 @@
         "version_string": "1.0.9",
         "hash": "3fd8e189be7e16cda7779fc287b453f7"
     },
+    "xfrmc_buy_now.txt": {
+        "global_cache": false,
+        "version_id": 2000300,
+        "version_string": "2.0.3",
+        "hash": "eeceac1af4e7620894d6d2083921bb73"
+    },
     "xfrmc_buy_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
