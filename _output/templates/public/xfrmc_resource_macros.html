@@ -90,7 +90,7 @@
 						  arg-count="{$resource.rating_count}"
 						  arg-rowClass="ratingStarsRow--justified"
 						  arg-starsClass="ratingStars--custom" />
-				<xf:if is="!$resource.canDownload()">
+				<xf:if is="$resource.canDownload()">
 					<xf:button href="{{ link('resources/download', $resource) }}"
 							   title="{{ phrase('download') }}" data-xf-init="tooltip"
 							   class="button--link button--icon"><i class="fa fa-download" aria-hidden="true"></i></xf:button>
