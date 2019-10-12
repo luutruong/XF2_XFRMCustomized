@@ -43,7 +43,8 @@ class GlobalStatic
      */
     public static function getFee($amount)
     {
-        if (!\XF::options()->xfrmc_enableFee) {
+        $formula = \XF::options()->xfrmc_feeFormula;
+        if (strlen($formula) <= 0) {
             return 0;
         }
 
@@ -51,7 +52,10 @@ class GlobalStatic
             return 0;
         }
 
-        return round((4.4 * $amount)/100 + 0.3, 2);
+        $formula = str_replace('{price}', $amount, $formula);
+        $price = eval("return $formula;");
+
+        return round($price, 2);
     }
 
     /**

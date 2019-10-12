@@ -29,6 +29,12 @@
         "version_string": "1.0.9",
         "hash": "a86239011b22801ee6ae304b764ad39f"
     },
+    "option.xfrmc_feeFormula.txt": {
+        "global_cache": false,
+        "version_id": 2000400,
+        "version_string": "2.0.4",
+        "hash": "4185a2c0a8de44f4807f8521b2c9a978"
+    },
     "option_explain.xfrmc_disableCategories.txt": {
         "global_cache": false,
         "version_id": 2000200,
@@ -40,6 +46,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "5f4a77ca7181f8dd5dee82c0ac8fd8cc"
+    },
+    "option_explain.xfrmc_feeFormula.txt": {
+        "global_cache": false,
+        "version_id": 2000400,
+        "version_string": "2.0.4",
+        "hash": "f40d0207b3ee41c7e03059fe9ef965eb"
     },
     "option_group.xfrmc.txt": {
         "global_cache": false,
