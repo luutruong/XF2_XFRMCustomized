@@ -60,19 +60,23 @@
 	<xf:css src="xfrmc_resource_list.less"/>
 	<div class="xfrmc-resourceList">
 		<xf:foreach loop="$resources" value="$resource">
-			<xf:macro name="resource_list_grid_item" arg-resource="{$resource}"/>
+			<div class="resourceList-item">
+				<xf:macro name="resource_list_grid_item" arg-resource="{$resource}"/>
+			</div>
 		</xf:foreach>
 	</div>
 </xf:macro>
 
 <xf:macro name="resource_list_grid_item" arg-resource="!">
-	<div class="resourceList-item">
+	<div class="resourceList-item--wrapper">
 		{{ resource_icon($resource, 'l', link('resources', $resource)) }}
 
 		<div class="resourceList-item--body">
-			<a href="{{ link('resources', $resource) }}"
-			   class="resourceList-item--title" data-tp-primary="on">{$resource.title}</a>
-			<p class="resourceList-item--description">{$resource.tag_line}</p>
+			<div class="resourceList-item--fill">
+				<a href="{{ link('resources', $resource) }}"
+				   class="resourceList-item--title" data-tp-primary="on">{$resource.title}</a>
+				<p class="resourceList-item--description">{$resource.tag_line}</p>
+			</div>
 
 			<xf:if is="$resource.isExternalPurchasable()">
 				<span class="resourceList-item--price">{$resource.price|currency($resource.currency)}</span>
