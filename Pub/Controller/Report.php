@@ -28,10 +28,16 @@ class Report extends AbstractController
         $toDate = $dateStringToTimestamp($this->filter('to', 'str'));
 
         if (!$toDate) {
-            $toDate = floor(\XF::$time / 86400) * 86400 - 1;
+            $dt = new \DateTime();
+            $dt->modify('last day of this month');
+
+            $toDate = $dt->format('U');
         }
         if (!$fromDate) {
-            $fromDate = $toDate - 30 * 86400;
+            $dt = new \DateTime('@' . $toDate);
+            $dt->modify('first day of this month');
+
+            $fromDate = $dt->format('U');
         }
 
         /** @var \Truonglv\XFRMCustomized\Repository\Report $reportRepo */

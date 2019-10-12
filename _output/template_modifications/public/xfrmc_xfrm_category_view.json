@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_category_view",
+    "description": "Render list grid",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "preg_replace",
+    "find": "#<div class=\"structItemContainer\">(.+?)</div>#s",
+    "replace": "<xf:macro template=\"xfrmc_resource_macros\" name=\"resource_list_grid\"\n\t\t  arg-resources=\"{$resources}\"/>"
+}
