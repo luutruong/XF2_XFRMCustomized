@@ -39,20 +39,20 @@ class GlobalStatic
 
     /**
      * @param float $amount
-     * @return float|int
+     * @return float
      */
     public static function getFee($amount)
     {
         $formula = \XF::options()->xfrmc_feeFormula;
         if (strlen($formula) <= 0) {
-            return 0;
+            return 0.0;
         }
 
         if ($amount < 1) {
-            return 0;
+            return 0.0;
         }
 
-        $formula = str_replace('{price}', $amount, $formula);
+        $formula = str_replace('{price}', strval($amount), $formula);
         $price = eval("return $formula;");
 
         return round($price, 2);
