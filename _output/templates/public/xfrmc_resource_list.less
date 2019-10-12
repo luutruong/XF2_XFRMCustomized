@@ -88,9 +88,16 @@
 
 @media(max-width: @xf-responsiveMedium) {
   .xfrmc-resourceList {
+    margin-left: -@xf-paddingSmall;
+    margin-right: -@xf-paddingSmall;
     .resourceList-item {
       flex: 0 0 50%;
       min-width: 50%;
+      padding: @xf-paddingSmall;
+
+      .avatar {
+        height: 140px;
+      }
     }
   }
 }
