@@ -27,6 +27,8 @@
     .resourceList-item--body {
       padding: @xf-paddingLarge;
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .resourceList-item--title {
@@ -55,6 +57,7 @@
     .resourceList-item--meta {
       display: flex;
       justify-content: space-between;
+      align-items: center;
 
       .ratingStarsRow {
         flex-direction: column;
@@ -73,6 +76,12 @@
 
     .resourceList-item--fill {
       flex: 1;
+    }
+
+    .button--icon {
+      .fa {
+        font-size: @xf-fontSizeLarge;
+      }
     }
   }
 }

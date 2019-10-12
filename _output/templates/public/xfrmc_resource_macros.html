@@ -80,7 +80,7 @@
 
 			<xf:if is="$resource.isExternalPurchasable()">
 				<span class="resourceList-item--price">{$resource.price|currency($resource.currency)}</span>
-			<xf:else />
+				<xf:else />
 				<span class="resourceList-item--price"></span>
 			</xf:if>
 
@@ -90,13 +90,14 @@
 						  arg-count="{$resource.rating_count}"
 						  arg-rowClass="ratingStarsRow--justified"
 						  arg-starsClass="ratingStars--custom" />
-				<xf:if is="$resource.canDownload()">
+				<xf:if is="!$resource.canDownload()">
 					<xf:button href="{{ link('resources/download', $resource) }}"
-							   class="button--link">{{ phrase('download') }}</xf:button>
+							   title="{{ phrase('download') }}" data-xf-init="tooltip"
+							   class="button--link button--icon"><i class="fa fa-download" aria-hidden="true"></i></xf:button>
 				<xf:elseif is="$resource.canPurchase()"/>
 					<xf:button href="{{ link('resources/purchase', $resource) }}"
-							   overlay="true"
-							   class="button--cta">{{ phrase('xfrmc_buy_now') }}</xf:button>
+							   overlay="true" title="{{ phrase('xfrmc_buy_now') }}" data-xf-init="tooltip"
+							   class="button--cta button--icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></xf:button>
 				</xf:if>
 			</div>
 		</div>

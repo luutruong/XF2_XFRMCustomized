@@ -47,12 +47,12 @@
     "public/xfrmc_resource_list.less": {
         "version_id": 2000400,
         "version_string": "2.0.4",
-        "hash": "d5f852b7b9ff7db4ed530627e90b9772"
+        "hash": "82fbb7b1c976759546a0d15f3e8bd1b4"
     },
     "public/xfrmc_resource_macros.html": {
         "version_id": 2000400,
         "version_string": "2.0.4",
-        "hash": "020b6c91e26ed316d3b5d8d21b39d012"
+        "hash": "94bd059633a229f6a693dbd2fdb2e018"
     },
     "public/xfrmc_resource_purchase.html": {
         "version_id": 1000971,
