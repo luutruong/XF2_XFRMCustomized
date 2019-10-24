@@ -35,6 +35,12 @@
         "version_string": "2.0.4",
         "hash": "4185a2c0a8de44f4807f8521b2c9a978"
     },
+    "option.xfrmc_resourceIconSize.txt": {
+        "global_cache": false,
+        "version_id": 2000500,
+        "version_string": "2.0.5",
+        "hash": "90f0bcc93aa6367991476f9821515c8d"
+    },
     "option_explain.xfrmc_disableCategories.txt": {
         "global_cache": false,
         "version_id": 2000200,
@@ -52,6 +58,12 @@
         "version_id": 2000400,
         "version_string": "2.0.4",
         "hash": "f40d0207b3ee41c7e03059fe9ef965eb"
+    },
+    "option_explain.xfrmc_resourceIconSize.txt": {
+        "global_cache": false,
+        "version_id": 2000500,
+        "version_string": "2.0.5",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "option_group.xfrmc.txt": {
         "global_cache": false,
@@ -76,6 +88,12 @@
         "version_id": 1010100,
         "version_string": "1.1.1",
         "hash": "82bd15e5dcae83f52fcfcf824a1fc4bc"
+    },
+    "permission.resource_xfrmc_viewHistoryAny.txt": {
+        "global_cache": false,
+        "version_id": 2000500,
+        "version_string": "2.0.5",
+        "hash": "f03c06adc3e412b4a482b06d46fe82ab"
     },
     "permission.xfrmc_add.txt": {
         "global_cache": false,

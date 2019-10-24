@@ -7,5 +7,8 @@
     },
     "xfrmc_feeFormula.json": {
         "hash": "618b4987508c1c5743c89ecd649eefd4"
+    },
+    "xfrmc_resourceIconSize.json": {
+        "hash": "d742140fc86051e60fc7460ce13c2734"
     }
 }

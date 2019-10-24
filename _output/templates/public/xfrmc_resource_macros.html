@@ -60,7 +60,7 @@
 	<xf:css src="xfrmc_resource_list.less"/>
 	<div class="xfrmc-resourceList">
 		<xf:foreach loop="$resources" value="$resource">
-			<div class="resourceList-item">
+			<div class="resourceList-item {{ $resource.resource_state }}">
 				<xf:macro name="resource_list_grid_item" arg-resource="{$resource}"/>
 			</div>
 		</xf:foreach>

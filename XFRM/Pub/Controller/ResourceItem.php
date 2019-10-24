@@ -12,6 +12,15 @@ use Truonglv\XFRMCustomized\GlobalStatic;
 
 class ResourceItem extends XFCP_ResourceItem
 {
+    /**
+     * @var null|string
+     */
+    private $xfrmcViewableMethod = null;
+
+    /**
+     * @param \XFRM\Entity\ResourceItem $resource
+     * @return \XFRM\Service\ResourceItem\Edit
+     */
     protected function setupResourceEdit(\XFRM\Entity\ResourceItem $resource)
     {
         $editor = parent::setupResourceEdit($resource);
@@ -273,6 +282,13 @@ class ResourceItem extends XFCP_ResourceItem
         );
     }
 
+    public function actionHistory(ParameterBag $params)
+    {
+        $this->xfrmcViewableMethod = 'canViewHistory';
+
+        return parent::actionHistory($params);
+    }
+
     /**
      * @param int|string|mixed $resourceId
      * @param array $extraWith
@@ -283,6 +299,20 @@ class ResourceItem extends XFCP_ResourceItem
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resourceItem */
         $resourceItem = parent::assertViewableResource($resourceId, $extraWith);
+
+        if ($this->xfrmcViewableMethod !== null) {
+            /** @var callable $callable */
+            $callable = [$resourceItem, $this->xfrmcViewableMethod];
+
+            $error = null;
+            $bool = (bool) call_user_func_array($callable, [&$error]);
+
+            if (!$bool) {
+                throw $this->exception($this->noPermission($error));
+            }
+
+            $this->xfrmcViewableMethod = null;
+        }
 
         return $resourceItem;
     }

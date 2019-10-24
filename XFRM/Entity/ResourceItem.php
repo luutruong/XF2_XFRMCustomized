@@ -8,6 +8,7 @@ namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
+use Truonglv\XFRMCustomized\Data\Lazy;
 use Truonglv\XFRMCustomized\GlobalStatic;
 
 /**
@@ -150,12 +151,37 @@ class ResourceItem extends XFCP_ResourceItem
     }
 
     /**
-     * @param null|string $error
+     * @param mixed $error
      * @return bool
      */
     public function canAddBuyer(&$error = null)
     {
         return $this->hasPermission('xfrmc_addBuyer');
+    }
+
+    /**
+     * @param mixed $error
+     * @return bool
+     */
+    public function canViewHistory(&$error = null)
+    {
+        $visitor = \XF::visitor();
+        if ($visitor->user_id <= 0) {
+            return false;
+        }
+
+        if ($this->hasPermission('xfrmc_viewHistoryAny')) {
+            return true;
+        }
+
+        if ($visitor->user_id === $this->user_id) {
+            return true;
+        }
+
+        /** @var Lazy $lazy */
+        $lazy = $this->app()->data('Truonglv\XFRMCustomized:Lazy');
+
+        return $lazy->isPurchasedResource($this->resource_id);
     }
 
     public static function getStructure(Structure $structure)
