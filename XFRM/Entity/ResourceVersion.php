@@ -11,21 +11,24 @@ use Truonglv\XFRMCustomized\GlobalStatic;
 class ResourceVersion extends XFCP_ResourceVersion
 {
     /**
-     * @param null|string $error
+     * @param mixed $error
      * @return bool
      */
     public function canDownload(&$error = null)
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = $this->Resource;
+        if ($resource === null) {
+            return false;
+        }
+
         if (GlobalStatic::isDisabledCategory($resource->resource_category_id)) {
             return parent::canDownload($error);
         }
 
         $visitor = \XF::visitor();
 
-        if ($resource
-            && $resource->price > 0
+        if ($resource->price > 0
             && $this->file_count > 0
             && $resource->user_id != $visitor->user_id
         ) {

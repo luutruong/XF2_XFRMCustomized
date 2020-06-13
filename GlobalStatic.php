@@ -20,7 +20,7 @@ class GlobalStatic
      */
     public static function hasPermission(string $permission, User $user = null)
     {
-        $user = $user ?: \XF::visitor();
+        $user = $user !== null ? $user : \XF::visitor();
 
         return $user->hasPermission('xfrmc', $permission);
     }

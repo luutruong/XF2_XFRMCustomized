@@ -1,4 +1,4 @@
-!(function($, window, document, _undefined) {
+!(function ($, window, document, _undefined) {
     XF.XFRMCustomized_CouponCheck = XF.Element.newHandler({
         options: {
             resourceId: null,
@@ -21,7 +21,7 @@
         orgData: null,
         cacheData: {},
 
-        init: function() {
+        init: function () {
             if (!this.options.href) {
                 throw new Error('Must have data-href attribute.');
             }
@@ -39,7 +39,7 @@
             this.$target.bind('click', XF.proxy(this, 'click'));
         },
 
-        setup: function() {
+        setup: function () {
             this.$price0 = $(this.options.price);
             this.$price1 = this.$price0
                 .clone()
@@ -67,7 +67,7 @@
             this.$total0.css({ color: 'green' });
         },
 
-        onInputKeyup: function() {
+        onInputKeyup: function () {
             var value = this.$input.val().trim();
 
             if (value.length) {
@@ -88,7 +88,7 @@
             }
         },
 
-        click: function(e) {
+        click: function (e) {
             e.preventDefault();
 
             if (this.loading) {
@@ -107,13 +107,13 @@
             this.loading = true;
             _this.$input.prop('disabled', true);
 
-            XF.ajax('POST', this.options.href, data, XF.proxy(this, 'onResponse')).always(function() {
+            XF.ajax('POST', this.options.href, data, XF.proxy(this, 'onResponse')).always(function () {
                 _this.loading = false;
                 _this.$input.prop('disabled', false);
             });
         },
 
-        onResponse: function(data) {
+        onResponse: function (data) {
             this.cacheData[this.$input.val()] = data;
 
             if (this.orgData === null) {

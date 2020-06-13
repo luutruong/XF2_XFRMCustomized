@@ -28,10 +28,10 @@ class Purchase extends Repository
      */
     public function getActivePurchase(ResourceItem $resource, User $user = null)
     {
-        $user = $user ?: \XF::visitor();
+        $user = $user !== null ? $user : \XF::visitor();
         $cacheKey = $resource->resource_id . '_' . $user->user_id;
 
-        if (array_key_exists($cacheKey, $this->activePurchases)) {
+        if (\array_key_exists($cacheKey, $this->activePurchases)) {
             return $this->activePurchases[$cacheKey];
         }
 
@@ -54,7 +54,7 @@ class Purchase extends Repository
      */
     public function getAllPurchases(ResourceItem $resource, User $user = null)
     {
-        $user = $user ?: \XF::visitor();
+        $user = $user !== null ? $user : \XF::visitor();
         $cacheKey = $resource->resource_id . '_' . $user->user_id;
 
         if (array_key_exists($cacheKey, $this->purchases)) {

@@ -67,7 +67,7 @@ class CouponUser extends Entity
 
     protected function _postSave()
     {
-        if ($this->isInsert()) {
+        if ($this->isInsert() && $this->Coupon !== null) {
             $this->Coupon->used_count++;
             $this->Coupon->save();
         }
@@ -75,7 +75,9 @@ class CouponUser extends Entity
 
     protected function _postDelete()
     {
-        $this->Coupon->used_count--;
-        $this->Coupon->save();
+        if ($this->Coupon !== null) {
+            $this->Coupon->used_count--;
+            $this->Coupon->save();
+        }
     }
 }

@@ -24,7 +24,7 @@ class ResourceItem extends XFCP_ResourceItem
 {
     /**
      * @param mixed $message
-     * @param null|string $key
+     * @param mixed $key
      * @param mixed $specificError
      * @return void
      */
@@ -93,7 +93,7 @@ class ResourceItem extends XFCP_ResourceItem
             return true;
         }
 
-        if ($this->CurrentVersion->canDownload()) {
+        if ($this->CurrentVersion !== null && $this->CurrentVersion->canDownload()) {
             return true;
         }
 

@@ -70,7 +70,7 @@ class MigrateBDPaygate extends AbstractRebuildJob
                 ->where('user_id', $paygatePurchase['user_id'])
                 ->fetchOne();
 
-        if (!$purchase) {
+        if ($purchase === null) {
             /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchase */
             $purchase = \XF::em()->create('Truonglv\XFRMCustomized:Purchase');
         }

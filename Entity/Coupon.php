@@ -67,7 +67,7 @@ class Coupon extends Entity
      */
     public function canUseWith(ResourceItem $resourceItem, &$error = null, User $purchaser = null)
     {
-        $purchaser = $purchaser ?: \XF::visitor();
+        $purchaser = $purchaser !== null ? $purchaser : \XF::visitor();
 
         if ($this->begin_date >= \XF::$time
             || $this->end_date <= \XF::$time
@@ -87,7 +87,7 @@ class Coupon extends Entity
             'user_id' => $purchaser->user_id
         ]);
 
-        if ($couponUser) {
+        if ($couponUser !== null) {
             $error = \XF::phrase('xfrmc_this_code_is_only_valid_once_per_resource');
 
             return false;
@@ -160,7 +160,7 @@ class Coupon extends Entity
             'coupon_code' => $value
         ]);
 
-        if ($existCoupon && $existCoupon->coupon_id !== $this->coupon_id) {
+        if ($existCoupon !== null && $existCoupon->coupon_id !== $this->coupon_id) {
             $this->error(\XF::phrase('xfrmc_coupon_code_x_not_available', [
                 'code' => $value
             ]));

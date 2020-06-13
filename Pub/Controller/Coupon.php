@@ -119,18 +119,20 @@ class Coupon extends AbstractController
             'coupon_code' => $input['coupon_code']
         ]);
 
-        if (!$coupon) {
+        if ($coupon === null) {
             return $this->error(\XF::phrase('xfrmc_requested_coupon_not_found'));
         }
 
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = $this->em()->find('XFRM:ResourceItem', $input['resource_id']);
-        if (!$resource || !$resource->canView()) {
+        if ($resource === null || !$resource->canView()) {
             return $this->error(\XF::phrase('xfrm_requested_resource_not_found'));
         }
 
         if (!$coupon->canUseWith($resource, $error)) {
-            return $this->error($error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
+            return $this->error($error !== null
+                ? $error
+                : \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
         }
 
         $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
@@ -250,14 +252,14 @@ class Coupon extends AbstractController
 
     /**
      * @param int $id
-     * @return \Truonglv\XFRMCustomized\Entity\Coupon|null
+     * @return \Truonglv\XFRMCustomized\Entity\Coupon
      * @throws \XF\Mvc\Reply\Exception
      */
     protected function assertCouponViewable($id)
     {
         /** @var \Truonglv\XFRMCustomized\Entity\Coupon|null $coupon */
         $coupon = $this->em()->find('Truonglv\XFRMCustomized:Coupon', $id);
-        if (!$coupon) {
+        if ($coupon === null) {
             throw $this->exception($this->notFound(\XF::phrase('xfrmc_requested_coupon_not_found')));
         }
 

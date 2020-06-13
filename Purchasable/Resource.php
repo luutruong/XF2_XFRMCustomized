@@ -34,7 +34,7 @@ class Resource extends AbstractPurchasable
         /** @var PaymentProfile|null $paymentProfile */
         $paymentProfile = \XF::em()->find('XF:PaymentProfile', $profileId);
 
-        if (!$paymentProfile || !$paymentProfile->active) {
+        if ($paymentProfile === null || !$paymentProfile->active) {
             $error = \XF::phrase('please_choose_valid_payment_profile_to_continue_with_your_purchase');
 
             return false;
@@ -43,7 +43,7 @@ class Resource extends AbstractPurchasable
         $resourceId = $request->filter('resource_id', 'uint');
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
         $resource = \XF::em()->find('XFRM:ResourceItem', $resourceId);
-        if (!$resource || !$resource->canPurchase()) {
+        if ($resource === null || !$resource->canPurchase()) {
             $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
 
             return false;
@@ -56,14 +56,14 @@ class Resource extends AbstractPurchasable
                 'coupon_code' => $couponCode
             ]);
 
-            if (!$coupon) {
+            if ($coupon === null) {
                 $error = \XF::phrase('xfrmc_requested_coupon_not_found');
 
                 return false;
             }
 
             if (!$coupon->canUseWith($resource, $error, $purchaser)) {
-                $error = $error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
+                $error = $error !== null ? $error : \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
 
                 return false;
             }
@@ -94,7 +94,7 @@ class Resource extends AbstractPurchasable
 
         /** @var ResourceItem|null $resource */
         $resource = \XF::em()->find('XFRM:ResourceItem', $extraData['resource_id']);
-        if ($resource) {
+        if ($resource !== null) {
             $output['link'] = \XF::app()->router('public')->buildLink('resources/edit', $resource);
             $output['title'] = $resource->title;
             $output['purchasable'] = $resource;
@@ -146,12 +146,12 @@ class Resource extends AbstractPurchasable
                 $purchase->username = $purchaser->username;
                 $purchase->expire_date = \XF::$time + 365 * 86400;
                 $purchase->resource_version_id = $resource->current_version_id;
-                if ($purchaseRequest->request_key) {
+                if ($purchaseRequest->request_key !== '') {
                     $purchase->purchase_request_key = substr($purchaseRequest->request_key, 0, 32);
                 }
 
                 $couponUser = null;
-                if ($coupon) {
+                if ($coupon !== null) {
                     $purchase->note = 'Using coupon code: ' . $coupon->coupon_code;
                     $purchase->amount = $coupon->getFinalPrice($resource);
 
@@ -170,7 +170,7 @@ class Resource extends AbstractPurchasable
 
                 $purchase->save();
 
-                if ($couponUser) {
+                if ($couponUser !== null) {
                     $couponUser->fastUpdate('purchase_id', $purchase->purchase_id);
                 }
 
@@ -179,7 +179,7 @@ class Resource extends AbstractPurchasable
                     'User (%s) bought resource (%s) with coupon code (%s)',
                     $purchaser->username,
                     $resource->resource_id . ' - ' . $resource->title,
-                    $coupon ? $coupon->coupon_code : ''
+                    $coupon !== null ? $coupon->coupon_code : ''
                 );
 
                 break;
@@ -187,7 +187,7 @@ class Resource extends AbstractPurchasable
                 if ($purchaseId) {
                     /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
                     $purchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $purchaseId);
-                    if ($purchase) {
+                    if ($purchase !== null) {
                         $purchase->expire_date = $purchase->purchased_date + 365 * 86400;
                         $purchase->save();
 
@@ -214,7 +214,7 @@ class Resource extends AbstractPurchasable
                 break;
         }
 
-        if ($purchaseRequest && $purchase) {
+        if ($purchaseRequest !== null && $purchase !== null) {
             $extraData = $purchaseRequest->extra_data;
             $extraData['purchase_id'] = $purchase->purchase_id;
             $purchaseRequest->extra_data = $extraData;
@@ -254,14 +254,14 @@ class Resource extends AbstractPurchasable
         if (isset($extraData['coupon_id'])) {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $extraData['coupon_id']);
-            if (!$coupon) {
+            if ($coupon === null) {
                 $error = \XF::phrase('xfrmc_requested_coupon_not_found');
 
                 return false;
             }
 
             if (!$coupon->canUseWith($purchasable, $error)) {
-                $error = $error ?: \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
+                $error = $error !== null ? $error : \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted');
 
                 return false;
             }
@@ -303,7 +303,7 @@ class Resource extends AbstractPurchasable
             $purchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $purchaseId);
         }
 
-        if ($purchase) {
+        if ($purchase !== null) {
             $purchase->delete();
 
             $state->logType = 'cancel';
@@ -350,7 +350,7 @@ class Resource extends AbstractPurchasable
         $purchasable,
         \XF\Entity\User $purchaser
     ) {
-        if ($this->coupon) {
+        if ($this->coupon !== null) {
             $cost = $this->coupon->getFinalPrice($purchasable);
         } else {
             $cost = $purchasable->getPurchasePrice();
@@ -385,7 +385,7 @@ class Resource extends AbstractPurchasable
         $purchase->purchasableTitle = $purchasable->title;
         $purchase->extraData = [
             'resource_id' => $purchasable->resource_id,
-            'coupon_id' => $this->coupon ? $this->coupon->coupon_id : 0
+            'coupon_id' => $this->coupon !== null ? $this->coupon->coupon_id : 0
         ];
 
         $router = \XF::app()->router('public');

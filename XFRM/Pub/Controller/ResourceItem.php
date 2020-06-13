@@ -71,7 +71,7 @@ class ResourceItem extends XFCP_ResourceItem
                     'resource_id' => $resource->resource_id
                 ]);
 
-                if ($exists) {
+                if ($exists !== null) {
                     continue;
                 }
 
@@ -126,7 +126,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         /** @var User|null $user */
         $user = $this->em()->find('XF:User', $this->filter('user_id', 'uint'));
-        if (!$user) {
+        if ($user === null) {
             return $this->notFound(\XF::phrase('requested_member_not_found'));
         }
 
@@ -136,7 +136,7 @@ class ResourceItem extends XFCP_ResourceItem
             ->where('user_id', $user->user_id)
             ->fetchOne();
 
-        if (!$purchased) {
+        if ($purchased === null) {
             return $this->error(\XF::phrase('xfrmc_user_x_did_not_bought_this_resource', [
                 'name' => $user->username
             ]));
@@ -192,7 +192,7 @@ class ResourceItem extends XFCP_ResourceItem
             /** @var User|null $user */
             $user = $userRepo->getUserByNameOrEmail($username);
 
-            $finder->where('user_id', $user ? $user->user_id : 0);
+            $finder->where('user_id', $user !== null ? $user->user_id : 0);
         }
 
         $page = $this->filterPage();
@@ -229,7 +229,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission($error);
         }
 
-        if (GlobalStatic::purchaseRepo()->getActivePurchase($resource)) {
+        if (GlobalStatic::purchaseRepo()->getActivePurchase($resource) !== null) {
             return $this->redirect($this->buildLink('resources', $resource));
         }
 
