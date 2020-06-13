@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_resource_view",
+    "description": "Replace schema to Product",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "preg_replace",
+    "find": "#<xf:page option=\"ldJsonHtml\">(.+?)</xf:page>#si",
+    "replace": "<xf:macro template=\"xfrmc_resource_macros\" name=\"structured_data\"\n\t\t  arg-resource=\"{$resource}\" arg-description=\"{$description}\" />"
+}
