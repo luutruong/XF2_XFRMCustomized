@@ -13,9 +13,9 @@
     },
     "nav.xfrmc_reports.txt": {
         "global_cache": false,
-        "version_id": 1010100,
-        "version_string": "1.1.1",
-        "hash": "c91c7b93c28cd18741b71f727ee81ee3"
+        "version_id": 2000600,
+        "version_string": "2.0.6",
+        "hash": "23a5bb3db4594efb69ba2f77d73dd242"
     },
     "option.xfrmc_disableCategories.txt": {
         "global_cache": false,
