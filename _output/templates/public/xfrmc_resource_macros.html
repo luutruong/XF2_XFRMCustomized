@@ -117,6 +117,9 @@
 				"alternativeHeadline": "{$resource.tag_line|escape('json')}",
 				"description": "{$descSnippet|escape('json')}",
 				"sku": "{$resource.resource_id|escape('json')}",
+				"url": "{{ link('canonical:resources', $resource)|escape('json') }}",
+				"brand": "{$xf.options.boardTitle|escape('json')}",
+				"mpn": "{{ 'E-' . $resource.resource_id|escape('json') }}",
 				"offers": {
 					"@type": "Offer",
 					"availability": "https://schema.org/InStock",
@@ -124,17 +127,13 @@
 					"priceCurrency": "{$resource.currency|escape('json')}"</xf:if>
 				},
 				"image": "{{ ($xf.options.xfrmAllowIcons AND $resource.icon_date) ? $resource.getIconUrl('m', true) : $resource.User.getAvatarUrl('m', null, true)|escape('json') }}",
-				"aggregateRating": {
+				<xf:if is="$resource.review_count > 0">"aggregateRating": {
 					"@type": "AggregateRating",
 					"ratingValue": "{$resource.rating_avg|escape('json')}",
 					"reviewCount": "{$resource.review_count|escape('json')}"
-				},
+				},</xf:if>
 				"dateCreated": "{{ date($resource.resource_date, 'c')|escape('json') }}",
-				"dateModified": "{{ date($resource.last_update, 'c')|escape('json') }}",
-				"author": {
-					"@type": "Person",
-					"name": "{{ ($resource.User ? $resource.User.username : $resource.username)|escape('json') }}"
-				}
+				"dateModified": "{{ date($resource.last_update, 'c')|escape('json') }}"
 			}
 		</script>
 	</xf:page>
