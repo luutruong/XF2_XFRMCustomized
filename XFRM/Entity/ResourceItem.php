@@ -122,6 +122,10 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isRenewLicense()
     {
+        if (\XF::visitor()->user_id <= 0) {
+            return false;
+        }
+
         $purchases = App::purchaseRepo()->getAllPurchases($this);
 
         return $purchases->count() > 0;
