@@ -11,7 +11,6 @@ use XF\Entity\PaymentProfile;
 use XF\Payment\CallbackState;
 use XFRM\Entity\ResourceItem;
 use XF\Purchasable\AbstractPurchasable;
-use Truonglv\XFRMCustomized\GlobalStatic;
 use Truonglv\XFRMCustomized\Entity\Coupon;
 use Truonglv\XFRMCustomized\Entity\CouponUser;
 
