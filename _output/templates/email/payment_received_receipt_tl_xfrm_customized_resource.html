@@ -9,7 +9,7 @@
     </tr>
     <tr>
         <td><a href="{{ link('canonical:resources', $purchasable.purchasable) }}">{$purchasable.title}</a></td>
-        <td align="right">{$purchasable.cost|currency($purchasable.currency)}</td>
+        <td align="right">{$purchaseRequest.cost_amount|currency($purchaseRequest.cost_currency)}</td>
     </tr>
 </table>
 
