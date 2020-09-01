@@ -8,8 +8,8 @@ namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
-use Truonglv\XFRMCustomized\Data\Lazy;
 use Truonglv\XFRMCustomized\App;
+use Truonglv\XFRMCustomized\Data\Lazy;
 
 /**
  * Class ResourceItem
