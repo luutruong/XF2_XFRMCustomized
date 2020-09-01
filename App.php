@@ -9,7 +9,7 @@ namespace Truonglv\XFRMCustomized;
 use XF\Entity\User;
 use Truonglv\XFRMCustomized\Repository\Purchase;
 
-class GlobalStatic
+class App
 {
     const PURCHASABLE_ID = 'tl_xfrm_customized_resource';
 

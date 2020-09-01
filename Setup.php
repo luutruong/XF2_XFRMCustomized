@@ -21,7 +21,7 @@ class Setup extends AbstractSetup
     {
         /** @var \XF\Entity\Purchasable $purchasable */
         $purchasable = $this->app->em()->create('XF:Purchasable');
-        $purchasable->purchasable_type_id = GlobalStatic::PURCHASABLE_ID;
+        $purchasable->purchasable_type_id = App::PURCHASABLE_ID;
         $purchasable->purchasable_class = 'Truonglv\XFRMCustomized:Resource';
         $purchasable->addon_id = 'Truonglv/XFRMCustomized';
         /** @noinspection PhpUnhandledExceptionInspection */
@@ -39,7 +39,7 @@ class Setup extends AbstractSetup
         $this->db()->delete(
             'xf_purchasable',
             'purchasable_type_id = ?',
-            GlobalStatic::PURCHASABLE_ID
+            App::PURCHASABLE_ID
         );
 
         $this->doDropColumns($this->getAlters1());

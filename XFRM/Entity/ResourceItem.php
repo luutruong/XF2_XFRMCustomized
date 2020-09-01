@@ -9,7 +9,7 @@ namespace Truonglv\XFRMCustomized\XFRM\Entity;
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
 use Truonglv\XFRMCustomized\Data\Lazy;
-use Truonglv\XFRMCustomized\GlobalStatic;
+use Truonglv\XFRMCustomized\App;
 
 /**
  * Class ResourceItem
@@ -45,7 +45,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isExternalPurchasable()
     {
-        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+        if (App::isDisabledCategory($this->resource_category_id)) {
             return parent::isExternalPurchasable();
         }
 
@@ -61,7 +61,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isExternalDownload()
     {
-        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+        if (App::isDisabledCategory($this->resource_category_id)) {
             return parent::isExternalDownload();
         }
 
@@ -73,7 +73,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isXFRMCCommerceItem()
     {
-        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+        if (App::isDisabledCategory($this->resource_category_id)) {
             return false;
         }
 
@@ -85,7 +85,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isDownloadable()
     {
-        if (GlobalStatic::isDisabledCategory($this->resource_category_id)) {
+        if (App::isDisabledCategory($this->resource_category_id)) {
             return parent::isDownloadable();
         }
 
@@ -122,7 +122,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function isRenewLicense()
     {
-        $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($this);
+        $purchases = App::purchaseRepo()->getAllPurchases($this);
 
         return $purchases->count() > 0;
     }
@@ -138,7 +138,7 @@ class ResourceItem extends XFCP_ResourceItem
             $price = $this->price;
         }
 
-        return $price + GlobalStatic::getFee($price);
+        return $price + App::getFee($price);
     }
 
     /**
