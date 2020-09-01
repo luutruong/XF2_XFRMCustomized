@@ -17,7 +17,7 @@ class Callback
      * @param Templater $templater
      * @return string
      */
-    public static function renderPaymentProfiles($value, array $params, Templater $templater)
+    public static function renderPaymentProfiles(string $value, array $params, Templater $templater)
     {
         if (!isset($params['resource']) || !$params['resource'] instanceof ResourceItem) {
             throw new \InvalidArgumentException('Missing resource data in callback.');

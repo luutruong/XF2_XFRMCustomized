@@ -1,0 +1,1 @@
+Default currency which apply to resources which does not have.

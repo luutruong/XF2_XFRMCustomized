@@ -253,7 +253,6 @@ class ResourceItem extends XFCP_ResourceItem
             'paymentProfiles' => $paymentProfiles,
             'isRenewPurchase' => $isRenewPurchase,
             'purchasePrice' => $purchasePrice,
-            'fee' => GlobalStatic::getFee($purchasePrice),
             'selPaymentProfile' => $selPaymentProfile
         ];
 

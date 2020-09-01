@@ -29,7 +29,7 @@ class GlobalStatic
      * @param int $categoryId
      * @return bool
      */
-    public static function isDisabledCategory($categoryId)
+    public static function isDisabledCategory(int $categoryId)
     {
         $disabled = \XF::options()->xfrmc_disableCategories;
         $disabled = array_map('intval', $disabled);
@@ -41,7 +41,7 @@ class GlobalStatic
      * @param float $amount
      * @return float
      */
-    public static function getFee($amount)
+    public static function getFee(float $amount)
     {
         $formula = \XF::options()->xfrmc_feeFormula;
         if (strlen($formula) <= 0) {

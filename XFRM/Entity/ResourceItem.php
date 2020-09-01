@@ -133,10 +133,12 @@ class ResourceItem extends XFCP_ResourceItem
     public function getPurchasePrice()
     {
         if ($this->renew_price > 0 && $this->isRenewLicense()) {
-            return $this->renew_price;
+            $price = $this->renew_price;
+        } else {
+            $price = $this->price;
         }
 
-        return $this->price;
+        return $price + GlobalStatic::getFee($price);
     }
 
     /**

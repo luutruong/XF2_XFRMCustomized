@@ -123,8 +123,8 @@
 				"offers": {
 					"@type": "Offer",
 					"availability": "https://schema.org/InStock",
-					"price": "{$resource.price|escape('json')}"<xf:if is="$resource.currency">,
-					"priceCurrency": "{$resource.currency|escape('json')}"</xf:if>
+					"price": "{$resource.price|escape('json')}"<xf:if is="$resource.currency OR $xf.options.xfrmc_defaultCurrency">,
+					"priceCurrency": "{{ ($resource.currency ?: $xf.options.xfrmc_defaultCurrency)|escape('json') }}"</xf:if>
 				},
 				"image": "{{ ($xf.options.xfrmAllowIcons AND $resource.icon_date) ? $resource.getIconUrl('m', true) : $resource.User.getAvatarUrl('m', null, true)|escape('json') }}",
 				<xf:if is="$resource.review_count > 0">"aggregateRating": {

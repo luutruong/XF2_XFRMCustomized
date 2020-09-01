@@ -5,15 +5,12 @@
             couponInput: null,
             href: null,
             price: null,
-            fee: null,
             total: null,
         },
 
         $input: null,
         $price0: null,
         $price1: null,
-        $fee0: null,
-        $fee1: null,
         $total0: null,
         $total1: null,
 
@@ -48,14 +45,6 @@
                 .hide();
             this.$price1.insertAfter(this.$price0);
 
-            this.$fee0 = $(this.options.fee);
-            this.$fee1 = this.$fee0
-                .clone()
-                .attr('id', '')
-                .css({ marginLeft: 10, textDecoration: 'line-through' })
-                .hide();
-            this.$fee1.insertAfter(this.$fee0);
-
             this.$total0 = $(this.options.total);
             this.$total1 = this.$total0
                 .clone()
@@ -78,12 +67,10 @@
 
             // reset state.
             this.$price1.hide();
-            this.$fee1.hide();
             this.$total1.hide();
 
             if (this.orgData) {
                 this.$price0.text(this.orgData.price);
-                this.$fee0.text(this.orgData.fee);
                 this.$total0.text(this.orgData.total);
             }
         },
@@ -119,19 +106,19 @@
             if (this.orgData === null) {
                 this.orgData = {
                     price: this.$price0.text(),
-                    fee: this.$fee0.text(),
                     total: this.$total0.text(),
                 };
             }
 
-            this.$total0.text(data.newTotal);
-            this.$total1.text(this.orgData.total).show();
+            if (data.hasOwnProperty('newTotal')) {
+                this.$total0.text(data.newTotal);
+                this.$total1.text(this.orgData.total).show();
+            }
 
-            this.$price0.text(data.newPrice);
-            this.$price1.text(this.orgData.price).show();
-
-            this.$fee0.text(data.newFee);
-            this.$fee1.text(this.orgData.fee).show();
+            if (data.hasOwnProperty('newPrice')) {
+                this.$price0.text(data.newPrice);
+                this.$price1.text(this.orgData.price).show();
+            }
         },
     });
 

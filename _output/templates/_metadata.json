@@ -52,12 +52,12 @@
     "public/xfrmc_resource_macros.html": {
         "version_id": 2000700,
         "version_string": "2.0.7",
-        "hash": "863b0ad12d01b7f7d4665a976f450d53"
+        "hash": "f8284a2e894444658492828650d0e8dc"
     },
     "public/xfrmc_resource_purchase.html": {
-        "version_id": 1000971,
-        "version_string": "1.0.9.1",
-        "hash": "df4c2f93b2d8283458bacfd53c49cbd3"
+        "version_id": 2000700,
+        "version_string": "2.0.7",
+        "hash": "e420415390ac1fb73182263b3fdcec3f"
     },
     "public/xfrmc_resource_purchased.html": {
         "version_id": 1000970,

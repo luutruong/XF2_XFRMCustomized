@@ -136,24 +136,16 @@ class Coupon extends AbstractController
         }
 
         $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
-
         $price = $coupon->getFinalPrice($resource);
-        $fee = GlobalStatic::getFee($price);
-
-        $total = $price + $fee;
 
         $message->setJsonParam(
             'newPrice',
             $this->app()->templater()->filter($price, [['currency', [$resource->currency]]])
         );
-        $message->setJsonParam(
-            'newFee',
-            $this->app()->templater()->filter($fee, [['currency', [$resource->currency]]])
-        );
 
         $message->setJsonParam(
             'newTotal',
-            $this->app()->templater()->filter($total, [['currency', [$resource->currency]]])
+            $this->app()->templater()->filter($price, [['currency', [$resource->currency]]])
         );
 
         return $message;

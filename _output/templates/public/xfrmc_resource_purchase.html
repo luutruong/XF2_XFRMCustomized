@@ -17,18 +17,13 @@
                 </xf:inforow>
             </xf:if>
 
-            <xf:formrow label="{{ phrase('price') }}"
-                        explain="{{ phrase('xfrmc_price_without_payment_fees') }}">
+            <xf:formrow label="{{ phrase('price') }}">
                 <span id="xfrmc-price" style="font-size: 17px">{$purchasePrice|currency($resource.currency)}</span>
-            </xf:formrow>
-
-            <xf:formrow label="{{ phrase('xfrmc_fee') }}">
-                <span id="xfrmc-fee">{$fee|currency($resource.currency)}</span>
             </xf:formrow>
 
             <hr class="formRowSep" />
             <xf:formrow label="{{ phrase('xfrmc_total') }}">
-                <span id="xfrmc-total" style="font-size: 20px">{{ ($purchasePrice + $fee)|currency($resource.currency) }}</span>
+                <span id="xfrmc-total" style="font-size: 20px">{{ $purchasePrice|currency($resource.currency) }}</span>
             </xf:formrow>
             <hr class="formRowSep" />
 
@@ -52,7 +47,6 @@
                                data-resource-id="{$resource.resource_id}"
                                data-coupon-input="< .inputGroup | .input--couponCode"
                                data-price="#xfrmc-price"
-                               data-fee="#xfrmc-fee"
                                data-total="#xfrmc-total"
                                type="button">{{ phrase('xfrmc_check_available') }}</xf:button>
                 </div>
@@ -61,8 +55,7 @@
 
         <xf:hiddenval name="resource_id">{$resource.resource_id}</xf:hiddenval>
 
-        <xf:submitrow submit="{{ phrase('xfrmc_purchase_resource') }}"
-                      rowtype="simple"
-                      icon="purchase" />
+        <xf:submitrow submit="{{ phrase('xfrmc_purchase') }}"
+                      rowtype="simple" icon="purchase" />
     </div>
 </xf:form>

@@ -356,8 +356,6 @@ class Resource extends AbstractPurchasable
             $cost = $purchasable->getPurchasePrice();
         }
 
-        $cost += GlobalStatic::getFee($cost);
-
         $purchase = new Purchase();
 
         $purchase->title = sprintf(
