@@ -10,7 +10,7 @@ use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceItem;
-use Truonglv\XFRMCustomized\GlobalStatic;
+use Truonglv\XFRMCustomized\App;
 
 /**
  * Class Coupon
@@ -38,7 +38,7 @@ class Coupon extends Entity
      */
     public function canView(&$error = null)
     {
-        return GlobalStatic::hasPermission('viewItem');
+        return App::hasPermission('viewItem');
     }
 
     /**
@@ -47,7 +47,7 @@ class Coupon extends Entity
      */
     public function canEdit(&$error = null)
     {
-        return GlobalStatic::hasPermission('editCoupon');
+        return App::hasPermission('editCoupon');
     }
 
     /**
@@ -56,7 +56,7 @@ class Coupon extends Entity
      */
     public function canDelete(&$error = null)
     {
-        return GlobalStatic::hasPermission('deleteCoupon');
+        return App::hasPermission('deleteCoupon');
     }
 
     /**

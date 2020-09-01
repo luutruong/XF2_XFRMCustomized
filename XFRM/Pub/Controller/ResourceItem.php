@@ -8,7 +8,7 @@ namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
-use Truonglv\XFRMCustomized\GlobalStatic;
+use Truonglv\XFRMCustomized\App;
 
 class ResourceItem extends XFCP_ResourceItem
 {
@@ -229,7 +229,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission($error);
         }
 
-        if (GlobalStatic::purchaseRepo()->getActivePurchase($resource) !== null) {
+        if (App::purchaseRepo()->getActivePurchase($resource) !== null) {
             return $this->redirect($this->buildLink('resources', $resource));
         }
 
@@ -249,7 +249,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         $viewParams = [
             'resource' => $resource,
-            'purchasable' => $this->em()->find('XF:Purchasable', GlobalStatic::PURCHASABLE_ID),
+            'purchasable' => $this->em()->find('XF:Purchasable', App::PURCHASABLE_ID),
             'paymentProfiles' => $paymentProfiles,
             'isRenewPurchase' => $isRenewPurchase,
             'purchasePrice' => $purchasePrice,
@@ -268,7 +268,7 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
 
         $visitor = \XF::visitor();
-        $resources = GlobalStatic::purchaseRepo()->getPurchasedResources($visitor);
+        $resources = App::purchaseRepo()->getPurchasedResources($visitor);
 
         $viewParams = [
             'resources' => $resources

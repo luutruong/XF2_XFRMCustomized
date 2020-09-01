@@ -6,7 +6,7 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
-use Truonglv\XFRMCustomized\GlobalStatic;
+use Truonglv\XFRMCustomized\App;
 
 class ResourceVersion extends XFCP_ResourceVersion
 {
@@ -22,7 +22,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             return false;
         }
 
-        if (GlobalStatic::isDisabledCategory($resource->resource_category_id)) {
+        if (App::isDisabledCategory($resource->resource_category_id)) {
             return parent::canDownload($error);
         }
 
@@ -36,7 +36,7 @@ class ResourceVersion extends XFCP_ResourceVersion
                 return true;
             }
 
-            $purchases = GlobalStatic::purchaseRepo()->getAllPurchases($resource, $visitor);
+            $purchases = App::purchaseRepo()->getAllPurchases($resource, $visitor);
             if (!$purchases->count()) {
                 $error = \XF::phrase('xfrmc_you_may_purchase_this_resource_to_download');
 

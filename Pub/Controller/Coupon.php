@@ -9,7 +9,7 @@ namespace Truonglv\XFRMCustomized\Pub\Controller;
 use XF\Mvc\ParameterBag;
 use XF\Repository\UserGroup;
 use XFRM\Repository\Category;
-use Truonglv\XFRMCustomized\GlobalStatic;
+use Truonglv\XFRMCustomized\App;
 use XF\Pub\Controller\AbstractController;
 use Truonglv\XFRMCustomized\Service\Coupon\Editor;
 use Truonglv\XFRMCustomized\Service\Coupon\Creator;
@@ -26,7 +26,7 @@ class Coupon extends AbstractController
             return $this->rerouteController(__CLASS__, 'view', $params);
         }
 
-        if (!GlobalStatic::hasPermission('viewList')) {
+        if (!App::hasPermission('viewList')) {
             return $this->noPermission();
         }
 
@@ -156,7 +156,7 @@ class Coupon extends AbstractController
      */
     public function actionAdd()
     {
-        if (!GlobalStatic::hasPermission('add')) {
+        if (!App::hasPermission('add')) {
             return $this->noPermission();
         }
 

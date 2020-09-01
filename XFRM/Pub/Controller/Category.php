@@ -8,7 +8,7 @@ namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
 use XF\Mvc\Reply\View;
 use XF\Mvc\ParameterBag;
-use Truonglv\XFRMCustomized\GlobalStatic;
+use Truonglv\XFRMCustomized\App;
 
 class Category extends XFCP_Category
 {
@@ -18,7 +18,7 @@ class Category extends XFCP_Category
         if ($response instanceof View) {
             /** @var \XFRM\Entity\Category $category */
             $category = $response->getParam('category');
-            $response->setParam('xfrmc_isEnabled', !GlobalStatic::isDisabledCategory($category->resource_category_id));
+            $response->setParam('xfrmc_isEnabled', !App::isDisabledCategory($category->resource_category_id));
         }
 
         return $response;
