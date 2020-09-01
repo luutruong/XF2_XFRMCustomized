@@ -79,8 +79,8 @@
 			</div>
 
 			<xf:if is="$resource.isExternalPurchasable()">
-				<span class="resourceList-item--price">{$resource.price|currency($resource.currency)}</span>
-				<xf:else />
+				<span class="resourceList-item--price">{$resource.getPurchasePrice()|currency($resource.currency)}</span>
+			<xf:else />
 				<span class="resourceList-item--price"></span>
 			</xf:if>
 
