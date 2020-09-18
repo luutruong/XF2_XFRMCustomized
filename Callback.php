@@ -51,6 +51,9 @@ class Callback
         return $templater->formCheckBoxRow($controlOptions, $choices, $rowOptions);
     }
 
+    /**
+     * @return bool|null
+     */
     public static function getIsXFRMSupportLargeFileEnabled()
     {
         /** @var AddOn $addOnRepo */
