@@ -50,9 +50,9 @@
         "hash": "15d8a4da8029bba4c5291b7a053d11d9"
     },
     "public/xfrmc_resource_macros.html": {
-        "version_id": 2000900,
-        "version_string": "2.0.9",
-        "hash": "25ac71b0c1404ea96eecdc5d34a4c3ff"
+        "version_id": 2010000,
+        "version_string": "2.1.0",
+        "hash": "37c6611136b88b76a3aaf9ca2c57e4a2"
     },
     "public/xfrmc_resource_purchase.html": {
         "version_id": 2000700,

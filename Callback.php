@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized;
 
+use XF\Repository\AddOn;
 use XF\Template\Templater;
 use XFRM\Entity\ResourceItem;
 
@@ -48,5 +49,14 @@ class Callback
         ];
 
         return $templater->formCheckBoxRow($controlOptions, $choices, $rowOptions);
+    }
+
+    public static function getIsXFRMSupportLargeFileEnabled()
+    {
+        /** @var AddOn $addOnRepo */
+        $addOnRepo = \XF::repository('XF:AddOn');
+        $addOns = $addOnRepo->getEnabledAddOns();
+
+        return isset($addOns['Truonglv/XFRMSupportLargeFile']) ? true : null;
     }
 }

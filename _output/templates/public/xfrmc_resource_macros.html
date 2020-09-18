@@ -4,19 +4,32 @@
 	arg-category="!"
 	arg-versionAttachData="!"
 	arg-allowCurrentType="{{ false }}">
+	<xf:set var="$xfrmSupportLargeFileEnabled"><xf:callback class="Truonglv\XFRMCustomized\Callback" method="getIsXFRMSupportLargeFileEnabled" /></xf:set>
+	<xf:if is="$xfrmSupportLargeFileEnabled is not empty">
+		<xf:radiorow name="resource_type" value="{$currentType}"
+					 label="{{ phrase('type') }}">
+			<xf:option value="download_local"
+					   label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
+				<xf:macro template="xfrm_extended_resource_macros"
+						  name="upload_button"
+						  arg-attachmentData="{$versionAttachData}"
+						  arg-category="{$category}"
+						  arg-hiddenName="version_attachment_hash"/>
+			</xf:option>
+		</xf:radiorow>
+	<xf:else />
+		<xf:radiorow name="resource_type" value="{$currentType}"
+					 label="{{ phrase('type') }}"
+					 data-xf-init="attachment-manager">
 
-	<xf:radiorow name="resource_type" value="{$currentType}"
-		label="{{ phrase('type') }}"
-		data-xf-init="attachment-manager">
-
-		<xf:option value="download_local"
-			label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
-
-			<xf:macro template="helper_attach_upload" name="upload_block"
-				arg-attachmentData="{$versionAttachData}"
-				arg-hiddenName="version_attachment_hash" />
-		</xf:option>
-	</xf:radiorow>
+			<xf:option value="download_local"
+					   label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
+				<xf:macro template="helper_attach_upload" name="upload_block"
+						  arg-attachmentData="{$versionAttachData}"
+						  arg-hiddenName="version_attachment_hash" />
+			</xf:option>
+		</xf:radiorow>
+	</xf:if>
 
     <xf:macro name="purchase_inputs" arg-resource="{$resource}" arg-showPrice="{{ true }}" />
 </xf:macro>
