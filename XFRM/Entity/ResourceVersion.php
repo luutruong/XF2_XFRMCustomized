@@ -30,7 +30,7 @@ class ResourceVersion extends XFCP_ResourceVersion
 
         if ($resource->price > 0
             && $this->file_count > 0
-            && $resource->user_id != $visitor->user_id
+            && $resource->user_id !== $visitor->user_id
         ) {
             if ($resource->canDownload()) {
                 return true;

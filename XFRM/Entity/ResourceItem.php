@@ -49,11 +49,7 @@ class ResourceItem extends XFCP_ResourceItem
             return parent::isExternalPurchasable();
         }
 
-        if ($this->price > 0) {
-            return true;
-        }
-
-        return parent::isExternalPurchasable();
+        return true;
     }
 
     /**
