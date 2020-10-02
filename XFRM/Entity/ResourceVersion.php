@@ -37,7 +37,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             }
 
             $purchases = App::purchaseRepo()->getAllPurchases($resource, $visitor);
-            if (!$purchases->count()) {
+            if ($purchases->count() === 0) {
                 $error = \XF::phrase('xfrmc_you_may_purchase_this_resource_to_download');
 
                 return false;

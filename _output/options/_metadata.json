@@ -1,17 +1,17 @@
 {
     "xfrmc_defaultCurrency.json": {
-        "hash": "4c687d23422812b6a46d253c0c71f394"
+        "hash": "21cbc8b80482c6739a4370b482446dbc"
     },
     "xfrmc_disableCategories.json": {
-        "hash": "24ef7ccebc03520170821f5b8040fe49"
+        "hash": "67f1af01c6b6f750ec638739e488a97a"
     },
     "xfrmc_enableFee.json": {
-        "hash": "7712641959f9de6195e910768817cea3"
+        "hash": "7f0d3d7846bf34d5976e83168b33bcf6"
     },
     "xfrmc_feeFormula.json": {
-        "hash": "618b4987508c1c5743c89ecd649eefd4"
+        "hash": "85b0d9e2a0f784117c498bebd7d4823c"
     },
     "xfrmc_resourceIconSize.json": {
-        "hash": "d742140fc86051e60fc7460ce13c2734"
+        "hash": "617775fa1a0b489b0107f74898a1c482"
     }
 }
