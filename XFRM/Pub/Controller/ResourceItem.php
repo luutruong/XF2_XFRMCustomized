@@ -353,6 +353,12 @@ class ResourceItem extends XFCP_ResourceItem
                 continue;
             }
 
+            if ($lastPurchase === null) {
+                $version['canDownload'] = false;
+                
+                continue;
+            }
+
             if ($lastPurchase->isExpired()) {
                 $version['canDownload'] = $version['resource_version_id'] <= $lastPurchase->resource_version_id;
             } else {
