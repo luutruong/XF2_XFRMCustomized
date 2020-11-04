@@ -215,6 +215,12 @@
         "version_string": "1.0.9",
         "hash": "bcdfd535f2e382cfbf2e19a746d72d99"
     },
+    "xfrmc_choose_version.txt": {
+        "global_cache": false,
+        "version_id": 3000000,
+        "version_string": "3.0.0",
+        "hash": "b94f69b67782523972578860ea61baf8"
+    },
     "xfrmc_coupon_code.txt": {
         "global_cache": false,
         "version_id": 1000970,

@@ -9,7 +9,6 @@ namespace Truonglv\XFRMCustomized\XFRM\Entity;
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
 use Truonglv\XFRMCustomized\App;
-use Truonglv\XFRMCustomized\Data\Lazy;
 
 /**
  * Class ResourceItem
@@ -110,6 +109,11 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function canPurchase(&$error = null)
     {
+        $visitor = \XF::visitor();
+        if ($visitor->user_id <= 0 || $visitor->user_id === $this->user_id) {
+            return false;
+        }
+
         return $this->price > 0;
     }
 
@@ -176,14 +180,7 @@ class ResourceItem extends XFCP_ResourceItem
             return true;
         }
 
-        if ($visitor->user_id === $this->user_id) {
-            return true;
-        }
-
-        /** @var Lazy $lazy */
-        $lazy = $this->app()->data('Truonglv\XFRMCustomized:Lazy');
-
-        return $lazy->isPurchasedResource($this->resource_id);
+        return $visitor->user_id === $this->user_id;
     }
 
     public static function getStructure(Structure $structure)

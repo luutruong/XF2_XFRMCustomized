@@ -7,16 +7,13 @@
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
 use XF\Entity\User;
+use XF\Mvc\Reply\View;
 use XF\Mvc\ParameterBag;
 use Truonglv\XFRMCustomized\App;
+use Truonglv\XFRMCustomized\Entity\Purchase;
 
 class ResourceItem extends XFCP_ResourceItem
 {
-    /**
-     * @var null|string
-     */
-    private $xfrmcViewableMethod = null;
-
     /**
      * @param \XFRM\Entity\ResourceItem $resource
      * @return \XFRM\Service\ResourceItem\Edit
@@ -283,9 +280,95 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function actionHistory(ParameterBag $params)
     {
-        $this->xfrmcViewableMethod = 'canViewHistory';
+        $response = parent::actionHistory($params);
+        if ($response instanceof View) {
+            /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+            $resource = $response->getParam('resource');
+            if (!$resource->canViewHistory($error)) {
+                throw $this->exception($this->noPermission($error));
+            }
+        }
 
-        return parent::actionHistory($params);
+        return $response;
+    }
+
+    public function actionDownload(ParameterBag $params)
+    {
+        $this->assertRegistrationRequired();
+        $resource = $this->assertViewableResource($params['resource_id']);
+
+        if ($resource->user_id !== \XF::visitor()->user_id) {
+            $anyVersions = $this->finder('Truonglv\XFRMCustomized:Purchase')
+                ->where('resource_id', $resource->resource_id)
+                ->where('user_id', \XF::visitor()->user_id)
+                ->total();
+            if ($anyVersions === 0) {
+                return $this->error(\XF::phrase('xfrmc_you_may_purchase_this_resource_to_download'));
+            }
+        }
+
+        /** @var Purchase|null $lastPurchase */
+        $lastPurchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
+            ->where('user_id', \XF::visitor()->user_id)
+            ->where('resource_id', $resource->resource_id)
+            ->order('purchased_date', 'desc')
+            ->fetchOne();
+
+        $versionId = $this->filter('version_id', 'uint');
+        if ($versionId > 0) {
+            $canDownload = false;
+            if ($resource->user_id !== \XF::visitor()->user_id) {
+                if ($lastPurchase !== null) {
+                    if ($lastPurchase->isExpired()) {
+                        $canDownload = $versionId <= $lastPurchase->resource_version_id;
+                    } else {
+                        $canDownload = true;
+                    }
+                }
+            } else {
+                $canDownload = true;
+            }
+
+            if ($canDownload) {
+                return $this->rerouteController('XFRM:ResourceVersion', 'download', [
+                    'resource_id' => $resource->resource_id,
+                    'resource_version_id' => $versionId
+                ]);
+            }
+        }
+
+        $versions = $this->finder('XFRM:ResourceVersion')
+            ->where('resource_id', $resource->resource_id)
+            ->where('version_state', 'visible')
+            ->order('release_date', 'DESC')
+            ->fetchColumns([
+                'resource_version_id',
+                'version_string',
+                'release_date'
+            ]);
+        foreach ($versions as &$version) {
+            if (\XF::visitor()->user_id === $resource->user_id) {
+                $version['canDownload'] = true;
+
+                continue;
+            }
+
+            if ($lastPurchase->isExpired()) {
+                $version['canDownload'] = $version['resource_version_id'] <= $lastPurchase->resource_version_id;
+            } else {
+                $version['canDownload'] = true;
+            }
+        }
+        unset($version);
+
+        return $this->view(
+            'Truonglv\XFRMCustomized:Resource\Download',
+            'xfrmc_resource_download',
+            [
+                'resource' => $resource,
+                'versions' => $versions
+            ]
+        );
     }
 
     /**
@@ -298,20 +381,6 @@ class ResourceItem extends XFCP_ResourceItem
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resourceItem */
         $resourceItem = parent::assertViewableResource($resourceId, $extraWith);
-
-        if ($this->xfrmcViewableMethod !== null) {
-            /** @var callable $callable */
-            $callable = [$resourceItem, $this->xfrmcViewableMethod];
-
-            $error = null;
-            $bool = (bool) call_user_func_array($callable, [&$error]);
-
-            if (!$bool) {
-                throw $this->exception($this->noPermission($error));
-            }
-
-            $this->xfrmcViewableMethod = null;
-        }
 
         return $resourceItem;
     }
