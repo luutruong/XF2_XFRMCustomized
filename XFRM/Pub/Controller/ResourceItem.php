@@ -355,7 +355,7 @@ class ResourceItem extends XFCP_ResourceItem
 
             if ($lastPurchase === null) {
                 $version['canDownload'] = false;
-                
+
                 continue;
             }
 
@@ -372,7 +372,8 @@ class ResourceItem extends XFCP_ResourceItem
             'xfrmc_resource_download',
             [
                 'resource' => $resource,
-                'versions' => $versions
+                'versions' => $versions,
+                'inlineDownload' => $this->filter('_xfWithData', 'bool'),
             ]
         );
     }

@@ -2,9 +2,11 @@
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />
 
-<xf:wrap template="xfrm_resource_wrapper">
-    <xf:set var="$pageSelected" value="buyers" />
-</xf:wrap>
+<xf:if is="!$inlineDownload">
+    <xf:wrap template="xfrm_resource_wrapper">
+        <xf:set var="$pageSelected" value="buyers" />
+    </xf:wrap>
+</xf:if>
 
 <xf:form action="{{ link('resources/download', $resource) }}" class="block">
     <div class="block-container">
