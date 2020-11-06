@@ -297,7 +297,9 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
         $resource = $this->assertViewableResource($params['resource_id']);
 
-        if ($resource->user_id !== \XF::visitor()->user_id) {
+        if ($resource->user_id !== \XF::visitor()->user_id
+            && !$resource->canDownload()
+        ) {
             $anyVersions = $this->finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $resource->resource_id)
                 ->where('user_id', \XF::visitor()->user_id)
@@ -329,7 +331,7 @@ class ResourceItem extends XFCP_ResourceItem
                 $canDownload = true;
             }
 
-            if ($canDownload) {
+            if ($canDownload || $resource->canDownload()) {
                 return $this->rerouteController('XFRM:ResourceVersion', 'download', [
                     'resource_id' => $resource->resource_id,
                     'resource_version_id' => $versionId
@@ -347,7 +349,9 @@ class ResourceItem extends XFCP_ResourceItem
                 'release_date'
             ]);
         foreach ($versions as &$version) {
-            if (\XF::visitor()->user_id === $resource->user_id) {
+            if (\XF::visitor()->user_id === $resource->user_id
+                || $resource->canDownload()
+            ) {
                 $version['canDownload'] = true;
 
                 continue;
