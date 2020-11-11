@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_resource_wrapper_macros",
+    "description": "Replace default download button",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "{{ $resource.CurrentVersion.file_count > 1 ? 'overlay' : '' }}",
+    "replace": "overlay"
+}

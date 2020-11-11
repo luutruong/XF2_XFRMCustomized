@@ -59,13 +59,13 @@
 				   style="margin-right:6px"
 				   overlay="true" icon="download">{{ phrase('download') }}</xf:button>
 	</xf:set>
-	<xf:if is="$resource.user_id == $xf.visitor.user_id">
+	<xf:if is="$resource.canDownload()">
 		{{ $downloadButton|raw }}
 	</xf:if>
 	<xf:if is="$resource.isRenewLicense()">
 		{{ $downloadButton|raw }}
 		<xf:set var="$purchasePhrase">{{ phrase('xfrmc_renew_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
-	<xf:elseif is="$resource.canPurchase()" />
+	<xf:elseif is="$resource.canPurchase() AND !$resource.canDownload()" />
 		<xf:set var="$purchasePhrase">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
 	</xf:if>
 	<xf:if is="$purchasePhrase is not empty">
