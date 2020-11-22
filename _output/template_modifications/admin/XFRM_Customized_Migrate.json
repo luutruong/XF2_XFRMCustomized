@@ -1,9 +1,0 @@
-{
-    "template": "tools_rebuild",
-    "description": "Add migrate rebuilds",
-    "execution_order": 10,
-    "enabled": true,
-    "action": "str_replace",
-    "find": "<!--[XF:after_thread]-->",
-    "replace": "$0\n<xf:macro name=\"rebuild_job\"\n\targ-header=\"Import buyers from add-on [bd] Paygate\"\n\targ-job=\"Truonglv\\XFRMCustomized:MigrateBDPaygate\" />"
-}
