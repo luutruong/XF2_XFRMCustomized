@@ -227,7 +227,7 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         if (App::purchaseRepo()->getActivePurchase($resource) !== null) {
-            return $this->redirect($this->buildLink('resources', $resource));
+            return $this->rerouteController(__CLASS__, 'renew', $params);
         }
 
         /** @var \XF\Repository\Payment $paymentRepo */
@@ -238,6 +238,9 @@ class ResourceItem extends XFCP_ResourceItem
 
         $purchasePrice = $resource->getPurchasePrice();
         $isRenewPurchase = $resource->isRenewLicense();
+        if ($isRenewPurchase) {
+            return $this->rerouteController(__CLASS__, 'renew', $params);
+        }
 
         $selPaymentProfile = null;
         if ($paymentProfiles->count() === 1) {
@@ -248,7 +251,6 @@ class ResourceItem extends XFCP_ResourceItem
             'resource' => $resource,
             'purchasable' => $this->em()->find('XF:Purchasable', App::PURCHASABLE_ID),
             'paymentProfiles' => $paymentProfiles,
-            'isRenewPurchase' => $isRenewPurchase,
             'purchasePrice' => $purchasePrice,
             'selPaymentProfile' => $selPaymentProfile
         ];
@@ -257,6 +259,43 @@ class ResourceItem extends XFCP_ResourceItem
             'Truonglv\XFRMCustomized:Resource\Purchase',
             'xfrmc_resource_purchase',
             $viewParams
+        );
+    }
+
+    public function actionRenew(ParameterBag $params)
+    {
+        $this->assertRegistrationRequired();
+
+        $resource = $this->assertViewableResource($params->resource_id);
+        if ($resource->canDownload()) {
+            // skip users who has permission to download resource directly
+            return $this->noPermission();
+        }
+
+        $purchases = $this->finder('Truonglv\XFRMCustomized:Purchase')
+            ->where('resource_id', $resource->resource_id)
+            ->where('user_id', \XF::visitor()->user_id)
+            ->order('expire_date')
+            ->fetch();
+        if ($purchases->count() === 0) {
+            return $this->error(\XF::phrase('xfrmc_you_did_not_have_any_licenses_for_this_resource'));
+        }
+
+        /** @var \XF\Repository\Payment $paymentRepo */
+        $paymentRepo = \XF::repository('XF:Payment');
+        $paymentProfiles = $paymentRepo->findPaymentProfilesForList()
+            ->whereIds($resource->payment_profile_ids)
+            ->fetch();
+
+        return $this->view(
+            'Truonglv\XFRMCustomized:Resource\Renew',
+            'xfrmc_resource_license_renew',
+            [
+                'resource' => $resource,
+                'purchases' => $purchases,
+                'purchasable' => $this->em()->find('XF:Purchasable', App::PURCHASABLE_ID),
+                'paymentProfiles' => $paymentProfiles,
+            ]
         );
     }
 

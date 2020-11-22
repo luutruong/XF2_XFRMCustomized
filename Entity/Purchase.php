@@ -11,10 +11,8 @@ use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceVersion;
 
 /**
- * Class Purchase
- * @package Truonglv\XFRMCustomized\Entity
- *
- * @property int purchase_id
+ * COLUMNS
+ * @property int|null purchase_id
  * @property int resource_id
  * @property int user_id
  * @property string username
@@ -25,6 +23,10 @@ use XFRM\Entity\ResourceVersion;
  * @property string purchase_request_key
  * @property array purchase_request_keys
  * @property string note
+ *
+ * RELATIONS
+ * @property \XF\Entity\User User
+ * @property \XFRM\Entity\ResourceItem Resource
  */
 class Purchase extends Entity
 {

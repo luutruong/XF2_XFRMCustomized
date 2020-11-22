@@ -10,12 +10,10 @@
 <xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
     <div class="block-container">
         <div class="block-body">
-            <xf:if is="!$isRenewPurchase">
-                <xf:inforow rowtype="confirm">
-                    {{ phrase('xfrmc_sure_you_want_to_purchase_this_resource') }}
-                    <strong><a href="{{ link('resources', $resource) }}">{$resource.title}</a></strong>
-                </xf:inforow>
-            </xf:if>
+            <xf:inforow rowtype="confirm">
+                {{ phrase('xfrmc_sure_you_want_to_purchase_this_resource') }}
+                <strong><a href="{{ link('resources', $resource) }}">{$resource.title}</a></strong>
+            </xf:inforow>
 
             <xf:formrow label="{{ phrase('price') }}">
                 <span id="xfrmc-price" style="font-size: 17px">{$purchasePrice|currency($resource.currency)}</span>

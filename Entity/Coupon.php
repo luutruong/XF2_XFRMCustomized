@@ -13,10 +13,8 @@ use XFRM\Entity\ResourceItem;
 use Truonglv\XFRMCustomized\App;
 
 /**
- * Class Coupon
- * @package Truonglv\XFRMCustomized\Entity
- *
- * @property int coupon_id
+ * COLUMNS
+ * @property int|null coupon_id
  * @property string coupon_code
  * @property string title
  * @property int created_date
@@ -29,6 +27,9 @@ use Truonglv\XFRMCustomized\App;
  * @property int discount_amount
  * @property int user_id
  * @property string username
+ *
+ * RELATIONS
+ * @property \XF\Entity\User User
  */
 class Coupon extends Entity
 {

@@ -35,6 +35,7 @@ class Purchase extends Repository
             return $this->activePurchases[$cacheKey];
         }
 
+        /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
         $purchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $resource->resource_id)
                 ->where('user_id', $user->user_id)
@@ -50,7 +51,7 @@ class Purchase extends Repository
     /**
      * @param ResourceItem $resource
      * @param User|null $user
-     * @return \XF\Mvc\Entity\ArrayCollection
+     * @return \XF\Mvc\Entity\AbstractCollection
      */
     public function getAllPurchases(ResourceItem $resource, User $user = null)
     {
@@ -74,7 +75,7 @@ class Purchase extends Repository
 
     /**
      * @param User $user
-     * @return \XF\Mvc\Entity\ArrayCollection
+     * @return \XF\Mvc\Entity\AbstractCollection
      */
     public function getPurchasedResources(User $user)
     {
