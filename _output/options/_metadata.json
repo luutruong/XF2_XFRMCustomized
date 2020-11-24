@@ -14,6 +14,9 @@
     "xfrmc_feeFormula.json": {
         "hash": "85b0d9e2a0f784117c498bebd7d4823c"
     },
+    "xfrmc_licenseDuration.json": {
+        "hash": "bd334a1cc17ec406e1f771e2f6657500"
+    },
     "xfrmc_reminderRenewDays.json": {
         "hash": "9b2f35de0ad2bfc22da43abe75dffa98"
     },

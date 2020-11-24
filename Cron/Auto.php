@@ -2,18 +2,14 @@
 
 namespace Truonglv\XFRMCustomized\Cron;
 
+use XF\Entity\User;
+use XF\Service\Conversation\Creator;
 use Truonglv\XFRMCustomized\Entity\Purchase;
 use Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem;
-use XF\Entity\User;
-use XF\Html\Renderer\BbCode;
-use XF\Service\Conversation\Creator;
 
 class Auto
 {
-    /**
-     * @return void
-     */
-    public static function reminderLicenseExpires()
+    public static function reminderLicenseExpires(): void
     {
         $conversationStarter = \XF::app()->options()->xfrmc_conversationStarter;
         if (strlen($conversationStarter) === 0) {
@@ -38,7 +34,7 @@ class Auto
         }
     }
 
-    protected static function reminderLicenseExpiresBefore(User $conversationStarter, int $day)
+    protected static function reminderLicenseExpiresBefore(User $conversationStarter, int $day): void
     {
         $dt = new \DateTime();
         $dt->setTimezone(new \DateTimeZone('UTC'));
@@ -64,7 +60,7 @@ class Auto
             if ($resource === null) {
                 continue;
             }
-            $canView = \XF::asVisitor($purchaser, function () use ($resource) {
+            $canView = (bool) \XF::asVisitor($purchaser, function () use ($resource) {
                 return $resource->canView();
             });
             if (!$canView) {

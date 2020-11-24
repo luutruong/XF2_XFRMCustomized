@@ -1,1 +1,1 @@
-Your license will additional 12 months when successfully renewed.
+Your license will additional {days} days when successfully renewed.

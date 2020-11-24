@@ -275,6 +275,7 @@ class ResourceItem extends XFCP_ResourceItem
         $purchases = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', \XF::visitor()->user_id)
+            ->where('new_purchase_id', '=', 0)
             ->order('expire_date')
             ->fetch();
         if ($purchases->count() === 0) {

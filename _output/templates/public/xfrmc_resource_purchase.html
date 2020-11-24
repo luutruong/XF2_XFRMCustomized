@@ -25,7 +25,7 @@
             </xf:formrow>
             <hr class="formRowSep" />
 
-            <xf:formrow label="{{ phrase('xfrmc_license_duration') }}">{{ phrase('xfrmc_12_months') }}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_license_duration') }}">{{ phrase('xfrmc_x_days', {'days': $xf.app.options.xfrmc_licenseDuration}) }}</xf:formrow>
 
             <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id"
                          value="{{ $selPaymentProfile ? $selPaymentProfile.payment_profile_id : 0 }}">

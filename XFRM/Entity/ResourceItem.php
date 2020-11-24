@@ -132,17 +132,21 @@ class ResourceItem extends XFCP_ResourceItem
     }
 
     /**
+     * @param bool $forceRenew
      * @return float
      */
-    public function getPurchasePrice()
+    public function getPurchasePrice(bool $forceRenew = false)
     {
-        if ($this->renew_price > 0 && $this->isRenewLicense()) {
-            $price = $this->renew_price;
-        } else {
-            $price = $this->price;
+        if ($this->isRenewLicense() || $forceRenew) {
+            return $this->getRenewPrice();
         }
 
-        return $price + App::getFee($price);
+        return $this->price + App::getFee($this->price);
+    }
+
+    public function getRenewPrice(): float
+    {
+        return $this->renew_price + App::getFee($this->renew_price);
     }
 
     /**

@@ -83,6 +83,17 @@ class Setup extends AbstractSetup
         return $alters;
     }
 
+    protected function getAlters3(): array
+    {
+        return [
+            'tl_xfrm_resource_purchase' => [
+                'new_purchase_id' => function (Alter $table) {
+                    $table->addColumn('new_purchase_id', 'int')->setDefault(0);
+                }
+            ]
+        ];
+    }
+
     /**
      * @return array
      */
