@@ -7,9 +7,9 @@
 namespace Truonglv\XFRMCustomized\Repository;
 
 use XF\Entity\User;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Repository;
 use XFRM\Entity\ResourceItem;
+use XF\Mvc\Entity\AbstractCollection;
 
 class Purchase extends Repository
 {
@@ -32,7 +32,7 @@ class Purchase extends Repository
     {
         $user = $user !== null ? $user : \XF::visitor();
 
-       return $this->finder('Truonglv\XFRMCustomized:Purchase')
+        return $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $user->user_id)
             ->order('expire_date', 'ASC')
