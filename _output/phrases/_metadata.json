@@ -251,6 +251,12 @@
         "version_string": "1.0.9",
         "hash": "bcdfd535f2e382cfbf2e19a746d72d99"
     },
+    "xfrmc_choose_license.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "3ba0c2d79c7758a3d82c4b1369b3396b"
+    },
     "xfrmc_choose_version.txt": {
         "global_cache": false,
         "version_id": 3000000,
@@ -340,6 +346,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "9efd5d1168d8316b2b6fa92f86bbd226"
+    },
+    "xfrmc_expires_at_x.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "ba8bf3ca73d8d60130cd9f1bc277823f"
     },
     "xfrmc_find_buyer.txt": {
         "global_cache": false,
@@ -433,15 +445,15 @@
     },
     "xfrmc_renew_license.txt": {
         "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "ce05d1d258d6a504cf32442fd96e5d40"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "1b2322a7f8995e8bf1049bd2758a3d30"
     },
     "xfrmc_renew_license_explain.txt": {
         "global_cache": false,
         "version_id": 3000200,
         "version_string": "3.0.2",
-        "hash": "e673d4131b63a10508431b039b4ca9a6"
+        "hash": "aa64f9d11e17cd77c04047c206920e15"
     },
     "xfrmc_renew_price.txt": {
         "global_cache": false,
@@ -587,6 +599,12 @@
         "version_string": "3.0.2",
         "hash": "4922faa814dc85e2254d7788b1e6754d"
     },
+    "xfrmc_you_have_license_this_resource_but_it_expired_renew_continue_download.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "4fbe0698d6d1a451959a6e1ffe6f9785"
+    },
     "xfrmc_you_may_purchase_this_resource_to_download.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -598,5 +616,11 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "826bab9249c7d07d7e3549eefeffe4a4"
+    },
+    "xfrmc_your_license_has_been_expired_renew_to_download_latest_version.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "7a186490f648b9b69e39a963320c8843"
     }
 }

@@ -1,18 +1,17 @@
 <xf:title>{{ phrase('xfrmc_purchased_resources') }}</xf:title>
 
-<div class="block">
+<xf:css src="xfrmc_resource_list.less"/>
+
+<div class="block xfrmc-purchaseResources">
     <div class="block-container">
         <div class="block-body">
-            <div class="structItemContainer">
-                <xf:foreach loop="$resources" value="$resource">
-                    <xf:macro template="xfrm_resource_list_macros"
-                              name="resource"
-                              arg-resource="{$resource}"
-                              arg-allowInlineMod="{{ false }}" />
-                <xf:else />
-                    <div class="block-row">{{ phrase('xfrmc_you_did_not_bought_any_resources_yet') }}</div>
-                </xf:foreach>
-            </div>
+            <xf:if is="$resources is not empty">
+                <xf:macro name="xfrmc_resource_macros::resource_list_grid"
+                          arg-resources="{$resources}"
+                          arg-showPrice="{{ false }}" />
+            <xf:else />
+                <div class="block-row">{{ phrase('xfrmc_you_did_not_bought_any_resources_yet') }}</div>
+            </xf:if>
         </div>
     </div>
 </div>

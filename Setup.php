@@ -45,6 +45,11 @@ class Setup extends AbstractSetup
         $this->doDropColumns($this->getAlters1());
     }
 
+    public function upgrade3000300Step1()
+    {
+        $this->doAlterTables($this->getAlters3());
+    }
+
     /**
      * @return array
      */

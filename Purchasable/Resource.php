@@ -221,7 +221,9 @@ class Resource extends AbstractPurchasable
                     $purchase->addCascadedSave($couponUser);
                     $logMessages[] = 'Using coupon code: ' . $coupon->coupon_code;
                 } else {
-                    $purchase->amount = $resource->getPurchasePrice($oldPurchase !== null);
+                    $purchase->amount = $this->oldPurchase === null
+                        ? $resource->getPurchasePrice()
+                        : $resource->getRenewPrice();
                 }
 
                 $purchase->save();
@@ -431,7 +433,9 @@ class Resource extends AbstractPurchasable
 
             $cost = $this->coupon->getFinalPrice($purchasable);
         } else {
-            $cost = $purchasable->getPurchasePrice($this->oldPurchase !== null);
+            $cost = $this->oldPurchase === null
+                ? $purchasable->getPurchasePrice()
+                : $purchasable->getRenewPrice();
         }
 
         $purchase = new Purchase();

@@ -45,6 +45,10 @@ class Purchase extends Entity
      */
     public function canDownloadVersion(ResourceVersion $version)
     {
+        if ($this->new_purchase_id > 0) {
+            return false;
+        }
+
         return $version->resource_version_id <= $this->resource_version_id;
     }
 

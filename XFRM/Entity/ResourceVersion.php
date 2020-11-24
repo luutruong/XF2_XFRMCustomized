@@ -60,7 +60,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             }
 
             if ($canDownloadThisVersion) {
-                return parent::canDownload($error);
+                return true;
             } else {
                 $error = \XF::phrase('xfrmc_your_license_expired_renew_to_download_latest_version');
 

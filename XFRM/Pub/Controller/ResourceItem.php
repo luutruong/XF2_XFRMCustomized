@@ -226,7 +226,12 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission($error);
         }
 
-        if (App::purchaseRepo()->getActivePurchase($resource) !== null) {
+        $existingLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
+            ->where('user_id', \XF::visitor()->user_id)
+            ->where('resource_id', $resource->resource_id)
+            ->where('new_purchase_id', 0)
+            ->total();
+        if ($existingLicenses > 0) {
             return $this->rerouteController(__CLASS__, 'renew', $params);
         }
 
@@ -237,11 +242,6 @@ class ResourceItem extends XFCP_ResourceItem
             ->fetch();
 
         $purchasePrice = $resource->getPurchasePrice();
-        $isRenewPurchase = $resource->isRenewLicense();
-        if ($isRenewPurchase) {
-            return $this->rerouteController(__CLASS__, 'renew', $params);
-        }
-
         $selPaymentProfile = null;
         if ($paymentProfiles->count() === 1) {
             $selPaymentProfile = $paymentProfiles->first();
@@ -275,7 +275,7 @@ class ResourceItem extends XFCP_ResourceItem
         $purchases = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', \XF::visitor()->user_id)
-            ->where('new_purchase_id', '=', 0)
+            ->where('new_purchase_id', 0)
             ->order('expire_date')
             ->fetch();
         if ($purchases->count() === 0) {
@@ -340,11 +340,12 @@ class ResourceItem extends XFCP_ResourceItem
         if ($resource->user_id !== \XF::visitor()->user_id
             && !$resource->canDownload()
         ) {
-            $anyVersions = $this->finder('Truonglv\XFRMCustomized:Purchase')
+            $activeLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $resource->resource_id)
                 ->where('user_id', \XF::visitor()->user_id)
+                ->where('new_purchase_id', 0)
                 ->total();
-            if ($anyVersions === 0) {
+            if ($activeLicenses === 0) {
                 return $this->error(\XF::phrase('xfrmc_you_may_purchase_this_resource_to_download'));
             }
         }
@@ -353,7 +354,8 @@ class ResourceItem extends XFCP_ResourceItem
         $lastPurchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('user_id', \XF::visitor()->user_id)
             ->where('resource_id', $resource->resource_id)
-            ->order('purchased_date', 'desc')
+            ->where('new_purchase_id', 0)
+            ->order('expire_date', 'desc')
             ->fetchOne();
 
         $versionId = $this->filter('version_id', 'uint');
@@ -388,6 +390,7 @@ class ResourceItem extends XFCP_ResourceItem
                 'version_string',
                 'release_date'
             ]);
+        $canDownloadVersionId = 0;
         foreach ($versions as &$version) {
             if (\XF::visitor()->user_id === $resource->user_id
                 || $resource->canDownload()
@@ -408,6 +411,10 @@ class ResourceItem extends XFCP_ResourceItem
             } else {
                 $version['canDownload'] = true;
             }
+
+            if ($version['canDownload'] === true) {
+                $canDownloadVersionId = $version['resource_version_id'];
+            }
         }
         unset($version);
 
@@ -417,6 +424,7 @@ class ResourceItem extends XFCP_ResourceItem
             [
                 'resource' => $resource,
                 'versions' => $versions,
+                'canDownloadVersionId' => $canDownloadVersionId,
                 'inlineDownload' => $this->filter('_xfWithData', 'bool'),
             ]
         );

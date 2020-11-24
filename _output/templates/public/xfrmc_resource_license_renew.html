@@ -3,6 +3,10 @@
 <xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
     <div class="block-container">
         <div class="block-body">
+            <xf:inforow rowtype="confirm">
+                {{ phrase('xfrmc_you_have_license_this_resource_but_it_expired_renew_continue_download') }}
+            </xf:inforow>
+
             <xf:radiorow name="purchase_id" label="{{ phrase('xfrmc_choose_license') }}"
                          hint="{{ phrase('xfrmc_renew_license_explain', {'days': $xf.app.options.xfrmc_licenseDuration}) }}">
                 <xf:foreach loop="$purchases" value="$purchase">
@@ -12,6 +16,10 @@
                 </xf:foreach>
             </xf:radiorow>
 
+            <hr class="formRowSep"/>
+
+            <xf:formrow label="{{ phrase('price') }}">{$resource.getRenewPrice()|currency($resource.currency)}</xf:formrow>
+
             <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id">
                 <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
                     <xf:option value="{$paymentProfile.payment_profile_id}">{{ $paymentProfile.display_title . ' - ' . $paymentProfile.title }}</xf:option>
@@ -19,6 +27,6 @@
             </xf:radiorow>
         </div>
 
-        <xf:submitrow submit="{{ phrase('xfrmc_renew_license') }}" icon="save"/>
+        <xf:submitrow icon="purchase" submit="{{ phrase('xfrmc_purchase') }}" />
     </div>
 </xf:form>
