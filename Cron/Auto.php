@@ -17,7 +17,7 @@ class Auto
         }
 
         /** @var User|null $user */
-        $user = \XF::finder('XF:User')->where('username', $conversationStarter)->fetch();
+        $user = \XF::finder('XF:User')->where('username', $conversationStarter)->fetchOne();
         if ($user === null) {
             return;
         }
