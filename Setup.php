@@ -45,6 +45,11 @@ class Setup extends AbstractSetup
         $this->doDropColumns($this->getAlters1());
     }
 
+    public function upgrade3000300Step1()
+    {
+        $this->doAlterTables($this->getAlters3());
+    }
+
     /**
      * @return array
      */
@@ -81,6 +86,17 @@ class Setup extends AbstractSetup
         ];
 
         return $alters;
+    }
+
+    protected function getAlters3(): array
+    {
+        return [
+            'tl_xfrm_resource_purchase' => [
+                'new_purchase_id' => function (Alter $table) {
+                    $table->addColumn('new_purchase_id', 'int')->setDefault(0);
+                }
+            ]
+        ];
     }
 
     /**

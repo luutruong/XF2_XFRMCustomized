@@ -45,28 +45,33 @@
         "hash": "59b8c2fb14bb99d1325f3368da5eb632"
     },
     "public/xfrmc_resource_download.html": {
-        "version_id": 3000100,
-        "version_string": "3.0.1",
-        "hash": "5089ad6a84fc0a4225c719f65da7d731"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "11ddbbf8b09812011521a43b505c9384"
+    },
+    "public/xfrmc_resource_license_renew.html": {
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "4c07d1caf0a4c4ef3ddf3cfd627e5d20"
     },
     "public/xfrmc_resource_list.less": {
-        "version_id": 2000500,
-        "version_string": "2.0.5",
-        "hash": "15d8a4da8029bba4c5291b7a053d11d9"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "6583e86e032366769050a203db68de1b"
     },
     "public/xfrmc_resource_macros.html": {
-        "version_id": 3000100,
-        "version_string": "3.0.1",
-        "hash": "015e1b0147077f987517131ce1a9f583"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "f56ca69ee1c612f3ba9e7ed41474ac7a"
     },
     "public/xfrmc_resource_purchase.html": {
-        "version_id": 2000700,
-        "version_string": "2.0.7",
-        "hash": "13dd2460ae90a9483b56f4efedb738eb"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "e7d0fc88280ff2e9d461e154b8e5e761"
     },
     "public/xfrmc_resource_purchased.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "34f5564089ad684aeacbf86de536083f"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "adfd0e38e7d098228f7312ac66d9ae2d"
     }
 }

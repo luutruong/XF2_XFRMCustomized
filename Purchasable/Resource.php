@@ -16,10 +16,19 @@ use Truonglv\XFRMCustomized\Entity\CouponUser;
 
 class Resource extends AbstractPurchasable
 {
+    const EXTRA_OLD_PURCHASE_ID = 'old_purchase_id';
+    const EXTRA_DATA_COUPON_ID = 'coupon_id';
+    const EXTRA_DATA_RESOURCE_ID = 'resource_id';
+    const EXTRA_DATA_PURCHASE_ID = 'purchase_id';
+
     /**
      * @var Coupon|null
      */
     protected $coupon;
+    /**
+     * @var \Truonglv\XFRMCustomized\Entity\Purchase|null
+     */
+    protected $oldPurchase;
 
     /**
      * @param \XF\Http\Request $request
@@ -40,16 +49,37 @@ class Resource extends AbstractPurchasable
         }
 
         $resourceId = $request->filter('resource_id', 'uint');
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
-        $resource = \XF::em()->find('XFRM:ResourceItem', $resourceId);
-        if ($resource === null || !$resource->canPurchase()) {
-            $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
+        $purchaseId = $request->filter('purchase_id', 'uint');
+        $canUseCouponCode = true;
 
-            return false;
+        if ($purchaseId > 0) {
+            /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
+            $purchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $purchaseId);
+            if ($purchase === null
+                || $purchase->user_id !== $purchaser->user_id
+                || $purchase->new_purchase_id > 0
+            ) {
+                $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
+
+                return false;
+            }
+
+            /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+            $resource = $purchase->Resource;
+            $canUseCouponCode = false;
+            $this->oldPurchase = $purchase;
+        } else {
+            /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
+            $resource = \XF::em()->find('XFRM:ResourceItem', $resourceId);
+            if ($resource === null || !$resource->canPurchase()) {
+                $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
+
+                return false;
+            }
         }
 
         $couponCode = $request->filter('coupon_code', 'str');
-        if ($couponCode !== '') {
+        if ($couponCode !== '' && $canUseCouponCode) {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->findOne('Truonglv\XFRMCustomized:Coupon', [
                 'coupon_code' => $couponCode
@@ -111,39 +141,65 @@ class Resource extends AbstractPurchasable
     {
         if ($state->legacy) {
             $purchaseRequest = null;
-            $resourceId = $state->resource_id;
-            $purchaseId = $state->purchase_id;
+            $resourceId = $state->{ self::EXTRA_DATA_RESOURCE_ID };
+            $purchaseId = $state->{ self::EXTRA_DATA_PURCHASE_ID };
+            $oldPurchaseId = $state->{ self::EXTRA_OLD_PURCHASE_ID };
         } else {
             $purchaseRequest = $state->getPurchaseRequest();
-            $resourceId = $purchaseRequest->extra_data['resource_id'];
-            $purchaseId = isset($purchaseRequest->extra_data['purchase_id'])
-                ? $purchaseRequest->extra_data['purchase_id']
-                : null;
+            $resourceId = $purchaseRequest->extra_data[self::EXTRA_DATA_RESOURCE_ID];
+            $purchaseId = $purchaseRequest->extra_data[self::EXTRA_DATA_PURCHASE_ID] ?? null;
+            $oldPurchaseId = $purchaseRequest->extra_data[self::EXTRA_OLD_PURCHASE_ID] ?? null;
         }
 
         $paymentResult = $state->paymentResult;
         $purchaser = $state->getPurchaser();
+        $canUseCoupon = true;
+        /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $oldPurchase */
+        $oldPurchase = null;
 
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
         $resource = \XF::em()->find('XFRM:ResourceItem', $resourceId);
 
+        $licenseStartDate = \time();
+        if ($oldPurchaseId > 0) {
+            /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $oldPurchase */
+            $oldPurchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $oldPurchaseId);
+            $canUseCoupon = false;
+
+            if ($oldPurchase !== null) {
+                $licenseStartDate = $oldPurchase->expire_date;
+            }
+        }
+
         /** @var Coupon|null $coupon */
         $coupon = null;
-        if (isset($purchaseRequest->extra_data['coupon_id'])) {
+        if (isset($purchaseRequest->extra_data[self::EXTRA_DATA_COUPON_ID]) && $canUseCoupon) {
             /** @var Coupon|null $coupon */
-            $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $purchaseRequest->extra_data['coupon_id']);
+            $coupon = \XF::em()->find(
+                'Truonglv\XFRMCustomized:Coupon',
+                $purchaseRequest->extra_data[self::EXTRA_DATA_COUPON_ID]
+            );
         }
 
         $purchase = null;
 
         switch ($paymentResult) {
             case CallbackState::PAYMENT_RECEIVED:
+                $logMessages = [
+                    sprintf(
+                        'User %d bought resource %s (%d)',
+                        $purchaser->user_id,
+                        $resource->title,
+                        $resource->resource_id
+                    )
+                ];
+
                 /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchase */
                 $purchase = \XF::em()->create('Truonglv\XFRMCustomized:Purchase');
                 $purchase->resource_id = $resource->resource_id;
                 $purchase->user_id = $purchaser->user_id;
                 $purchase->username = $purchaser->username;
-                $purchase->expire_date = \XF::$time + 365 * 86400;
+                $purchase->expire_date = $licenseStartDate + \XF::app()->options()->xfrmc_licenseDuration * 86400;
                 $purchase->resource_version_id = $resource->current_version_id;
                 if ($purchaseRequest->request_key !== '') {
                     $purchase->purchase_request_key = substr($purchaseRequest->request_key, 0, 32);
@@ -163,8 +219,11 @@ class Resource extends AbstractPurchasable
                     $couponUser->purchase_id = 0;
 
                     $purchase->addCascadedSave($couponUser);
+                    $logMessages[] = 'Using coupon code: ' . $coupon->coupon_code;
                 } else {
-                    $purchase->amount = $resource->getPurchasePrice();
+                    $purchase->amount = $this->oldPurchase === null
+                        ? $resource->getPurchasePrice()
+                        : $resource->getRenewPrice();
                 }
 
                 $purchase->save();
@@ -173,13 +232,15 @@ class Resource extends AbstractPurchasable
                     $couponUser->fastUpdate('purchase_id', $purchase->purchase_id);
                 }
 
+                if ($oldPurchase !== null) {
+                    $oldPurchase->new_purchase_id = $purchase->purchase_id;
+                    $oldPurchase->save();
+
+                    $logMessages[] = 'Old purchase ID: ' . $oldPurchase->purchase_id;
+                }
+
                 $state->logType = 'payment';
-                $state->logMessage = sprintf(
-                    'User (%s) bought resource (%s) with coupon code (%s)',
-                    $purchaser->username,
-                    $resource->resource_id . ' - ' . $resource->title,
-                    $coupon !== null ? $coupon->coupon_code : ''
-                );
+                $state->logMessage = implode(', ', $logMessages);
 
                 break;
             case CallbackState::PAYMENT_REINSTATED:
@@ -187,7 +248,7 @@ class Resource extends AbstractPurchasable
                     /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
                     $purchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $purchaseId);
                     if ($purchase !== null) {
-                        $purchase->expire_date = $purchase->purchased_date + 365 * 86400;
+                        $purchase->expire_date = $purchase->purchased_date + \XF::app()->options()->xfrmc_licenseDuration * 86400;
                         $purchase->save();
 
                         $state->logType = 'payment';
@@ -215,7 +276,7 @@ class Resource extends AbstractPurchasable
 
         if ($purchaseRequest !== null && $purchase !== null) {
             $extraData = $purchaseRequest->extra_data;
-            $extraData['purchase_id'] = $purchase->purchase_id;
+            $extraData[self::EXTRA_DATA_PURCHASE_ID] = $purchase->purchase_id;
             $purchaseRequest->extra_data = $extraData;
 
             $purchaseRequest->save();
@@ -250,7 +311,24 @@ class Resource extends AbstractPurchasable
             return false;
         }
 
-        if (isset($extraData['coupon_id'])) {
+        $canUseCoupon = true;
+        if (isset($extraData[self::EXTRA_OLD_PURCHASE_ID])) {
+            /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
+            $purchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $extraData[self::EXTRA_OLD_PURCHASE_ID]);
+            if ($purchase === null
+                || $purchase->user_id !== $purchaser->user_id
+                || $purchase->new_purchase_id > 0
+            ) {
+                $error = \XF::phrase('this_item_cannot_be_purchased_at_moment');
+
+                return false;
+            }
+            $this->oldPurchase = $purchase;
+
+            $canUseCoupon = false;
+        }
+
+        if (isset($extraData[self::EXTRA_DATA_COUPON_ID]) && $canUseCoupon) {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $extraData['coupon_id']);
             if ($coupon === null) {
@@ -288,12 +366,10 @@ class Resource extends AbstractPurchasable
     {
         if ($state->legacy) {
             $purchaseRequest = null;
-            $purchaseId = $state->purchase_id;
+            $purchaseId = $state->{ self::EXTRA_DATA_PURCHASE_ID };
         } else {
             $purchaseRequest = $state->getPurchaseRequest();
-            $purchaseId = isset($purchaseRequest->extra_data['purchase_id'])
-                ? $purchaseRequest->extra_data['purchase_id']
-                : null;
+            $purchaseId = $purchaseRequest->extra_data[self::EXTRA_DATA_PURCHASE_ID] ?? null;
         }
 
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
@@ -349,17 +425,26 @@ class Resource extends AbstractPurchasable
         $purchasable,
         \XF\Entity\User $purchaser
     ) {
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $purchasable */
         if ($this->coupon !== null) {
+            if ($this->oldPurchase !== null) {
+                throw new \LogicException('Cannot apply coupon code to renew license.');
+            }
+
             $cost = $this->coupon->getFinalPrice($purchasable);
         } else {
-            $cost = $purchasable->getPurchasePrice();
+            $cost = $this->oldPurchase === null
+                ? $purchasable->getPurchasePrice()
+                : $purchasable->getRenewPrice();
         }
 
         $purchase = new Purchase();
 
         $purchase->title = sprintf(
             '%s: %s (%s)',
-            \XF::phrase('xfrmc_buy_resource'),
+            $this->oldPurchase === null
+                ? \XF::phrase('xfrmc_buy_resource')
+                : \XF::phrase('xfrmc_renew_license'),
             $purchasable->title,
             $purchaser->username
         );
@@ -380,10 +465,17 @@ class Resource extends AbstractPurchasable
         $purchase->purchasableId = strval($purchasable->resource_id);
 
         $purchase->purchasableTitle = $purchasable->title;
-        $purchase->extraData = [
-            'resource_id' => $purchasable->resource_id,
-            'coupon_id' => $this->coupon !== null ? $this->coupon->coupon_id : 0
+        $extraData = [
+            self::EXTRA_DATA_RESOURCE_ID => $purchasable->resource_id,
         ];
+        if ($this->coupon !== null) {
+            $extraData[self::EXTRA_DATA_COUPON_ID] = $this->coupon->coupon_id;
+        }
+        if ($this->oldPurchase !== null) {
+            // link to existing purchase if this request is renew license
+            $extraData[self::EXTRA_OLD_PURCHASE_ID] = $this->oldPurchase->purchase_id;
+        }
+        $purchase->extraData = $extraData;
 
         $router = \XF::app()->router('public');
 

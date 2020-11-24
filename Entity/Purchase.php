@@ -11,10 +11,8 @@ use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceVersion;
 
 /**
- * Class Purchase
- * @package Truonglv\XFRMCustomized\Entity
- *
- * @property int purchase_id
+ * COLUMNS
+ * @property int|null purchase_id
  * @property int resource_id
  * @property int user_id
  * @property string username
@@ -25,6 +23,11 @@ use XFRM\Entity\ResourceVersion;
  * @property string purchase_request_key
  * @property array purchase_request_keys
  * @property string note
+ * @property int new_purchase_id
+ *
+ * RELATIONS
+ * @property \XF\Entity\User User
+ * @property \XFRM\Entity\ResourceItem Resource
  */
 class Purchase extends Entity
 {
@@ -33,7 +36,7 @@ class Purchase extends Entity
      */
     public function isExpired()
     {
-        return $this->expire_date <= \XF::$time;
+        return $this->expire_date <= \XF::$time || $this->new_purchase_id > 0;
     }
 
     /**
@@ -42,6 +45,10 @@ class Purchase extends Entity
      */
     public function canDownloadVersion(ResourceVersion $version)
     {
+        if ($this->new_purchase_id > 0) {
+            return false;
+        }
+
         return $version->resource_version_id <= $this->resource_version_id;
     }
 
@@ -63,7 +70,8 @@ class Purchase extends Entity
             'purchased_date' => ['type' => self::UINT, 'default' => \XF::$time],
             'purchase_request_key' => ['type' => self::STR, 'default' => '', 'maxLength' => 32],
             'purchase_request_keys' => ['type' => self::JSON_ARRAY, 'default' => []],
-            'note' => ['type' => self::STR, 'default' => '', 'maxLength' => 255]
+            'note' => ['type' => self::STR, 'default' => '', 'maxLength' => 255],
+            'new_purchase_id' => ['type' => self::UINT, 'default' => 0],
         ];
 
         $structure->relations = [
@@ -82,5 +90,17 @@ class Purchase extends Entity
         ];
 
         return $structure;
+    }
+
+    protected function _postDelete()
+    {
+        $this->db()->update(
+            $this->structure()->table,
+            [
+                'new_purchase_id' => 0
+            ],
+            'new_purchase_id = ?',
+            $this->purchase_id
+        );
     }
 }

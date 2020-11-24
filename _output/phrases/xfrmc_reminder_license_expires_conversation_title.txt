@@ -1,0 +1,1 @@
+Your license for resource {title} expires in {day} day(s)

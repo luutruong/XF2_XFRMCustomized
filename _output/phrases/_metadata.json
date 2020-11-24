@@ -1,4 +1,10 @@
 {
+    "cron_entry.xfrmc_reminderLicenseExpi.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "c4359753dd2ae06975ccf3a784b6a437"
+    },
     "nav.xfrmc_coupons.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -16,6 +22,12 @@
         "version_id": 2000600,
         "version_string": "2.0.6",
         "hash": "23a5bb3db4594efb69ba2f77d73dd242"
+    },
+    "option.xfrmc_conversationStarter.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "5101c04f3e88a6232e91345a06d781cd"
     },
     "option.xfrmc_defaultCurrency.txt": {
         "global_cache": false,
@@ -41,11 +53,29 @@
         "version_string": "2.0.4",
         "hash": "4185a2c0a8de44f4807f8521b2c9a978"
     },
+    "option.xfrmc_licenseDuration.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "96fc35b6f9ffc7d38325a9aa31e1b29f"
+    },
+    "option.xfrmc_reminderRenewDays.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "9d325545d82c669e0bae514c9f1fbb0d"
+    },
     "option.xfrmc_resourceIconSize.txt": {
         "global_cache": false,
         "version_id": 2000500,
         "version_string": "2.0.5",
         "hash": "90f0bcc93aa6367991476f9821515c8d"
+    },
+    "option_explain.xfrmc_conversationStarter.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "option_explain.xfrmc_defaultCurrency.txt": {
         "global_cache": false,
@@ -70,6 +100,18 @@
         "version_id": 2000400,
         "version_string": "2.0.4",
         "hash": "f40d0207b3ee41c7e03059fe9ef965eb"
+    },
+    "option_explain.xfrmc_licenseDuration.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "option_explain.xfrmc_reminderRenewDays.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "16e978a0b89d8f24ca4d87db2131edf6"
     },
     "option_explain.xfrmc_resourceIconSize.txt": {
         "global_cache": false,
@@ -143,12 +185,6 @@
         "version_string": "1.1.1",
         "hash": "b118d217732fdb079f7391e6c0dafc20"
     },
-    "xfrmc_12_months.txt": {
-        "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "e3b2a6d5fe4c268d7f994b6a3bda9811"
-    },
     "xfrmc_add_buyer.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -214,6 +250,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "bcdfd535f2e382cfbf2e19a746d72d99"
+    },
+    "xfrmc_choose_license.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "3ba0c2d79c7758a3d82c4b1369b3396b"
     },
     "xfrmc_choose_version.txt": {
         "global_cache": false,
@@ -305,6 +347,12 @@
         "version_string": "1.0.9",
         "hash": "9efd5d1168d8316b2b6fa92f86bbd226"
     },
+    "xfrmc_expires_at_x.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "ba8bf3ca73d8d60130cd9f1bc277823f"
+    },
     "xfrmc_find_buyer.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -377,6 +425,18 @@
         "version_string": "1.0.9",
         "hash": "581be822e22b8c4ca28875ab4f921fd7"
     },
+    "xfrmc_reminder_license_expires_conversation_body.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "a398ba73129d007a353259be4ad1b346"
+    },
+    "xfrmc_reminder_license_expires_conversation_title.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "3f922a08d59164bf14db8718bd63020f"
+    },
     "xfrmc_renew_for_x.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -385,9 +445,15 @@
     },
     "xfrmc_renew_license.txt": {
         "global_cache": false,
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "ce05d1d258d6a504cf32442fd96e5d40"
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "1b2322a7f8995e8bf1049bd2758a3d30"
+    },
+    "xfrmc_renew_license_explain.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "aa64f9d11e17cd77c04047c206920e15"
     },
     "xfrmc_renew_price.txt": {
         "global_cache": false,
@@ -515,11 +581,29 @@
         "version_string": "1.0.9",
         "hash": "7cdaea27ff8be65943105339cab662e0"
     },
+    "xfrmc_x_days.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "651963af0c5b18b4d165a347e31fd21b"
+    },
     "xfrmc_you_did_not_bought_any_resources_yet.txt": {
         "global_cache": false,
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "f244c68e96f382818b27e7891f6b55b2"
+    },
+    "xfrmc_you_did_not_have_any_licenses_for_this_resource.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "4922faa814dc85e2254d7788b1e6754d"
+    },
+    "xfrmc_you_have_license_this_resource_but_it_expired_renew_continue_download.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "4fbe0698d6d1a451959a6e1ffe6f9785"
     },
     "xfrmc_you_may_purchase_this_resource_to_download.txt": {
         "global_cache": false,
@@ -532,5 +616,11 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "826bab9249c7d07d7e3549eefeffe4a4"
+    },
+    "xfrmc_your_license_has_been_expired_renew_to_download_latest_version.txt": {
+        "global_cache": false,
+        "version_id": 3000200,
+        "version_string": "3.0.2",
+        "hash": "7a186490f648b9b69e39a963320c8843"
     }
 }

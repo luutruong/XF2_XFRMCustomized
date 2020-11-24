@@ -64,7 +64,7 @@
 	</xf:if>
 	<xf:if is="$resource.isRenewLicense()">
 		{{ $downloadButton|raw }}
-		<xf:set var="$purchasePhrase">{{ phrase('xfrmc_renew_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
+		<xf:set var="$purchasePhrase">{{ phrase('xfrmc_renew_for_x', {'price': $resource.getRenewPrice()|currency($resource.currency)}) }}</xf:set>
 	<xf:elseif is="$resource.canPurchase() AND !$resource.canDownload()" />
 		<xf:set var="$purchasePhrase">{{ phrase('xfrm_buy_for_x', {'price': $resource.getPurchasePrice()|currency($resource.currency)}) }}</xf:set>
 	</xf:if>
@@ -75,18 +75,20 @@
 	</xf:if>
 </xf:macro>
 
-<xf:macro name="resource_list_grid" arg-resources="!">
+<xf:macro name="resource_list_grid" arg-resources="!" arg-showPrice="{{ true }}">
 	<xf:css src="xfrmc_resource_list.less"/>
 	<div class="xfrmc-resourceList">
 		<xf:foreach loop="$resources" value="$resource">
 			<div class="resourceList-item {{ $resource.resource_state }}">
-				<xf:macro name="resource_list_grid_item" arg-resource="{$resource}"/>
+				<xf:macro name="resource_list_grid_item"
+						  arg-showPrice="{$showPrice}"
+						  arg-resource="{$resource}"/>
 			</div>
 		</xf:foreach>
 	</div>
 </xf:macro>
 
-<xf:macro name="resource_list_grid_item" arg-resource="!">
+<xf:macro name="resource_list_grid_item" arg-resource="!" arg-showPrice="{{ true }}">
 	<div class="resourceList-item--wrapper">
 		{{ resource_icon($resource, 'l', link('resources', $resource)) }}
 
@@ -97,10 +99,12 @@
 				<p class="resourceList-item--description">{$resource.tag_line}</p>
 			</div>
 
-			<xf:if is="$resource.isExternalPurchasable()">
-				<span class="resourceList-item--price">{$resource.getPurchasePrice()|currency($resource.currency)}</span>
-			<xf:else />
-				<span class="resourceList-item--price"></span>
+			<xf:if is="$showPrice">
+				<xf:if is="$resource.isExternalPurchasable()">
+					<span class="resourceList-item--price">{$resource.getPurchasePrice()|currency($resource.currency)}</span>
+				<xf:else />
+					<span class="resourceList-item--price"></span>
+				</xf:if>
 			</xf:if>
 
 			<div class="resourceList-item--meta">
@@ -109,11 +113,12 @@
 						  arg-count="{$resource.rating_count}"
 						  arg-rowClass="ratingStarsRow--justified"
 						  arg-starsClass="ratingStars--custom" />
-				<xf:if is="$resource.canDownload()">
+				<xf:if is="$xf.visitor.user_id > 0">
 					<xf:button href="{{ link('resources/download', $resource) }}"
 							   title="{{ phrase('download') }}" data-xf-init="tooltip" data-xf-click="overlay"
 							   class="button--link button--icon"><i class="far fa-download" aria-hidden="true"></i></xf:button>
-				<xf:elseif is="$resource.canPurchase()"/>
+				</xf:if>
+				<xf:if is="$resource.canPurchase()">
 					<xf:button href="{{ link('resources/purchase', $resource) }}"
 							   overlay="true" title="{{ phrase('xfrmc_buy_now') }}" data-xf-init="tooltip"
 							   class="button--cta button--icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></xf:button>

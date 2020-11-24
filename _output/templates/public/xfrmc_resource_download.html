@@ -11,6 +11,12 @@
 <xf:form action="{{ link('resources/download', $resource) }}" class="block">
     <div class="block-container">
         <div class="block-body">
+            <xf:if is="$canDownloadVersionId < $resource.current_version_id">
+                <xf:inforow rowtype="confirm">
+                    {{ phrase('xfrmc_your_license_has_been_expired_renew_to_download_latest_version') }}
+                </xf:inforow>
+            </xf:if>
+
             <xf:selectrow name="version_id" label="{{ phrase('xfrmc_choose_version') }}">
                 <xf:foreach loop="$versions" value="$version" if="{$version.canDownload}">
                     <xf:option value="{$version.resource_version_id}">{$version.version_string}</xf:option>

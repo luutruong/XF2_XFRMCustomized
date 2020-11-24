@@ -103,6 +103,19 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->app()->router('public')->buildLink('canonical:resources/purchase', $this);
     }
 
+    public function isRenewLicense(): bool
+    {
+        if (\XF::visitor()->user_id <= 0) {
+            return false;
+        }
+
+        return $this->finder('Truonglv\XFRMCustomized:Purchase')
+            ->where('user_id', \XF::visitor()->user_id)
+            ->where('resource_id', $this->resource_id)
+            ->where('new_purchase_id', 0)
+            ->total() > 0;
+    }
+
     /**
      * @param null|string $error
      * @return bool
@@ -117,32 +130,14 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->price > 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRenewLicense()
+    public function getPurchasePrice(): float
     {
-        if (\XF::visitor()->user_id <= 0) {
-            return false;
-        }
-
-        $purchases = App::purchaseRepo()->getAllPurchases($this);
-
-        return $purchases->count() > 0;
+        return $this->price + App::getFee($this->price);
     }
 
-    /**
-     * @return float
-     */
-    public function getPurchasePrice()
+    public function getRenewPrice(): float
     {
-        if ($this->renew_price > 0 && $this->isRenewLicense()) {
-            $price = $this->renew_price;
-        } else {
-            $price = $this->price;
-        }
-
-        return $price + App::getFee($price);
+        return $this->renew_price + App::getFee($this->renew_price);
     }
 
     /**
