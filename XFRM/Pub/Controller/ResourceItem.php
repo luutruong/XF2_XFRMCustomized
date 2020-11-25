@@ -384,6 +384,7 @@ class ResourceItem extends XFCP_ResourceItem
         $versions = $this->finder('XFRM:ResourceVersion')
             ->where('resource_id', $resource->resource_id)
             ->where('version_state', 'visible')
+            ->where('resource_version_id', '>=', $lastPurchase->resource_version_id ?? 0)
             ->order('release_date', 'DESC')
             ->fetchColumns([
                 'resource_version_id',
@@ -396,6 +397,7 @@ class ResourceItem extends XFCP_ResourceItem
                 || $resource->canDownload()
             ) {
                 $version['canDownload'] = true;
+                $canDownloadVersionId = $version['resource_version_id'];
 
                 continue;
             }

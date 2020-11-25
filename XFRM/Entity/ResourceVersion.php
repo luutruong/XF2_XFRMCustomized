@@ -43,12 +43,6 @@ class ResourceVersion extends XFCP_ResourceVersion
                 return false;
             }
 
-            foreach ($purchases as $purchase) {
-                if (!$purchase->isExpired()) {
-                    return true;
-                }
-            }
-
             // all purchases has been expired.
             $canDownloadThisVersion = false;
             foreach ($purchases as $purchase) {

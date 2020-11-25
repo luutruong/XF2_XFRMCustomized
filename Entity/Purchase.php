@@ -36,7 +36,7 @@ class Purchase extends Entity
      */
     public function isExpired()
     {
-        return $this->expire_date <= \XF::$time || $this->new_purchase_id > 0;
+        return $this->expire_date <= time() || $this->new_purchase_id > 0;
     }
 
     /**
@@ -49,7 +49,7 @@ class Purchase extends Entity
             return false;
         }
 
-        return $version->resource_version_id <= $this->resource_version_id;
+        return $version->resource_version_id <= $this->resource_version_id || $this->expire_date > time();
     }
 
     public static function getStructure(Structure $structure)
