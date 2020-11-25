@@ -360,25 +360,10 @@ class ResourceItem extends XFCP_ResourceItem
 
         $versionId = $this->filter('version_id', 'uint');
         if ($versionId > 0) {
-            $canDownload = false;
-            if ($resource->user_id !== \XF::visitor()->user_id) {
-                if ($lastPurchase !== null) {
-                    if ($lastPurchase->isExpired()) {
-                        $canDownload = $versionId <= $lastPurchase->resource_version_id;
-                    } else {
-                        $canDownload = true;
-                    }
-                }
-            } else {
-                $canDownload = true;
-            }
-
-            if ($canDownload || $resource->canDownload()) {
-                return $this->rerouteController('XFRM:ResourceVersion', 'download', [
-                    'resource_id' => $resource->resource_id,
-                    'resource_version_id' => $versionId
-                ]);
-            }
+            return $this->rerouteController('XFRM:ResourceVersion', 'download', [
+                'resource_id' => $resource->resource_id,
+                'resource_version_id' => $versionId
+            ]);
         }
 
         $versions = $this->finder('XFRM:ResourceVersion')
