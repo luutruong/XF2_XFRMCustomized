@@ -366,10 +366,21 @@ class ResourceItem extends XFCP_ResourceItem
             ]);
         }
 
+        $limitVersionOp = '>=';
+        $limitVersionValue = 0;
+
+        if (($lastPurchase !== null && $lastPurchase->isExpired() && $lastPurchase->resource_version_id > 0)
+            && !$resource->canDownload()
+        ) {
+            // only allow users download resources from previous version
+            $limitVersionOp = '<=';
+            $limitVersionValue = $lastPurchase->resource_version_id;
+        }
+
         $versions = $this->finder('XFRM:ResourceVersion')
             ->where('resource_id', $resource->resource_id)
             ->where('version_state', 'visible')
-            ->where('resource_version_id', '>=', $lastPurchase->resource_version_id ?? 0)
+            ->where('resource_version_id', $limitVersionOp, $limitVersionValue)
             ->order('release_date', 'DESC')
             ->fetchColumns([
                 'resource_version_id',
