@@ -3,6 +3,7 @@
 namespace Truonglv\XFRMCustomized\Cron;
 
 use XF\Entity\User;
+use XF\Repository\AddOn;
 use XF\Service\Conversation\Creator;
 use Truonglv\XFRMCustomized\Entity\Purchase;
 use Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem;
@@ -50,6 +51,9 @@ class Auto
         $finder->order('expire_date');
 
         $app = \XF::app();
+        /** @var AddOn $addOnRepo */
+        $addOnRepo = $app->repository('XF:AddOn');
+        $enabledAddOns = $addOnRepo->getEnabledAddOns();
 
         /** @var Purchase $purchase */
         foreach ($finder->fetch() as $purchase) {
@@ -94,6 +98,24 @@ class Auto
             }
 
             $conversationCreator->save();
+            /** @var mixed $callable */
+            $callable = ['Truonglv\TelegramBot\App', 'getTelegramApi'];
+            if (is_callable($callable) && isset($enabledAddOns['Truonglv/TelegramBot'])) {
+                $telegram = call_user_func($callable);
+                if (is_object($telegram) && method_exists($telegram, 'sendMessage')) {
+                    call_user_func(
+                        [$telegram, 'sendMessage'],
+                        sprintf(
+                            'Send conversation reminder to license expires to user %s(%d). $purchaseId=%d'
+                                . ' $resourceId=%d',
+                            $purchaser->username,
+                            $purchaser->user_id,
+                            $purchase->purchase_id,
+                            $resource->resource_id
+                        )
+                    );
+                }
+            }
         }
     }
 }
