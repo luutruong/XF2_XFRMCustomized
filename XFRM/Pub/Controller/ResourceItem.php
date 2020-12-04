@@ -387,13 +387,11 @@ class ResourceItem extends XFCP_ResourceItem
                 'version_string',
                 'release_date'
             ]);
-        $canDownloadVersionId = 0;
         foreach ($versions as &$version) {
             if (\XF::visitor()->user_id === $resource->user_id
                 || $resource->canDownload()
             ) {
                 $version['canDownload'] = true;
-                $canDownloadVersionId = $version['resource_version_id'];
 
                 continue;
             }
@@ -409,10 +407,6 @@ class ResourceItem extends XFCP_ResourceItem
             } else {
                 $version['canDownload'] = true;
             }
-
-            if ($version['canDownload'] === true) {
-                $canDownloadVersionId = $version['resource_version_id'];
-            }
         }
         unset($version);
 
@@ -422,8 +416,8 @@ class ResourceItem extends XFCP_ResourceItem
             [
                 'resource' => $resource,
                 'versions' => $versions,
-                'canDownloadVersionId' => $canDownloadVersionId,
                 'inlineDownload' => $this->filter('_xfWithData', 'bool'),
+                'purchase' => $lastPurchase,
             ]
         );
     }

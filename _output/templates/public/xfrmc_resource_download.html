@@ -11,7 +11,7 @@
 <xf:form action="{{ link('resources/download', $resource) }}" class="block">
     <div class="block-container">
         <div class="block-body">
-            <xf:if is="$canDownloadVersionId < $resource.current_version_id">
+            <xf:if is="$purchase AND $purchase.isExpired()">
                 <xf:inforow rowtype="confirm">
                     {{ phrase('xfrmc_your_license_has_been_expired_renew_to_download_latest_version') }}
                 </xf:inforow>
