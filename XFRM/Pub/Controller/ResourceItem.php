@@ -10,6 +10,7 @@ use XF\Entity\User;
 use XF\Mvc\Reply\View;
 use XF\Mvc\ParameterBag;
 use Truonglv\XFRMCustomized\App;
+use XFRM\Entity\ResourceVersion;
 use Truonglv\XFRMCustomized\Entity\Purchase;
 
 class ResourceItem extends XFCP_ResourceItem
@@ -418,6 +419,55 @@ class ResourceItem extends XFCP_ResourceItem
                 'versions' => $versions,
                 'inlineDownload' => $this->filter('_xfWithData', 'bool'),
                 'purchase' => $lastPurchase,
+            ]
+        );
+    }
+
+    public function actionDownloadLogs(ParameterBag $params)
+    {
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        $resource = $this->assertViewableResource($params['resource_id']);
+        if (!$resource->canViewHistory($error)) {
+            return $this->noPermission($error);
+        }
+
+        $versionId = $this->filter('version_id', 'uint');
+        /** @var ResourceVersion $version */
+        $version = $this->assertRecordExists(
+            'XFRM:ResourceVersion',
+            $versionId
+        );
+
+        if ($version->resource_id !== $resource->resource_id) {
+            return $this->noPermission();
+        }
+
+        $finder = $this->finder('XFRM:ResourceDownload');
+        $finder->with('User');
+        $finder->where('resource_version_id', $version->resource_version_id);
+        $finder->order('last_download_date', 'DESC');
+
+        $page = $this->filterPage();
+        $perPage = 20;
+
+        $total = $finder->total();
+        $entities = $total > 0
+            ? $finder->limitByPage($page, $perPage)->fetch()
+            : $this->em()->getEmptyCollection();
+
+        return $this->view(
+            'Truonglv\XFRMCustomized:ResourceVersion\DownloadLogs',
+            'xfrmc_resource_download_logs',
+            [
+                'resource' => $resource,
+                'entities' => $entities,
+                'page' => $page,
+                'perPage' => $perPage,
+                'total' => $total,
+                'version' => $version,
+                'pageNavParams' => [
+                    'version_id' => $version->resource_version_id,
+                ],
             ]
         );
     }

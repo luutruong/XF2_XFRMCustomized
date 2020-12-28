@@ -23,6 +23,9 @@
     "public/xfrmc_xfrm_overview.json": {
         "hash": "a84880bd99ab070e1a2b9a6c31172f14"
     },
+    "public/xfrmc_xfrm_resource_history.json": {
+        "hash": "612f2a8e33e3bd926076b93762bc1ae8"
+    },
     "public/xfrmc_xfrm_resource_wrapper_macros.json": {
         "hash": "d0ff1d8f02b5e65ceaf450bcb5a195db"
     }

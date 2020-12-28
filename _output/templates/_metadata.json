@@ -49,6 +49,11 @@
         "version_string": "3.0.3",
         "hash": "62bc3a5328d0e083a522688016236652"
     },
+    "public/xfrmc_resource_download_logs.html": {
+        "version_id": 3000400,
+        "version_string": "3.0.4",
+        "hash": "294ba8306742490c1e1bfc5ef304b94f"
+    },
     "public/xfrmc_resource_license_renew.html": {
         "version_id": 3000200,
         "version_string": "3.0.2",

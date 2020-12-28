@@ -1,0 +1,9 @@
+{
+    "template": "xfrm_resource_history",
+    "description": "Add link to view download logs",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "{{ $version.isDownloadable() ? $version.download_count|number : phrase('n_a') }}",
+    "replace": "<a href=\"{{ link('resources/download-logs', $resource, {'version_id':$version.resource_version_id}) }}\">$0</a>"
+}

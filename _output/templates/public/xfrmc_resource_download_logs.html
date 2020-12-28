@@ -1,0 +1,38 @@
+<xf:title>{{ phrase('xfrmc_users_download_resource_version_x', {
+    'name': $version.version_string
+}) }}</xf:title>
+
+<xf:wrap template="xfrm_resource_wrapper">
+    <xf:set var="$pageSelected" value="buyers" />
+</xf:wrap>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:datalist data-xf-init="responsive-data-list">
+                <xf:datarow rowtype="header">
+                    <xf:cell>{{ phrase('user') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_download_date') }}</xf:cell>
+                </xf:datarow>
+
+                <xf:foreach loop="$entities" value="$entity">
+                    <xf:datarow>
+                        <xf:cell>
+                            <xf:avatar user="{$entity.User}" size="xs" />
+                            <xf:username user="{$entity.User}" />
+                        </xf:cell>
+                        <xf:cell class="dataList-cell--min dataList-cell--alt">
+                            <xf:date time="{$entity.last_download_date}" />
+                        </xf:cell>
+                    </xf:datarow>
+                </xf:foreach>
+            </xf:datalist>
+        </div>
+    </div>
+
+    <div class="block-outer block-outer--after">
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+                    link="resources/download-logs" data="{$resource}"
+                    params="{$pageNavParams}"/>
+    </div>
+</div>
