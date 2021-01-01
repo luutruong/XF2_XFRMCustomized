@@ -533,6 +533,12 @@
         "version_string": "1.1.0",
         "hash": "597fb05a3959f5303fe21dae70d69bf0"
     },
+    "xfrmc_resource_id.txt": {
+        "global_cache": false,
+        "version_id": 3000700,
+        "version_string": "3.0.7",
+        "hash": "bf48ab00ba8d01dbf79df8c1805d3e2a"
+    },
     "xfrmc_resource_ids.txt": {
         "global_cache": false,
         "version_id": 1000970,

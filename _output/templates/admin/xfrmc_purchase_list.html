@@ -1,5 +1,22 @@
 <xf:title>{{ phrase('xfrmc_purchases') }}</xf:title>
 
+<xf:form action="{{ link($linkPrefix) }}" method="GET" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:textboxrow name="username" ac="single" value="{$filters.username}"
+                           label="{{ phrase('user') }}"/>
+            <xf:textboxrow name="resource_id" value="{$filters.resource_id}"
+                           label="{{ phrase('xfrmc_resource_id') }}"/>
+        </div>
+
+        <xf:submitrow icon="search">
+            <xf:html>
+                <xf:button href="{{ link($linkPrefix) }}" class="button--link">{{ phrase('reset') }}</xf:button>
+            </xf:html>
+        </xf:submitrow>
+    </div>
+</xf:form>
+
 <xf:if is="$total > 0">
     <div class="block">
         <div class="block-container">
@@ -52,5 +69,7 @@
         </div>
     </div>
 <xf:else />
-    <div class="blockMessage">{{ phrase('no_items_have_been_created_yet') }}</div>
+    <div class="blockMessage">{{ $filters
+        ? phrase('no_records_matched')
+        : phrase('no_items_have_been_created_yet') }}</div>
 </xf:if>

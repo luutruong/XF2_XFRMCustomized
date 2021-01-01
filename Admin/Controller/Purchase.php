@@ -2,6 +2,7 @@
 
 namespace Truonglv\XFRMCustomized\Admin\Controller;
 
+use XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use XF\Admin\Controller\AbstractController;
 
@@ -24,8 +25,23 @@ class Purchase extends AbstractController
 
         $filters = $this->filter([
             'user_id' => 'uint',
+            'username' => 'str',
             'resource_id' => 'uint',
         ]);
+
+        if ($filters['username'] !== '') {
+            /** @var User|null $user */
+            $user = $this->em()->findOne('XF:User', [
+                'username' => $filters['username']
+            ]);
+            if ($user === null) {
+                $finder->whereImpossible();
+            } else {
+                $filters['user_id'] = $user->user_id;
+            }
+        } else {
+            unset($filters['username']);
+        }
 
         if ($filters['user_id'] > 0) {
             $finder->where('user_id', $filters['user_id']);
