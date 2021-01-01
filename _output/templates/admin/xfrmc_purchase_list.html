@@ -9,6 +9,7 @@
                         <xf:cell>ID</xf:cell>
                         <xf:cell>{{ phrase('name') }}</xf:cell>
                         <xf:cell>{{ phrase('xfrm_resource') }}</xf:cell>
+                        <xf:cell>{{ phrase('xfrmc_price') }}</xf:cell>
                         <xf:cell>{{ phrase('xfrmc_purchased_date') }}</xf:cell>
                         <xf:cell>{{ phrase('xfrmc_expire_date') }}</xf:cell>
                         <xf:cell>{{ phrase('xfrmc_new_purchase') }}</xf:cell>
@@ -16,12 +17,13 @@
 
                     <xf:foreach loop="$purchases" value="$purchase">
                         <xf:datarow>
-                            <xf:cell>{$purchase.purchase_id}</xf:cell>
+                            <xf:cell><a href="{{ link($linkPrefix, $purchase) }}">{$purchase.purchase_id}</a></xf:cell>
                             <xf:cell>
                                 <a href="{{ link($linkPrefix, null, {'user_id': $purchase.user_id}) }}">
                                     {{ $purchase.User ? $purchase.User.username : $purchase.username }}
                                 </a>
                             </xf:cell>
+                            <xf:cell>{$purchase.amount}</xf:cell>
                             <xf:cell>
                                 <a href="{{ link($linkPrefix, null, {'resource_id': $purchase.resource_id}) }}">
                                     {$purchase.Resource.title}

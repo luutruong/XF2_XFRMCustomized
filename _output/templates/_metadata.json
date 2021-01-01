@@ -1,8 +1,18 @@
 {
+    "admin/xfrmc_purchase_edit.html": {
+        "version_id": 3000600,
+        "version_string": "3.0.6",
+        "hash": "edf067c748e48890b99d725fb9b0d71e"
+    },
     "admin/xfrmc_purchase_list.html": {
-        "version_id": 3000500,
-        "version_string": "3.0.5",
-        "hash": "363e89db935066b07065c053fffaccf2"
+        "version_id": 3000600,
+        "version_string": "3.0.6",
+        "hash": "230fc4a10a0042dd5985ce3fff1419ee"
+    },
+    "admin/xfrmc_purchase_view.html": {
+        "version_id": 3000600,
+        "version_string": "3.0.6",
+        "hash": "0dccaf24567b1b8b2a1c0b4e7629989b"
     },
     "email/payment_received_receipt_tl_xfrm_customized_resource.html": {
         "version_id": 2000800,

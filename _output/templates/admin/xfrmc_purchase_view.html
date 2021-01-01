@@ -1,0 +1,44 @@
+<xf:title>#{$purchase.purchase_id}</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:formrow label="{{ phrase('user') }}">
+                <xf:username user="$purchase.User"/>
+            </xf:formrow>
+            <xf:formrow label="{{ phrase('xfrm_resource') }}">
+                <a href="{{ link_type('public', 'resources', $purchase.Resource) }}">{$purchase.Resource.title}</a>
+            </xf:formrow>
+            <xf:formrow label="{{ phrase('xfrm_resource_version') }}">
+                {{ $purchase.ResourceVersion ? $purchase.ResourceVersion.version_string : '' }}
+            </xf:formrow>
+
+            <hr class="formRowSep"/>
+
+            <xf:formrow label="{{ phrase('xfrmc_price') }}">{$purchase.amount}</xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_purchased_date') }}">
+                <xf:date time="$purchase.purchased_date"/>
+            </xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_expire_date') }}">
+                <xf:date time="$purchase.expire_date"/>
+            </xf:formrow>
+            <xf:formrow label="{{ phrase('xfrmc_new_purchase') }}">
+                <xf:if is="$purchase.new_purchase_id">
+                    <a href="{{ link($linkPrefix, {'purchase_id': $purchase.new_purchase_id}) }}">
+                        #{$purchase.new_purchase_id}
+                    </a>
+                    <xf:else />
+                    {{ phrase('n_a') }}
+                </xf:if>
+            </xf:formrow>
+            <xf:formrow label="{{ phrase('note') }}">{$purchase.note}</xf:formrow>
+
+            <hr class="formRowSep"/>
+
+            <xf:formrow label="">
+                <xf:button href="{{ link($linkPrefix . '/edit', $purchase) }}"
+                           class="button--link" overlay="true">{{ phrase('edit') }}</xf:button>
+            </xf:formrow>
+        </div>
+    </div>
+</div>

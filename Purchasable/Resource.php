@@ -160,7 +160,7 @@ class Resource extends AbstractPurchasable
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
         $resource = \XF::em()->find('XFRM:ResourceItem', $resourceId);
 
-        $licenseStartDate = \time();
+        $licenseStartDate = 0;
         if ($oldPurchaseId > 0) {
             /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $oldPurchase */
             $oldPurchase = \XF::em()->find('Truonglv\XFRMCustomized:Purchase', $oldPurchaseId);
@@ -199,7 +199,7 @@ class Resource extends AbstractPurchasable
                 $purchase->resource_id = $resource->resource_id;
                 $purchase->user_id = $purchaser->user_id;
                 $purchase->username = $purchaser->username;
-                $purchase->expire_date = $licenseStartDate + \XF::app()->options()->xfrmc_licenseDuration * 86400;
+                $purchase->expire_date = max(time(), $licenseStartDate) + \XF::app()->options()->xfrmc_licenseDuration * 86400;
                 $purchase->resource_version_id = $resource->current_version_id;
                 if ($purchaseRequest->request_key !== '') {
                     $purchase->purchase_request_key = substr($purchaseRequest->request_key, 0, 32);

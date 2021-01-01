@@ -1,0 +1,30 @@
+<xf:title>{{ phrase('xfrmc_edit_purchase') }}</xf:title>
+
+<xf:form action="{{ link($linkPrefix . '/edit', $purchase) }}" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:numberboxrow name="amount" value="{$purchase.amount}"
+                             min="0" label="{{ phrase('xfrmc_price') }}"/>
+            <xf:radiorow name="expire_type" value="" label="{{ phrase('xfrmc_update_expires') }}">
+                <xf:option value="">{{ phrase('do_not_change') }}</xf:option>
+                <xf:option value="update" label="{{ phrase('xfrmc_new_expires') }}">
+                    <xf:dependent>
+                        <xf:dateinput name="expire_date" value="{{ date($purchase.expire_date, 'picker') }}"/>
+                    </xf:dependent>
+                </xf:option>
+            </xf:radiorow>
+
+            <xf:selectrow name="resource_version_id" value="{$purchase.resource_version_id}"
+                          label="{{ phrase('xfrm_resource_version') }}">
+                <xf:foreach loop="$resourceVersions" value="$version">
+                    <xf:option value="{$version.resource_version_id}">{$version.version_string}&nbsp;({$version.resource_version_id})</xf:option>
+                </xf:foreach>
+            </xf:selectrow>
+
+            <xf:textarearow name="note" value="{$purchase.note}"
+                            label="{{ phrase('note') }}"/>
+        </div>
+
+        <xf:submitrow icon="save"/>
+    </div>
+</xf:form>

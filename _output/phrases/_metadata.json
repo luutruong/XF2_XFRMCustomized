@@ -335,6 +335,12 @@
         "version_string": "1.0.9",
         "hash": "45de1ce192f3138424be1c8504c54e2d"
     },
+    "xfrmc_edit_purchase.txt": {
+        "global_cache": false,
+        "version_id": 3000600,
+        "version_string": "3.0.6",
+        "hash": "9da74a1cc88984bc6ef9a7dbfa9bb3e8"
+    },
     "xfrmc_end_date.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -394,6 +400,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "30f42d0998894dc934d09c6f8f58aad1"
+    },
+    "xfrmc_new_expires.txt": {
+        "global_cache": false,
+        "version_id": 3000600,
+        "version_string": "3.0.6",
+        "hash": "04b3b0300e971b24832ae418bc86cbd8"
     },
     "xfrmc_new_purchase.txt": {
         "global_cache": false,
@@ -580,6 +592,12 @@
         "version_id": 1010100,
         "version_string": "1.1.1",
         "hash": "bc30768048a7bbfd2d158d722c140c6d"
+    },
+    "xfrmc_update_expires.txt": {
+        "global_cache": false,
+        "version_id": 3000600,
+        "version_string": "3.0.6",
+        "hash": "73df3160cdb04a132bb5afb34cf8b8ae"
     },
     "xfrmc_usable_user_groups.txt": {
         "global_cache": false,

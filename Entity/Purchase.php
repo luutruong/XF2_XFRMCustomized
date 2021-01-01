@@ -86,7 +86,13 @@ class Purchase extends Entity
                 'entity' => 'XFRM:ResourceItem',
                 'conditions' => 'resource_id',
                 'primary' => true
-            ]
+            ],
+            'ResourceVersion' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XFRM:ResourceVersion',
+                'conditions' => 'resource_version_id',
+                'primary' => true,
+            ],
         ];
 
         return $structure;
