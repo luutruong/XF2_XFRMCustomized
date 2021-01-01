@@ -3,7 +3,7 @@
 <xf:form action="{{ link($linkPrefix . '/edit', $purchase) }}" ajax="true" class="block">
     <div class="block-container">
         <div class="block-body">
-            <xf:numberboxrow name="amount" value="{$purchase.amount}"
+            <xf:textboxrow name="amount" value="{$purchase.amount}"
                              min="0" label="{{ phrase('xfrmc_price') }}"/>
             <xf:radiorow name="expire_type" value="" label="{{ phrase('xfrmc_update_expires') }}">
                 <xf:option value="">{{ phrase('do_not_change') }}</xf:option>

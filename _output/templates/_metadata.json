@@ -1,8 +1,8 @@
 {
     "admin/xfrmc_purchase_edit.html": {
-        "version_id": 3000600,
-        "version_string": "3.0.6",
-        "hash": "2e0748d7f8e497b1c6e217fcbef89bbe"
+        "version_id": 3000700,
+        "version_string": "3.0.7",
+        "hash": "fb1fbf1529ce847536ed83ab02d0ab0c"
     },
     "admin/xfrmc_purchase_list.html": {
         "version_id": 3000700,
