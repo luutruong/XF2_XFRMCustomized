@@ -5,9 +5,9 @@
         "hash": "2e0748d7f8e497b1c6e217fcbef89bbe"
     },
     "admin/xfrmc_purchase_list.html": {
-        "version_id": 3000600,
-        "version_string": "3.0.6",
-        "hash": "ccb344c96e4cb2b4717034c9846e5bd9"
+        "version_id": 3000700,
+        "version_string": "3.0.7",
+        "hash": "8f0e5d87450911d1effab463b907bdb9"
     },
     "admin/xfrmc_purchase_view.html": {
         "version_id": 3000600,
