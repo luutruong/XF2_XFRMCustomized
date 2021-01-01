@@ -1,4 +1,10 @@
 {
+    "admin_navigation.xfrmc_purchases.txt": {
+        "global_cache": false,
+        "version_id": 3000500,
+        "version_string": "3.0.5",
+        "hash": "b4b5e091be238ed9df46d35b241611bc"
+    },
     "cron_entry.xfrmc_reminderLicenseExpi.txt": {
         "global_cache": false,
         "version_id": 3000200,
@@ -389,6 +395,12 @@
         "version_string": "1.0.9",
         "hash": "30f42d0998894dc934d09c6f8f58aad1"
     },
+    "xfrmc_new_purchase.txt": {
+        "global_cache": false,
+        "version_id": 3000500,
+        "version_string": "3.0.5",
+        "hash": "e3f64ac3ff3dae21afa542c235dad40d"
+    },
     "xfrmc_percent.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -424,6 +436,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "45ff9251f5191a622e93c1bd449b5670"
+    },
+    "xfrmc_purchases.txt": {
+        "global_cache": false,
+        "version_id": 3000500,
+        "version_string": "3.0.5",
+        "hash": "b4b5e091be238ed9df46d35b241611bc"
     },
     "xfrmc_receipt_for_your_resource_purchase_at_x.txt": {
         "global_cache": false,

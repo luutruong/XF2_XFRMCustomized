@@ -1,0 +1,11 @@
+{
+    "route_type": "admin",
+    "route_prefix": "xfrmc-purchases",
+    "sub_name": "",
+    "format": ":int<purchase_id>/",
+    "build_class": "",
+    "build_method": "",
+    "controller": "Truonglv\\XFRMCustomized:Purchase",
+    "context": "xfrm",
+    "action_prefix": ""
+}

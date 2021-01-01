@@ -429,7 +429,7 @@ class ResourceItem extends XFCP_ResourceItem
             'user_id' => $user->user_id,
         ];
         if (\XF::visitor()->is_admin) {
-            $debugData = [
+            $debugData += [
                 'purchase_id' => $lastPurchase->purchase_id ?? 0,
                 'purchase_date' => $lastPurchase !== null
                     ? $this->app()->language(\XF::visitor()->language_id)->date($lastPurchase->expire_date, 'Y-m-d H:i:s')

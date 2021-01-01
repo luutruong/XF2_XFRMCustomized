@@ -1,4 +1,9 @@
 {
+    "admin/xfrmc_purchase_list.html": {
+        "version_id": 3000500,
+        "version_string": "3.0.5",
+        "hash": "363e89db935066b07065c053fffaccf2"
+    },
     "email/payment_received_receipt_tl_xfrm_customized_resource.html": {
         "version_id": 2000800,
         "version_string": "2.0.8",

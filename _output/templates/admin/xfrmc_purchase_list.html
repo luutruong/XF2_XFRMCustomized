@@ -1,0 +1,54 @@
+<xf:title>{{ phrase('xfrmc_purchases') }}</xf:title>
+
+<xf:if is="$total > 0">
+    <div class="block">
+        <div class="block-container">
+            <div class="block-body">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:datarow rowtype="header">
+                        <xf:cell>ID</xf:cell>
+                        <xf:cell>{{ phrase('name') }}</xf:cell>
+                        <xf:cell>{{ phrase('xfrm_resource') }}</xf:cell>
+                        <xf:cell>{{ phrase('xfrmc_purchased_date') }}</xf:cell>
+                        <xf:cell>{{ phrase('xfrmc_expire_date') }}</xf:cell>
+                        <xf:cell>{{ phrase('xfrmc_new_purchase') }}</xf:cell>
+                    </xf:datarow>
+
+                    <xf:foreach loop="$purchases" value="$purchase">
+                        <xf:datarow>
+                            <xf:cell>{$purchase.purchase_id}</xf:cell>
+                            <xf:cell>
+                                <a href="{{ link($linkPrefix, null, {'user_id': $purchase.user_id}) }}">
+                                    {{ $purchase.User ? $purchase.User.username : $purchase.username }}
+                                </a>
+                            </xf:cell>
+                            <xf:cell>
+                                <a href="{{ link($linkPrefix, null, {'resource_id': $purchase.resource_id}) }}">
+                                    {$purchase.Resource.title}
+                                </a>
+                            </xf:cell>
+                            <xf:cell><xf:date time="$purchase.purchased_date"/></xf:cell>
+                            <xf:cell><xf:date time="$purchase.expire_date"/></xf:cell>
+                            <xf:cell>
+                                <xf:if is="$purchase.new_purchase_id">
+                                    <a href="{{ link($linkPrefix, {'purchase_id': $purchase.new_purchase_id}) }}">
+                                        #{$purchase.new_purchase_id}
+                                    </a>
+                                <xf:else />
+                                    {{ phrase('n_a') }}
+                                </xf:if>
+                            </xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            </div>
+        </div>
+
+        <div class="block-outer block-outer--after">
+            <xf:pagenav page="{$page}" perpage="{$perPage}"
+                        total="{$total}" link="{$linkPrefix}" params="{$filters}"/>
+        </div>
+    </div>
+<xf:else />
+    <div class="blockMessage">{{ phrase('no_items_have_been_created_yet') }}</div>
+</xf:if>
