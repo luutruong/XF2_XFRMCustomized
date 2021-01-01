@@ -425,6 +425,18 @@ class ResourceItem extends XFCP_ResourceItem
         }
         unset($version);
 
+        $debugData = [
+            'user_id' => $user->user_id,
+        ];
+        if (\XF::visitor()->is_admin) {
+            $debugData = [
+                'purchase_id' => $lastPurchase->purchase_id ?? 0,
+                'purchase_date' => $lastPurchase !== null
+                    ? $this->app()->language(\XF::visitor()->language_id)->date($lastPurchase->expire_date, 'Y-m-d H:i:s')
+                    : 'n_a',
+            ];
+        }
+
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Download',
             'xfrmc_resource_download',
@@ -433,6 +445,8 @@ class ResourceItem extends XFCP_ResourceItem
                 'versions' => $versions,
                 'inlineDownload' => $this->filter('_xfWithData', 'bool'),
                 'purchase' => $lastPurchase,
+                'user' => $user,
+                'debugData' => $debugData,
             ]
         );
     }

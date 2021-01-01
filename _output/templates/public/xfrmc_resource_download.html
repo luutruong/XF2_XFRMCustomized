@@ -10,7 +10,7 @@
 
 <xf:form action="{{ link('resources/download', $resource) }}" class="block">
     <div class="block-container">
-        <div class="block-body">
+        <div class="block-body" data-debug="{$debugData|json}">
             <xf:if is="$purchase AND $purchase.isExpired()">
                 <xf:inforow rowtype="confirm">
                     {{ phrase('xfrmc_your_license_has_been_expired_renew_to_download_latest_version') }}
