@@ -91,7 +91,7 @@ class Purchase extends AbstractController
                 return $this->error(\XF::phrase('xfrmc_please_select_valid_resource_version'));
             }
             if ($inputData['expire_type'] === 'update') {
-                $inputData['expire_date'] = $this->filter('expire_type', 'datetime');
+                $inputData['expire_date'] = $this->filter('expire_date', 'datetime');
             }
             unset($inputData['expire_type']);
 
