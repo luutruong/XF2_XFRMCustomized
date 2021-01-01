@@ -2,12 +2,12 @@
     "admin/xfrmc_purchase_edit.html": {
         "version_id": 3000600,
         "version_string": "3.0.6",
-        "hash": "edf067c748e48890b99d725fb9b0d71e"
+        "hash": "2e0748d7f8e497b1c6e217fcbef89bbe"
     },
     "admin/xfrmc_purchase_list.html": {
         "version_id": 3000600,
         "version_string": "3.0.6",
-        "hash": "230fc4a10a0042dd5985ce3fff1419ee"
+        "hash": "ccb344c96e4cb2b4717034c9846e5bd9"
     },
     "admin/xfrmc_purchase_view.html": {
         "version_id": 3000600,
