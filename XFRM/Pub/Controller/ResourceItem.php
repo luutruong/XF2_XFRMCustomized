@@ -338,12 +338,26 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
         $resource = $this->assertViewableResource($params['resource_id']);
 
-        if ($resource->user_id !== \XF::visitor()->user_id
+        /** @var User|null $user */
+        $user = null;
+        if (\XF::visitor()->is_admin) {
+            $userId = $this->filter('user_id', 'uint');
+            if ($userId > 0) {
+                /** @var User|null $user */
+                $user = $this->em()->find('XF:User', $userId);
+            }
+        }
+
+        if ($user === null) {
+            $user = \XF::visitor();
+        }
+
+        if ($resource->user_id !== $user->user_id
             && !$resource->canDownload()
         ) {
             $activeLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $resource->resource_id)
-                ->where('user_id', \XF::visitor()->user_id)
+                ->where('user_id', $user->user_id)
                 ->where('new_purchase_id', 0)
                 ->total();
             if ($activeLicenses === 0) {
@@ -353,7 +367,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         /** @var Purchase|null $lastPurchase */
         $lastPurchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
-            ->where('user_id', \XF::visitor()->user_id)
+            ->where('user_id', $user->user_id)
             ->where('resource_id', $resource->resource_id)
             ->where('new_purchase_id', 0)
             ->order('expire_date', 'desc')
@@ -389,7 +403,7 @@ class ResourceItem extends XFCP_ResourceItem
                 'release_date'
             ]);
         foreach ($versions as &$version) {
-            if (\XF::visitor()->user_id === $resource->user_id
+            if ($user->user_id === $resource->user_id
                 || $resource->canDownload()
             ) {
                 $version['canDownload'] = true;
