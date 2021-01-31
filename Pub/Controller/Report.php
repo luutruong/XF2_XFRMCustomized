@@ -31,6 +31,9 @@ class Report extends AbstractController
             $fromDate->modify('first day of this month');
         }
 
+        $fromDate->setTime(0, 0, 0);
+        $toDate->setTime(23,59, 59);
+
         /** @var \Truonglv\XFRMCustomized\Repository\Report $reportRepo */
         $reportRepo = $this->repository('Truonglv\XFRMCustomized:Report');
         $data = $reportRepo->getReportsData($fromDate->getTimestamp(), $toDate->getTimestamp());
