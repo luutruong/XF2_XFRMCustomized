@@ -16,33 +16,24 @@ class Report extends AbstractController
             return $this->noPermission();
         }
 
-        $dateStringToTimestamp = function ($date) {
-            $dt = \DateTime::createFromFormat('Y-m-d', $date);
-            if ($dt !== false) {
-                return $dt->format('U');
-            }
+        $visitor = \XF::visitor();
+        /** @var \DateTime|null $fromDate */
+        $fromDate = $this->filter('from', 'datetime,obj,tz:' . $visitor->timezone);
+        /** @var \DateTime|null $toDate */
+        $toDate = $this->filter('to', 'datetime,obj,tz:' . $visitor->timezone);
 
-            return 0;
-        };
-        $fromDate = $dateStringToTimestamp($this->filter('from', 'str'));
-        $toDate = $dateStringToTimestamp($this->filter('to', 'str'));
-
-        if (!$toDate) {
-            $dt = new \DateTime();
-            $dt->modify('last day of this month');
-
-            $toDate = $dt->format('U');
+        if ($toDate === null) {
+            $toDate = new \DateTime('@' . time(), new \DateTimeZone($visitor->timezone));
+            $toDate->modify('last day of this month');
         }
-        if (!$fromDate) {
-            $dt = new \DateTime('@' . $toDate);
-            $dt->modify('first day of this month');
-
-            $fromDate = $dt->format('U');
+        if ($fromDate === null) {
+            $fromDate = new \DateTime('@' . $toDate->getTimestamp(), new \DateTimeZone($visitor->timezone));
+            $fromDate->modify('first day of this month');
         }
 
         /** @var \Truonglv\XFRMCustomized\Repository\Report $reportRepo */
         $reportRepo = $this->repository('Truonglv\XFRMCustomized:Report');
-        $data = $reportRepo->getReportsData($fromDate, $toDate);
+        $data = $reportRepo->getReportsData($fromDate->getTimestamp(), $toDate->getTimestamp());
 
         $dataJs = [];
         $totalAmount = 0;
@@ -53,8 +44,8 @@ class Report extends AbstractController
 
         $params = [
             'reports' => $data,
-            'fromDate' => date('Y-m-d', $fromDate),
-            'toDate' => date('Y-m-d', $toDate),
+            'fromDate' => $fromDate->format('Y-m-d'),
+            'toDate' => $toDate->format('Y-m-d'),
             'dataJs' => $dataJs,
             'totalAmount' => $totalAmount
         ];
