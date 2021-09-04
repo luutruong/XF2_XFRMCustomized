@@ -1,0 +1,9 @@
+{
+    "template": "helper_criteria",
+    "description": "Inject our criteria",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<!--[XF:user:bottom]-->",
+    "replace": "$0\n<xf:macro name=\"xfrmc_helper_macros::criteria_user\"\n\t\t  arg-criteria=\"{$criteria}\" />"
+}

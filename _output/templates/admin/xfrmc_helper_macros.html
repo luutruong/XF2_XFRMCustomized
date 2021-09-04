@@ -1,0 +1,11 @@
+<xf:macro name="criteria_user" arg-criteria="!">
+    <xf:checkboxrow label="">
+        <xf:option name="user_criteria[xfrmc_purchase_resources][rule]"
+                   value="xfrmc_purchase_resources"
+                   selected="{$criteria.xfrmc_purchase_resources}"
+                   label="{{ phrase('xfrmc_user_bought_at_least_x_resources') }}">
+            <xf:numberbox name="user_criteria[xfrmc_purchase_resources][data][total]"
+                          value="{$criteria.xfrmc_purchase_resources.total}" min="0" />
+        </xf:option>
+    </xf:checkboxrow>
+</xf:macro>

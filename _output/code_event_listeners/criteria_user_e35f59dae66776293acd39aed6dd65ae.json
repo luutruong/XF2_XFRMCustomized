@@ -1,0 +1,9 @@
+{
+    "event_id": "criteria_user",
+    "execute_order": 10,
+    "callback_class": "Truonglv\\XFRMCustomized\\Listener",
+    "callback_method": "criteria_user",
+    "active": true,
+    "hint": "",
+    "description": "Handle our criteria."
+}

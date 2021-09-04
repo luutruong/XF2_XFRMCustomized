@@ -1,4 +1,9 @@
 {
+    "admin/xfrmc_helper_macros.html": {
+        "version_id": 3000700,
+        "version_string": "3.0.7",
+        "hash": "77827820fdbfc05944b405d763369ad8"
+    },
     "admin/xfrmc_purchase_edit.html": {
         "version_id": 3000700,
         "version_string": "3.0.7",

@@ -16,10 +16,6 @@ use Truonglv\XFRMCustomized\Service\Coupon\Creator;
 
 class Coupon extends AbstractController
 {
-    /**
-     * @param ParameterBag $params
-     * @return \XF\Mvc\Reply\Reroute|\XF\Mvc\Reply\View
-     */
     public function actionIndex(ParameterBag $params)
     {
         if ($params->coupon_id) {
@@ -47,11 +43,6 @@ class Coupon extends AbstractController
         ]);
     }
 
-    /**
-     * @param ParameterBag $params
-     * @return \XF\Mvc\Reply\View
-     * @throws \XF\Mvc\Reply\Exception
-     */
     public function actionView(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
@@ -101,10 +92,6 @@ class Coupon extends AbstractController
         return $this->view('Truonglv\XFRMCustomized:Coupon\View', 'xfrmc_coupon_view', $viewParams);
     }
 
-    /**
-     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Message
-     * @throws \XF\Mvc\Reply\Exception
-     */
     public function actionCheck()
     {
         $this->assertPostOnly();
@@ -151,9 +138,6 @@ class Coupon extends AbstractController
         return $message;
     }
 
-    /**
-     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
-     */
     public function actionAdd()
     {
         if (!App::hasPermission('add')) {
@@ -179,11 +163,6 @@ class Coupon extends AbstractController
         return $this->getCouponForm($coupon);
     }
 
-    /**
-     * @param ParameterBag $params
-     * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
-     * @throws \XF\Mvc\Reply\Exception
-     */
     public function actionEdit(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
@@ -215,12 +194,6 @@ class Coupon extends AbstractController
         return $this->getCouponForm($coupon);
     }
 
-    /**
-     * @param ParameterBag $params
-     * @return \XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
-     * @throws \XF\Mvc\Reply\Exception
-     * @throws \XF\PrintableException
-     */
     public function actionDelete(ParameterBag $params)
     {
         $coupon = $this->assertCouponViewable($params->coupon_id);
@@ -243,7 +216,7 @@ class Coupon extends AbstractController
     }
 
     /**
-     * @param int $id
+     * @param mixed $id
      * @return \Truonglv\XFRMCustomized\Entity\Coupon
      * @throws \XF\Mvc\Reply\Exception
      */

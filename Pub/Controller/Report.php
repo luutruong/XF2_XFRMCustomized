@@ -32,7 +32,7 @@ class Report extends AbstractController
         }
 
         $fromDate->setTime(0, 0, 0);
-        $toDate->setTime(23,59, 59);
+        $toDate->setTime(23, 59, 59);
 
         /** @var \Truonglv\XFRMCustomized\Repository\Report $reportRepo */
         $reportRepo = $this->repository('Truonglv\XFRMCustomized:Report');
