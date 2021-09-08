@@ -1,0 +1,43 @@
+<xf:title>{{ phrase('xfrmc_coupons') }}</xf:title>
+
+<xf:pageaction>
+    <xf:button class="button--link"
+               href="{{ link($linkPrefix . '/add') }}" icon="add">{{ phrase('xfrmc_add_coupon') }}</xf:button>
+</xf:pageaction>
+
+<xf:form action="{{ link($linkPrefix) }}" class="block" ajax="true">
+    <div class="block-outer">
+        <xf:macro template="filter_macros" name="quick_filter" arg-key="xfrmc-coupons"
+                  arg-class="block-outer-opposite" />
+    </div>
+
+    <div class="block-container">
+        <div class="block-body">
+            <xf:datalist>
+                <xf:foreach loop="$coupons" value="$coupon">
+                    <xf:datarow>
+                        <xf:cell class="dataList-cell--link dataList-cell--main" hash="{$coupon.coupon_id}">
+                            <a href="{{ link($linkPrefix . '/edit', $coupon.coupon_id) }}">
+                                <div class="u-depth0">
+                                    <div class="dataList-mainRow">
+                                        {$coupon.title}
+                                        <span class="dataList-hint" dir="auto">{$coupon.coupon_code}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </xf:cell>
+
+                        <xf:delete href="{{ link($linkPrefix . '/delete', $coupon) }}" />
+                    </xf:datarow>
+                </xf:foreach>
+            </xf:datalist>
+        </div>
+
+        <div class="block-footer block-footer--split">
+            <span class="block-footer-counter">{{ display_totals($coupons, $total) }}</span>
+        </div>
+    </div>
+</xf:form>
+
+<xf:pagenav link="{$linkPrefix}" page="{$page}"
+            perpage="{$perPage}" total="{$total}" />

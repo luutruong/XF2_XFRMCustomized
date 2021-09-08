@@ -28,6 +28,7 @@ use XFRM\Entity\ResourceVersion;
  * RELATIONS
  * @property \XF\Entity\User User
  * @property \XFRM\Entity\ResourceItem Resource
+ * @property \XFRM\Entity\ResourceVersion ResourceVersion
  */
 class Purchase extends Entity
 {

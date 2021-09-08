@@ -1,4 +1,14 @@
 {
+    "admin/xfrmc_coupon_edit.html": {
+        "version_id": 3000800,
+        "version_string": "3.0.8",
+        "hash": "7e8f24213746ca3d815da97b915888d9"
+    },
+    "admin/xfrmc_coupon_list.html": {
+        "version_id": 3000800,
+        "version_string": "3.0.8",
+        "hash": "f93065ed2cadde52d4dc5bbe09cb9002"
+    },
     "admin/xfrmc_helper_macros.html": {
         "version_id": 3000700,
         "version_string": "3.0.7",
@@ -24,35 +34,10 @@
         "version_string": "2.0.8",
         "hash": "25c29ad97e96c2ab0ce9df59c5ef3f0b"
     },
-    "public/xfrmc_coupon_add.html": {
-        "version_id": 1000971,
-        "version_string": "1.0.9a",
-        "hash": "2aa2095fc9227269f9e7fe42268fb78f"
-    },
-    "public/xfrmc_coupon_delete.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "2e143557de717498e1bf59d3232c964d"
-    },
-    "public/xfrmc_coupon_list.html": {
-        "version_id": 1000972,
-        "version_string": "1.0.9b",
-        "hash": "7fb537343986b83983ccaffa6db2f6b4"
-    },
-    "public/xfrmc_coupon_view.html": {
-        "version_id": 1000971,
-        "version_string": "1.0.9a",
-        "hash": "fcc502805671e58d04303f5b31aa7555"
-    },
     "public/xfrmc_report.less": {
         "version_id": 1010100,
         "version_string": "1.1.1",
         "hash": "686c55c577be0c51abfe9f6704c1b88f"
-    },
-    "public/xfrmc_report_index.html": {
-        "version_id": 2000000,
-        "version_string": "2.0.0",
-        "hash": "bedde7bd637ac34fc68db0eb1fd023d4"
     },
     "public/xfrmc_resource_add_buyer.html": {
         "version_id": 1000970,

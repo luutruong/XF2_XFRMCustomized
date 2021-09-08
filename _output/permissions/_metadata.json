@@ -1,26 +1,8 @@
 {
-    "general-xfrmc_viewReports.json": {
-        "hash": "29f5064bff9ac7b6695fbc96dbd2633a"
-    },
     "resource-xfrmc_addBuyer.json": {
         "hash": "a728d2bf51f51b5b4d8112d702685e11"
     },
     "resource-xfrmc_viewHistoryAny.json": {
         "hash": "21765cba014a1731c84923d9c3f34a70"
-    },
-    "xfrmc-add.json": {
-        "hash": "240c6c91fe8192bba528d138ac44e341"
-    },
-    "xfrmc-deleteCoupon.json": {
-        "hash": "fe26f7bda54d3c811d0f530ad1b62920"
-    },
-    "xfrmc-editCoupon.json": {
-        "hash": "dd4c3e3375c01f8c4f594179472019cc"
-    },
-    "xfrmc-viewItem.json": {
-        "hash": "ec701bd2013269f2bc6b9771d4823449"
-    },
-    "xfrmc-viewList.json": {
-        "hash": "616691d5342eb792979e643d3b509f81"
     }
 }

@@ -1,0 +1,65 @@
+<xf:title>{{ $coupon.coupon_id ? phrase('xfrmc_edit_coupon') : phrase('xfrmc_add_coupon') }}</xf:title>
+
+<xf:form action="{{ link($linkPrefix . '/save', $coupon) }}" ajax="true" class="block">
+    <div class="block-container">
+        <h2 class="block-tabHeader tabs hScroller" data-xf-init="tabs h-scroller" role="tablist">
+			<span class="hScroller-scroll">
+				<a class="tabs-tab is-active" role="tab" tabindex="0"
+                   aria-controls="xfrmc-coupon-basic">{{ phrase('xfrmc_coupon_basic') }}</a>
+				<xf:macro template="helper_criteria" name="user_tabs" />
+			</span>
+        </h2>
+
+        <ul class="tabPanes block-body">
+            <li class="is-active" role="tabpanel" id="xfrmc-coupon-basic">
+                <xf:textboxrow name="title" value="{$coupon.title}"
+                               maxlength="{{ max_length($coupon, 'title') }}"
+                               label="{{ phrase('title') }}" />
+                <xf:textboxrow name="coupon_code" value="{$coupon.coupon_code}"
+                               maxlength="{{ max_length($coupon, 'coupon_code') }}"
+                               label="{{ phrase('xfrmc_coupon_code') }}" />
+                <hr class="formRowSep" />
+
+                <xf:formrow rowtype="input" label="{{ phrase('xfrmc_discount') }}">
+                    <div class="inputGroup">
+                        <xf:numberbox name="discount_amount" value="{$coupon.discount_amount}"
+                                      min="0" />
+                        <span class="inputGroup-splitter"></span>
+                        <xf:select name="discount_unit" value="{$coupon.discount_unit}">
+                            <xf:option value="percent">{{ phrase('xfrmc_percent') }}</xf:option>
+                            <xf:option value="fixed">{{ phrase('xfrmc_fixed') }}</xf:option>
+                        </xf:select>
+                    </div>
+                </xf:formrow>
+
+                <xf:dateinputrow name="begin_date" value="{{ $coupon.begin_date ? date($coupon.begin_date, 'picker') : '' }}"
+                                 label="{{ phrase('xfrmc_begin_date') }}" />
+                <xf:dateinputrow name="end_date" value="{{ $coupon.end_date ? date($coupon.end_date, 'picker') : '' }}"
+                                 label="{{ phrase('xfrmc_end_date') }}" />
+                <hr class="formRowSep" />
+
+                <xf:numberboxrow name="max_use_count" value="{$coupon.max_use_count}" min="0"
+                                 label="{{ phrase('xfrmc_max_use_count') }}" />
+
+                <hr class="formRowSep" />
+
+                <xf:selectrow name="resource_criteria[category_ids]"
+                              value="{$coupon.criteria.resource.category_ids}"
+                              label="{{ phrase('xfrmc_all_resources_in_categories') }}" multiple="multiple">
+                    <xf:foreach loop="$xfrmCategories" value="$xfrmCategory">
+                        <xf:option value="{$xfrmCategory.value}">{{ $xfrmCategory.label ?: phrase('(none)') }}</xf:option>
+                    </xf:foreach>
+                </xf:selectrow>
+                <xf:textboxrow name="resource_criteria[resource_ids]"
+                               value="{$coupon.criteria.resource.resource_ids}" label="{{ phrase('xfrmc_resource_ids') }}"
+                               explain="{{ phrase('xfrmc_resource_ids_explain') }}" />
+            </li>
+
+            <xf:macro template="helper_criteria" name="user_panes"
+                      arg-criteria="{{ $userCriteria.getCriteriaForTemplate() }}"
+                      arg-data="{{ $userCriteria.getExtraTemplateData() }}" />
+        </ul>
+
+        <xf:submitrow icon="save" />
+    </div>
+</xf:form>
