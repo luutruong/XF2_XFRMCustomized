@@ -89,24 +89,33 @@ class Coupon extends Entity
             return false;
         }
 
-        if (isset($criteria['limit'])) {
-            $total = $criteria['limit']['total'];
-            $perUser = $criteria['limit']['per_user'];
+        $criteria = array_replace_recursive([
+            'limit' => [
+                'total' => 0,
+                'per_user' => 0
+            ],
+            'resource' => [
+                'category_ids' => null,
+                'resource_ids' => null
+            ]
+        ], $criteria);
 
-            if ($total >= 0 && $this->used_count >= $total) {
+        $total = $criteria['limit']['total'];
+        $perUser = $criteria['limit']['per_user'];
+
+        if ($total >= 0 && $this->used_count >= $total) {
+            return false;
+        }
+
+        if ($perUser >= 0) {
+            $userTotal = $this->finder('Truonglv\XFRMCustomized:CouponUser')
+                ->where('coupon_id', $this->coupon_id)
+                ->where('user_id', $purchaser->user_id)
+                ->total();
+            if ($userTotal >= $perUser) {
+                $error = \XF::phrase('xfrmc_you_reached_maximum_times_used_this_coupon_code');
+
                 return false;
-            }
-
-            if ($perUser >= 0) {
-                $userTotal = $this->finder('Truonglv\XFRMCustomized:CouponUser')
-                    ->where('coupon_id', $this->coupon_id)
-                    ->where('user_id', $purchaser->user_id)
-                    ->total();
-                if ($userTotal >= $perUser) {
-                    $error = \XF::phrase('xfrmc_you_reached_maximum_times_used_this_coupon_code');
-
-                    return false;
-                }
             }
         }
 
@@ -115,7 +124,8 @@ class Coupon extends Entity
             return false;
         }
 
-        if (count($criteria['resource']['category_ids']) > 0
+        if (is_array($criteria['resource']['category_ids'])
+            && count($criteria['resource']['category_ids']) > 0
             && !in_array($resourceItem->resource_category_id, $criteria['resource']['category_ids'], true)
         ) {
             $error = \XF::phrase('xfrmc_resource_category_not_discountable');
@@ -123,7 +133,8 @@ class Coupon extends Entity
             return false;
         }
 
-        if (count($criteria['resource']['resource_ids']) > 0
+        if (is_array($criteria['resource']['resource_ids'])
+            && count($criteria['resource']['resource_ids']) > 0
             && !in_array($resourceItem->resource_id, $criteria['resource']['resource_ids'], true)
         ) {
             $error = \XF::phrase('xfrmc_resource_not_discountable');
