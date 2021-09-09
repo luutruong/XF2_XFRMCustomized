@@ -1,8 +1,7 @@
 <xf:title>{{ phrase('xfrmc_coupons') }}</xf:title>
 
 <xf:pageaction>
-    <xf:button class="button--link"
-               href="{{ link($linkPrefix . '/add') }}" icon="add">{{ phrase('xfrmc_add_coupon') }}</xf:button>
+    <xf:button href="{{ link($linkPrefix . '/add') }}" icon="add">{{ phrase('xfrmc_add_coupon') }}</xf:button>
 </xf:pageaction>
 
 <xf:form action="{{ link($linkPrefix) }}" class="block" ajax="true">

@@ -395,6 +395,12 @@
         "version_string": "2.0.7",
         "hash": "76b6a47a02685d51794b9fdb095512e5"
     },
+    "xfrmc_purchase_reports.txt": {
+        "global_cache": false,
+        "version_id": 3000800,
+        "version_string": "3.0.8",
+        "hash": "c91c7b93c28cd18741b71f727ee81ee3"
+    },
     "xfrmc_purchase_via.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -466,6 +472,12 @@
         "version_id": 1010100,
         "version_string": "1.1.1",
         "hash": "4627ff4c7c8aadee82a5b43a8df4fdaa"
+    },
+    "xfrmc_report_details.txt": {
+        "global_cache": false,
+        "version_id": 3000800,
+        "version_string": "3.0.8",
+        "hash": "a69f266c0c0693bbbe371dc64d9be331"
     },
     "xfrmc_reports.txt": {
         "global_cache": false,
