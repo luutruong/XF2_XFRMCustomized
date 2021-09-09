@@ -44,11 +44,6 @@
         "version_string": "2.0.8",
         "hash": "25c29ad97e96c2ab0ce9df59c5ef3f0b"
     },
-    "public/xfrmc_report.less": {
-        "version_id": 1010100,
-        "version_string": "1.1.1",
-        "hash": "686c55c577be0c51abfe9f6704c1b88f"
-    },
     "public/xfrmc_resource_add_buyer.html": {
         "version_id": 1000970,
         "version_string": "1.0.9",
