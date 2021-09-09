@@ -105,7 +105,7 @@ class Coupon extends AbstractController
 
         return $this->redirect(
             $this->buildLink($this->getLinkPrefix())
-            . $this->app()->getRedirectHash(strval($coupon->coupon_id))
+            . $this->buildLinkHash($coupon->coupon_id)
         );
     }
 
