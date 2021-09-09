@@ -60,14 +60,20 @@ class Coupon extends AbstractController
             'coupon_code' => 'str',
             'discount_amount' => 'uint',
             'discount_unit' => 'str',
-            'max_use_count' => 'uint',
         ]);
         $coupon->bulkSet($inputData);
 
         $criteria = [
             'user' => $this->filter('user_criteria', 'array'),
-            'resource' => []
+            'resource' => [],
         ];
+        $criteria = array_merge($criteria, $this->filter([
+            'limit' => [
+                'total' => 'int',
+                'per_user' => 'int'
+            ],
+        ]));
+
         $resourceCriteria = $this->filter([
             'resource_criteria' => [
                 'category_ids' => 'array-uint',

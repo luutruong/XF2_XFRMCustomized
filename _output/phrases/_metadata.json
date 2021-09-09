@@ -365,6 +365,12 @@
         "version_string": "1.0.9",
         "hash": "30f42d0998894dc934d09c6f8f58aad1"
     },
+    "xfrmc_max_use_count_explain.txt": {
+        "global_cache": false,
+        "version_id": 3000910,
+        "version_string": "3.0.9",
+        "hash": "969425e47776639dcdbe9c946aa40934"
+    },
     "xfrmc_new_expires.txt": {
         "global_cache": false,
         "version_id": 3000600,
@@ -599,6 +605,18 @@
         "version_string": "3.0.7",
         "hash": "895a7f1c8dca9e4af15679a2defa59b7"
     },
+    "xfrmc_user_limit.txt": {
+        "global_cache": false,
+        "version_id": 3000910,
+        "version_string": "3.0.9",
+        "hash": "62053275aeb1e652b741a52973f08395"
+    },
+    "xfrmc_user_limit_explain.txt": {
+        "global_cache": false,
+        "version_id": 3000910,
+        "version_string": "3.0.9",
+        "hash": "17c1893d7f80257624440a27e43715e6"
+    },
     "xfrmc_user_x_did_not_bought_this_resource.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -640,6 +658,12 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "73bc56e27fff1cae96b24b1565039e7e"
+    },
+    "xfrmc_you_reached_maximum_times_used_this_coupon_code.txt": {
+        "global_cache": false,
+        "version_id": 3000910,
+        "version_string": "3.0.9",
+        "hash": "e5dd4e898c7eefca4dd9fad672619c77"
     },
     "xfrmc_your_license_expired_renew_to_download_latest_version.txt": {
         "global_cache": false,

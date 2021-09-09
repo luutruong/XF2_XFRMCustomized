@@ -37,7 +37,7 @@
     <div class="block-container">
         <div class="block-body">
             <div id="xfrmc-reports-chart" class="chart-wrapper"></div>
-            <xf:form method="GET" action="{{ link('xfrmc-reports') }}">
+            <xf:form method="GET" action="{{ link($linkPrefix . '/reports') }}">
                 <div class="xfrmc-filterDates">
                     <div class="xfrmc-filterDates--input">
                         <span>{{ phrase('xfrmc_from_date') }}:</span><xf:dateinput name="from" value="{$fromDate}" /></div>
@@ -61,7 +61,7 @@
                     <xf:cell>{{ phrase('xfrmc_total_amount') }}</xf:cell>
                 </xf:datarow>
                 <xf:foreach loop="$reports" value="$report">
-                    <xf:datarow>
+                    <xf:datarow class="{{ $report.amount <= 0 ? 'negative' : '' }}">
                         <xf:cell>{$report.date}</xf:cell>
                         <xf:cell>{$report.amount|currency('USD')}</xf:cell>
                     </xf:datarow>

@@ -28,7 +28,7 @@ class CouponUser extends Entity
 {
     public static function getStructure(Structure $structure)
     {
-        $structure->table = 'tl_xfrm_coupon_user';
+        $structure->table = 'xf_xfrmc_coupon_user';
         $structure->primaryKey = 'coupon_user_id';
         $structure->shortName = 'Truonglv\XFRMCustomized:CouponUser';
 

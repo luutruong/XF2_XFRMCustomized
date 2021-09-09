@@ -55,7 +55,7 @@ class Purchase extends Entity
 
     public static function getStructure(Structure $structure)
     {
-        $structure->table = 'tl_xfrm_resource_purchase';
+        $structure->table = 'xf_xfrmc_resource_purchase';
         $structure->primaryKey = 'purchase_id';
         $structure->shortName = 'Truonglv\XFRMCustomized:Purchase';
         $structure->contentType = 'xfrmc_purchase';

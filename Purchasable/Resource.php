@@ -85,7 +85,7 @@ class Resource extends AbstractPurchasable
                 'coupon_code' => $couponCode
             ]);
 
-            if ($coupon === null) {
+            if ($coupon === null || !$coupon->canView()) {
                 $error = \XF::phrase('xfrmc_requested_coupon_not_found');
 
                 return false;
@@ -331,7 +331,7 @@ class Resource extends AbstractPurchasable
         if (isset($extraData[self::EXTRA_DATA_COUPON_ID]) && $canUseCoupon) {
             /** @var Coupon|null $coupon */
             $coupon = \XF::em()->find('Truonglv\XFRMCustomized:Coupon', $extraData['coupon_id']);
-            if ($coupon === null) {
+            if ($coupon === null || !$coupon->canView()) {
                 $error = \XF::phrase('xfrmc_requested_coupon_not_found');
 
                 return false;

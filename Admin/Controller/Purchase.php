@@ -164,7 +164,8 @@ class Purchase extends AbstractController
             'fromDate' => $fromDate->format('Y-m-d'),
             'toDate' => $toDate->format('Y-m-d'),
             'dataJs' => $dataJs,
-            'totalAmount' => $totalAmount
+            'totalAmount' => $totalAmount,
+            'linkPrefix' => $this->getLinkPrefix(),
         ];
 
         return $this->view('Truonglv\XFRMCustomized:Purchase\Report', 'xfrmc_purchase_report', $params);

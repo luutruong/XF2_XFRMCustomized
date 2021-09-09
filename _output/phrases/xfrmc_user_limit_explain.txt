@@ -1,0 +1,1 @@
+Limit times user use this coupon code. Set to -1 to unlimited.

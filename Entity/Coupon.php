@@ -19,7 +19,6 @@ use XFRM\Entity\ResourceItem;
  * @property int created_date
  * @property int begin_date
  * @property int end_date
- * @property int max_use_count
  * @property int used_count
  * @property array criteria
  * @property string discount_unit
@@ -29,6 +28,7 @@ use XFRM\Entity\ResourceItem;
  *
  * RELATIONS
  * @property \XF\Entity\User User
+ * @property \XF\Mvc\Entity\AbstractCollection|\Truonglv\XFRMCustomized\Entity\CouponUser[] CouponUsers
  */
 class Coupon extends Entity
 {
@@ -63,13 +63,11 @@ class Coupon extends Entity
     public function canUseWith(ResourceItem $resourceItem, &$error = null, User $purchaser = null)
     {
         $purchaser = $purchaser !== null ? $purchaser : \XF::visitor();
-
-        if (!$this->isActive()) {
+        if ($purchaser->user_id <= 0) {
             return false;
         }
 
-        if ($this->used_count >= $this->max_use_count) {
-            // reached the limit
+        if (!$this->isActive()) {
             return false;
         }
 
@@ -89,6 +87,27 @@ class Coupon extends Entity
         if (!isset($criteria['user']) || !isset($criteria['resource'])) {
             // OLD coupon code
             return false;
+        }
+
+        if (isset($criteria['limit'])) {
+            $total = $criteria['limit']['total'];
+            $perUser = $criteria['limit']['per_user'];
+
+            if ($total >= 0 && $this->used_count >= $total) {
+                return false;
+            }
+
+            if ($perUser >= 0) {
+                $userTotal = $this->finder('Truonglv\XFRMCustomized:CouponUser')
+                    ->where('coupon_id', $this->coupon_id)
+                    ->where('user_id', $purchaser->user_id)
+                    ->total();
+                if ($userTotal >= $perUser) {
+                    $error = \XF::phrase('xfrmc_you_reached_maximum_times_used_this_coupon_code');
+
+                    return false;
+                }
+            }
         }
 
         $userCriteria = $this->app()->criteria('XF:User', $criteria['user']);
@@ -162,7 +181,7 @@ class Coupon extends Entity
 
     public static function getStructure(Structure $structure)
     {
-        $structure->table = 'tl_xfrm_coupon';
+        $structure->table = 'xf_xfrmc_coupon';
         $structure->primaryKey = 'coupon_id';
         $structure->shortName = 'Truonglv\XFRMCustomized:Coupon';
         $structure->columns = [
@@ -172,13 +191,12 @@ class Coupon extends Entity
             'created_date' => ['type' => self::UINT, 'default' => \XF::$time],
             'begin_date' => ['type' => self::UINT, 'required' => true],
             'end_date' => ['type' => self::UINT, 'default' => 0],
-            'max_use_count' => ['type' => self::UINT, 'default' => 0],
             'used_count' => ['type' => self::UINT, 'forced' => true, 'default' => 0],
             'criteria' => ['type' => self::JSON_ARRAY, 'default' => []],
             'discount_unit' => ['type' => self::STR, 'allowedValues' => ['percent', 'fixed'], 'default' => 'percent'],
             'discount_amount' => ['type' => self::UINT, 'default' => 0],
             'user_id' => ['type' => self::UINT, 'required' => true],
-            'username' => ['type' => self::STR, 'required' => true, 'maxLength' => 50]
+            'username' => ['type' => self::STR, 'required' => true, 'maxLength' => 50],
         ];
 
         $structure->relations = [
@@ -187,7 +205,12 @@ class Coupon extends Entity
                 'entity' => 'XF:User',
                 'conditions' => 'user_id',
                 'primary' => true
-            ]
+            ],
+            'CouponUsers' => [
+                'type' => self::TO_MANY,
+                'entity' => 'Truonglv\XFRMCustomized:CouponUser',
+                'conditions' => 'coupon_id',
+            ],
         ];
 
         return $structure;
@@ -202,6 +225,6 @@ class Coupon extends Entity
 
     protected function _postDelete()
     {
-        $this->db()->delete('tl_xfrm_coupon_user', 'coupon_id = ?', $this->coupon_id);
+        $this->db()->delete('xf_xfrmc_coupon_user', 'coupon_id = ?', $this->coupon_id);
     }
 }

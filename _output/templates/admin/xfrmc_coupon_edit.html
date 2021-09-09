@@ -38,8 +38,12 @@
                                  label="{{ phrase('xfrmc_end_date') }}" />
                 <hr class="formRowSep" />
 
-                <xf:numberboxrow name="max_use_count" value="{$coupon.max_use_count}" min="0"
+                <xf:numberboxrow name="limit[total]" value="{$coupon.criteria.limit.total}" min="-1"
+                                 explain="{{ phrase('xfrmc_max_use_count_explain') }}"
                                  label="{{ phrase('xfrmc_max_use_count') }}" />
+                <xf:numberboxrow name="limit[per_user]" value="{$coupon.criteria.limit.per_user}" min="-1"
+                                 explain="{{ phrase('xfrmc_user_limit_explain') }}"
+                                 label="{{ phrase('xfrmc_user_limit') }}" />
 
                 <hr class="formRowSep" />
 

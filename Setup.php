@@ -55,6 +55,17 @@ class Setup extends AbstractSetup
         $this->doAlterTables($this->getAlters4());
     }
 
+    public function upgrade3010000Step1()
+    {
+        // rename tables
+        $sm = $this->schemaManager();
+        $sm->renameTable('tl_xfrm_resource_purchase', 'xf_xfrmc_resource_purchase');
+        $sm->renameTable('tl_xfrm_coupon', 'xf_xfrmc_coupon');
+        $sm->renameTable('tl_xfrm_coupon_user', 'xf_xfrmc_coupon_user');
+
+        $this->doAlterTables($this->getAlters5());
+    }
+
     /**
      * @return array
      */
@@ -81,7 +92,7 @@ class Setup extends AbstractSetup
     {
         $alters = [];
 
-        $alters['tl_xfrm_resource_purchase'] = [
+        $alters['xf_xfrmc_resource_purchase'] = [
             'purchase_request_key' => function (Alter $table) {
                 $table->addColumn('purchase_request_key', 'VARBINARY', 32)->setDefault('');
             },
@@ -96,7 +107,7 @@ class Setup extends AbstractSetup
     protected function getAlters3(): array
     {
         return [
-            'tl_xfrm_resource_purchase' => [
+            'xf_xfrmc_resource_purchase' => [
                 'new_purchase_id' => function (Alter $table) {
                     $table->addColumn('new_purchase_id', 'int')->setDefault(0);
                 }
@@ -107,11 +118,22 @@ class Setup extends AbstractSetup
     protected function getAlters4(): array
     {
         return [
-            'tl_xfrm_coupon' => [
+            'xf_xfrmc_coupon' => [
                 'criteria' => function (Alter $table) {
                     $table->renameColumn('apply_rules', 'criteria');
                 }
             ]
+        ];
+    }
+
+    protected function getAlters5(): array
+    {
+        return [
+            'xf_xfrmc_coupon' => [
+                'max_use_count' => function (Alter $table) {
+                    $table->dropColumns('max_use_count');
+                },
+            ],
         ];
     }
 
@@ -122,7 +144,7 @@ class Setup extends AbstractSetup
     {
         $tables = [];
 
-        $tables['tl_xfrm_resource_purchase'] = function (Create $table) {
+        $tables['xf_xfrmc_resource_purchase'] = function (Create $table) {
             $table->addColumn('purchase_id', 'int')->unsigned()->autoIncrement();
             $table->addColumn('resource_id', 'int')->unsigned();
             $table->addColumn('user_id', 'int')->unsigned();
@@ -148,7 +170,7 @@ class Setup extends AbstractSetup
     {
         $tables = [];
 
-        $tables['tl_xfrm_coupon'] = function (Create $create) {
+        $tables['xf_xfrmc_coupon'] = function (Create $create) {
             $create->addColumn('coupon_id', 'int')->unsigned()->autoIncrement();
             $create->addColumn('coupon_code', 'varchar', 25);
             $create->addColumn('title', 'varchar', 100);
@@ -167,7 +189,7 @@ class Setup extends AbstractSetup
             $create->addUniqueKey('coupon_code');
             $create->addKey(['begin_date', 'end_date']);
         };
-        $tables['tl_xfrm_coupon_user'] = function (Create $create) {
+        $tables['xf_xfrmc_coupon_user'] = function (Create $create) {
             $create->addColumn('coupon_user_id', 'int')->unsigned()->autoIncrement();
             $create->addColumn('user_id', 'int')->unsigned();
             $create->addColumn('username', 'varchar', 50);
