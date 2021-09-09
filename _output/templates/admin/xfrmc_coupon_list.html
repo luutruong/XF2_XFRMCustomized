@@ -16,7 +16,7 @@
                 <xf:foreach loop="$coupons" value="$coupon">
                     <xf:datarow>
                         <xf:cell class="dataList-cell--link dataList-cell--main" hash="{$coupon.coupon_id}">
-                            <a href="{{ link($linkPrefix . '/edit', $coupon.coupon_id) }}">
+                            <a href="{{ link($linkPrefix . '/edit', $coupon) }}">
                                 <div class="u-depth0">
                                     <div class="dataList-mainRow">
                                         {$coupon.title}
