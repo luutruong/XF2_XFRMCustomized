@@ -44,7 +44,7 @@ class Purchase extends Repository
         $db = $this->db();
         $resourceIds = $db->fetchAllColumn('
             SELECT DISTINCT(resource_id)
-            FROM tl_xfrm_resource_purchase
+            FROM xf_xfrmc_resource_purchase
             WHERE user_id = ?
         ', $user->user_id);
 

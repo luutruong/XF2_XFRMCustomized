@@ -27,7 +27,7 @@ class Lazy
             $db = \XF::db();
             $results = $db->fetchAll('
                 SELECT resource_id, user_id
-                FROM tl_xfrm_resource_purchase
+                FROM xf_xfrmc_resource_purchase
                 GROUP BY resource_id, user_id
             ');
 

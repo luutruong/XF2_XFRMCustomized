@@ -20,7 +20,7 @@ class Report extends Repository
         $db = $this->db();
         $records = $db->fetchAllKeyed('
             SELECT FROM_UNIXTIME(purchased_date, "%Y-%m-%d") AS date, SUM(amount) AS total_amount
-            FROM tl_xfrm_resource_purchase
+            FROM xf_xfrmc_resource_purchase
             WHERE purchased_date >= ? AND purchased_date <= ?
             GROUP BY FLOOR(purchased_date/86400)
             ORDER BY purchased_date
