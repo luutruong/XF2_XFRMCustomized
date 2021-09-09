@@ -1,14 +1,17 @@
 {
     "legacy_addon_id": "",
     "title": "[tl] XenResource Customized",
-    "description": "",
-    "version_id": 3000900,
+    "description": "Make resources as marketplace",
+    "version_id": 3000910,
     "version_string": "3.0.9",
-    "dev": "",
-    "dev_url": "",
-    "faq_url": "",
-    "support_url": "",
-    "extra_urls": [],
+    "dev": "Truonglv",
+    "dev_url": "https://nobita.me",
+    "faq_url": "https://github.com/luutruong/XF2_XFRMCustomized",
+    "support_url": "https://github.com/luutruong/XF2_XFRMCustomized",
+    "extra_urls": {
+        "Github": "https://github.com/luutruong/XF2_XFRMCustomized",
+        "Homepage": "https://nobita.me"
+    },
     "require": [],
     "icon": "icon.png"
 }
