@@ -6,11 +6,11 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
-use Truonglv\XFRMCustomized\Entity\Coupon;
-use XF\Entity\PaymentProfile;
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
+use XF\Entity\PaymentProfile;
 use Truonglv\XFRMCustomized\App;
+use Truonglv\XFRMCustomized\Entity\Coupon;
 
 /**
  * Class ResourceItem

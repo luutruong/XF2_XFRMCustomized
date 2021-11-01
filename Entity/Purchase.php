@@ -32,6 +32,10 @@ use XFRM\Entity\ResourceVersion;
  */
 class Purchase extends Entity
 {
+    /**
+     * @param mixed $error
+     * @return bool
+     */
     public function canView(&$error = null): bool
     {
         $visitor = \XF::visitor();

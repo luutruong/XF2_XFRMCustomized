@@ -6,10 +6,10 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
-use XF\Entity\PaymentProfile;
 use XF\Entity\User;
 use XF\Mvc\Reply\View;
 use XF\Mvc\ParameterBag;
+use XF\Entity\PaymentProfile;
 use Truonglv\XFRMCustomized\App;
 use XFRM\Entity\ResourceVersion;
 use Truonglv\XFRMCustomized\Entity\Purchase;
