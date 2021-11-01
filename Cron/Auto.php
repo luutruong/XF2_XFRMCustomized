@@ -99,8 +99,8 @@ class Auto
 
             $conversationCreator->save();
             /** @var mixed $callable */
-            $callable = ['Truonglv\TelegramBot\App', 'getTelegramApi'];
-            if (is_callable($callable) && isset($enabledAddOns['Truonglv/TelegramBot'])) {
+            $callable = ['Truonglv\Telegram\App', 'getTelegram'];
+            if (is_callable($callable) && isset($enabledAddOns['Truonglv/Telegram'])) {
                 $telegram = call_user_func($callable);
                 if (is_object($telegram) && method_exists($telegram, 'sendMessage')) {
                     call_user_func(

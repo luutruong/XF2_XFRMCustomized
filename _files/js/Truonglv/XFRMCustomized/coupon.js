@@ -1,7 +1,6 @@
 !(function ($, window, document, _undefined) {
     XF.XFRMCustomized_CouponCheck = XF.Element.newHandler({
         options: {
-            resourceId: null,
             couponInput: null,
             href: null,
             price: null,
@@ -83,7 +82,7 @@
             }
 
             var _this = this,
-                data = { resource_id: this.options.resourceId, coupon_code: this.$input.val() };
+                data = { coupon_code: this.$input.val() };
 
             if (this.cacheData[data.coupon_code]) {
                 this.onResponse(this.cacheData[data.coupon_code]);

@@ -4,7 +4,7 @@
     "navigation_type_id": "basic",
     "type_config": {
         "link": "{{ link('resources/purchased') }}",
-        "display_condition": "",
+        "display_condition": "$xf.visitor.user_id > 0",
         "extra_attributes": []
     },
     "enabled": true

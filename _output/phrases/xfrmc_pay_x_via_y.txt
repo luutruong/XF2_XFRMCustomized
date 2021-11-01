@@ -1,0 +1,1 @@
+Pay {cost} via {title}

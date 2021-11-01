@@ -145,16 +145,8 @@ class Coupon extends Entity
         return true;
     }
 
-    /**
-     * @param ResourceItem $resourceItem
-     * @return float
-     */
-    public function getFinalPrice(ResourceItem $resourceItem)
+    public function calcPrice(float $price): float
     {
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $mixed */
-        $mixed = $resourceItem;
-        $price = $mixed->getPurchasePrice();
-
         if ($this->discount_unit === 'fixed') {
             $price = max(0, $price - $this->discount_amount);
         } else {

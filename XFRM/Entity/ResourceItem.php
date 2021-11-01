@@ -6,6 +6,8 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
+use Truonglv\XFRMCustomized\Entity\Coupon;
+use XF\Entity\PaymentProfile;
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
 use Truonglv\XFRMCustomized\App;
@@ -130,14 +132,20 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->price > 0;
     }
 
-    public function getPurchasePrice(): float
-    {
-        return $this->price + App::getFee($this->price);
-    }
-
     public function getRenewPrice(): float
     {
         return $this->renew_price + App::getFee($this->renew_price);
+    }
+
+    public function getXFRMCPriceForProfile(PaymentProfile $paymentProfile, Coupon $coupon = null): float
+    {
+        if ($paymentProfile->provider_id === 'paypal') {
+            $price = $this->price + App::getFee($this->price);
+        } else {
+            $price = $this->price;
+        }
+
+        return $coupon === null ? $price : $coupon->calcPrice($price);
     }
 
     /**

@@ -152,6 +152,8 @@ class Resource extends AbstractPurchasable
         }
 
         $paymentResult = $state->paymentResult;
+        /** @var PaymentProfile $paymentProfile */
+        $paymentProfile = $purchaseRequest->PaymentProfile;
         $purchaser = $state->getPurchaser();
         $canUseCoupon = true;
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $oldPurchase */
@@ -208,7 +210,7 @@ class Resource extends AbstractPurchasable
                 $couponUser = null;
                 if ($coupon !== null) {
                     $purchase->note = 'Using coupon code: ' . $coupon->coupon_code;
-                    $purchase->amount = $coupon->getFinalPrice($resource);
+                    $purchase->amount = $resource->getXFRMCPriceForProfile($paymentProfile, $coupon);
 
                     /** @var CouponUser $couponUser */
                     $couponUser = \XF::em()->create('Truonglv\XFRMCustomized:CouponUser');
@@ -222,7 +224,7 @@ class Resource extends AbstractPurchasable
                     $logMessages[] = 'Using coupon code: ' . $coupon->coupon_code;
                 } else {
                     $purchase->amount = $this->oldPurchase === null
-                        ? $resource->getPurchasePrice()
+                        ? $resource->getXFRMCPriceForProfile($paymentProfile)
                         : $resource->getRenewPrice();
                 }
 
@@ -430,13 +432,11 @@ class Resource extends AbstractPurchasable
             if ($this->oldPurchase !== null) {
                 throw new \LogicException('Cannot apply coupon code to renew license.');
             }
-
-            $cost = $this->coupon->getFinalPrice($purchasable);
-        } else {
-            $cost = $this->oldPurchase === null
-                ? $purchasable->getPurchasePrice()
-                : $purchasable->getRenewPrice();
         }
+
+        $cost = $this->oldPurchase === null
+            ? $purchasable->getXFRMCPriceForProfile($paymentProfile, $this->coupon)
+            : $purchasable->getRenewPrice();
 
         $purchase = new Purchase();
 

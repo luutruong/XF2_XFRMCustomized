@@ -6,6 +6,7 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
+use XF\Entity\PaymentProfile;
 use XF\Entity\User;
 use XF\Mvc\Reply\View;
 use XF\Mvc\ParameterBag;
@@ -242,19 +243,24 @@ class ResourceItem extends XFCP_ResourceItem
             ->whereIds($resource->payment_profile_ids)
             ->fetch();
 
-        $purchasePrice = $resource->getPurchasePrice();
-        $selPaymentProfile = null;
-        if ($paymentProfiles->count() === 1) {
-            $selPaymentProfile = $paymentProfiles->first();
-        }
-
+        $paymentProfileId = $this->filter('payment_profile_id', 'uint');
         $viewParams = [
             'resource' => $resource,
-            'purchasable' => $this->em()->find('XF:Purchasable', App::PURCHASABLE_ID),
             'paymentProfiles' => $paymentProfiles,
-            'purchasePrice' => $purchasePrice,
-            'selPaymentProfile' => $selPaymentProfile
         ];
+
+        if (isset($paymentProfiles[$paymentProfileId])) {
+            /** @var PaymentProfile $paymentProfile */
+            $paymentProfile = $paymentProfiles[$paymentProfileId];
+            $viewParams += [
+                'selectedPaymentProfile' => $paymentProfile,
+                'purchasable' => $this->em()->find('XF:Purchasable', App::PURCHASABLE_ID),
+                'purchasePrice' => $resource->getXFRMCPriceForProfile($paymentProfile),
+                'checkCouponUrl' => $this->buildLink('resources/check-coupon', $resource, [
+                    'payment_profile_id' => $paymentProfile->payment_profile_id,
+                ]),
+            ];
+        }
 
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Purchase',
@@ -502,6 +508,62 @@ class ResourceItem extends XFCP_ResourceItem
                 ],
             ]
         );
+    }
+
+    public function actionCheckCoupon(ParameterBag $params)
+    {
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        $resource = $this->assertViewableResource($params['resource_id']);
+        $this->assertPostOnly();
+
+        $input = $this->filter([
+            'payment_profile_id' => 'uint',
+            'coupon_code' => 'str'
+        ]);
+
+        /** @var \Truonglv\XFRMCustomized\Entity\Coupon|null $coupon */
+        $coupon = $this->em()->findOne('Truonglv\XFRMCustomized:Coupon', [
+            'coupon_code' => $input['coupon_code']
+        ]);
+
+        if ($coupon === null) {
+            return $this->error(\XF::phrase('xfrmc_requested_coupon_not_found'));
+        }
+
+        /** @var PaymentProfile|null $paymentProfile */
+        $paymentProfile = $this->em()->find('XF:PaymentProfile', $input['payment_profile_id']);
+        if ($paymentProfile === null
+            || !in_array($paymentProfile->payment_profile_id, $resource->payment_profile_ids, true)
+        ) {
+            return $this->noPermission();
+        }
+
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
+        $resource = $this->em()->find('XFRM:ResourceItem', $input['resource_id']);
+        if ($resource === null || !$resource->canView()) {
+            return $this->error(\XF::phrase('xfrm_requested_resource_not_found'));
+        }
+
+        if (!$coupon->canUseWith($resource, $error)) {
+            return $this->error($error !== null
+                ? $error
+                : \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
+        }
+
+        $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
+        $price = $resource->getXFRMCPriceForProfile($paymentProfile, $coupon);
+
+        $message->setJsonParam(
+            'newPrice',
+            $this->app()->templater()->filter($price, [['currency', [$resource->currency]]])
+        );
+
+        $message->setJsonParam(
+            'newTotal',
+            $this->app()->templater()->filter($price, [['currency', [$resource->currency]]])
+        );
+
+        return $message;
     }
 
     /**

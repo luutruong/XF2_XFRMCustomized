@@ -1,59 +1,80 @@
-<xf:title>{{ $isRenewPurchase
-    ? phrase('xfrmc_renew_license')
-    : phrase('xfrmc_buy_license') }}</xf:title>
+<xf:if is="$selectedPaymentProfile">
+    <xf:title>{{ phrase('confirm_action') }}</xf:title>
+<xf:else />
+    <xf:title>{{ $isRenewPurchase
+        ? phrase('xfrmc_renew_license')
+        : phrase('xfrmc_buy_license') }}</xf:title>
+</xf:if>
 
 <xf:breadcrumb source="$resource.getBreadcrumbs()" />
 
-<xf:js src="Truonglv/XFRMCustomized/coupon.js"
-       addon="Truonglv/XFRMCustomized" min="1" />
+<xf:if is="$selectedPaymentProfile">
+    <xf:js src="Truonglv/XFRMCustomized/coupon.js"
+           addon="Truonglv/XFRMCustomized" min="1" />
 
-<xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
-    <div class="block-container">
-        <div class="block-body">
-            <xf:inforow rowtype="confirm">
-                {{ phrase('xfrmc_sure_you_want_to_purchase_this_resource') }}
-                <strong><a href="{{ link('resources', $resource) }}">{$resource.title}</a></strong>
-            </xf:inforow>
+    <xf:form action="{{ link('purchase', $purchasable) }}" class="block" ajax="true">
+        <div class="block-container">
+            <div class="block-body">
+                <xf:formrow label="{{ phrase('xfrm_resource') }}">
+                    <a href="{{ link('resources', $resource) }}">{$resource.title}</a>
+                </xf:formrow>
+                <hr class="formRowSep" />
+                <xf:formrow label="{{ phrase('price') }}">
+                    <span id="xfrmc-price" style="font-size: 17px">{$purchasePrice|currency($resource.currency)}</span>
+                </xf:formrow>
+                <hr class="formRowSep" />
+                <xf:formrow label="{{ phrase('xfrmc_total') }}">
+                    <span id="xfrmc-total" style="font-size: 20px">{{ $purchasePrice|currency($resource.currency) }}</span>
+                </xf:formrow>
+                <hr class="formRowSep" />
 
-            <xf:formrow label="{{ phrase('price') }}">
-                <span id="xfrmc-price" style="font-size: 17px">{$purchasePrice|currency($resource.currency)}</span>
-            </xf:formrow>
+                <xf:formrow label="{{ phrase('xfrmc_coupon_code') }}" rowtype="input"
+                            explain="{{ phrase('xfrmc_enter_coupon_code_to_receive_discount') }}">
+                    <div class="inputGroup">
+                        <xf:textbox name="coupon_code" value="" class="input--couponCode" />
+                        <span class="inputGroup-splitter"></span>
+                        <xf:button data-xf-init="xfrmc-check-coupon-code"
+                                   class="is-disabled"
+                                   data-href="{$checkCouponUrl}"
+                                   data-coupon-input="< .inputGroup | .input--couponCode"
+                                   data-price="#xfrmc-price" data-total="#xfrmc-total"
+                                   type="button">{{ phrase('xfrmc_check_available') }}</xf:button>
+                    </div>
+                </xf:formrow>
 
-            <hr class="formRowSep" />
-            <xf:formrow label="{{ phrase('xfrmc_total') }}">
-                <span id="xfrmc-total" style="font-size: 20px">{{ $purchasePrice|currency($resource.currency) }}</span>
-            </xf:formrow>
-            <hr class="formRowSep" />
+                <xf:formrow label="{{ phrase('payment_profile') }}">{{ $selectedPaymentProfile.display_title ?: $selectedPaymentProfile.title }}</xf:formrow>
+            </div>
 
-            <xf:formrow label="{{ phrase('xfrmc_license_duration') }}">{{ phrase('xfrmc_x_days', {'days': $xf.app.options.xfrmc_licenseDuration}) }}</xf:formrow>
-
-            <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id"
-                         value="{{ $selPaymentProfile ? $selPaymentProfile.payment_profile_id : 0 }}">
-                <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
-                    <xf:option value="{$paymentProfile.payment_profile_id}">{{ $paymentProfile.display_title . ' - ' . $paymentProfile.title }}</xf:option>
-                </xf:foreach>
-            </xf:radiorow>
-
-            <xf:formrow label="{{ phrase('xfrmc_coupon_code') }}" rowtype="input"
-                        explain="{{ phrase('xfrmc_enter_coupon_code_to_receive_discount') }}">
-                <div class="inputGroup">
-                    <xf:textbox name="coupon_code" value="" class="input--couponCode" />
-                    <span class="inputGroup-splitter"></span>
-                    <xf:button data-xf-init="xfrmc-check-coupon-code"
-                               class="is-disabled"
-                               data-href="{{ link('resources/coupons/check') }}"
-                               data-resource-id="{$resource.resource_id}"
-                               data-coupon-input="< .inputGroup | .input--couponCode"
-                               data-price="#xfrmc-price"
-                               data-total="#xfrmc-total"
-                               type="button">{{ phrase('xfrmc_check_available') }}</xf:button>
-                </div>
-            </xf:formrow>
+            <xf:submitrow icon="purchase" />
         </div>
 
+        <xf:hiddenval name="payment_profile_id">{$selectedPaymentProfile.payment_profile_id}</xf:hiddenval>
         <xf:hiddenval name="resource_id">{$resource.resource_id}</xf:hiddenval>
+    </xf:form>
+<xf:else />
+    <div class="block">
+        <div class="block-container">
+            <div class="block-body">
+                <xf:inforow rowtype="confirm">
+                    {{ phrase('xfrmc_sure_you_want_to_purchase_this_resource') }}
+                    <strong><a href="{{ link('resources', $resource) }}">{$resource.title}</a></strong>
+                </xf:inforow>
 
-        <xf:submitrow submit="{{ phrase('xfrmc_purchase') }}"
-                      rowtype="simple" icon="purchase" />
+                <xf:formrow label="{{ phrase('xfrmc_license_duration') }}"
+                            explain="{{ phrase('xfrmc_license_duration_explain') }}">{{ phrase('xfrmc_x_days', {'days': $xf.app.options.xfrmc_licenseDuration}) }}</xf:formrow>
+
+                <xf:formrow label="">
+                    <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
+                        <xf:button href="{{ link('resources/purchase', $resource, {'payment_profile_id': $paymentProfile.payment_profile_id}) }}"
+                                   overlay="true" class="btn-pay--{$paymentProfile.provider_id}">
+                            {{ phrase('xfrmc_pay_x_via_y', {
+                                'title': $paymentProfile.display_title ?: $paymentProfile.title,
+                                'cost': $resource.getXFRMCPriceForProfile($paymentProfile)|currency($resource.currency)
+                            }) }}
+                        </xf:button>
+                    </xf:foreach>
+                </xf:formrow>
+            </div>
+        </div>
     </div>
-</xf:form>
+</xf:if>
