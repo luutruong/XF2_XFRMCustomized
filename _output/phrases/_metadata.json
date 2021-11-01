@@ -17,6 +17,12 @@
         "version_string": "3.0.2",
         "hash": "c4359753dd2ae06975ccf3a784b6a437"
     },
+    "nav.xfrmcInvoices.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "fce9a6a1bd2a2050eb86d33103f46fd3"
+    },
     "nav.xfrmc_purchasedResources.txt": {
         "global_cache": false,
         "version_id": 3010000,
@@ -142,6 +148,12 @@
         "version_id": 2000500,
         "version_string": "2.0.5",
         "hash": "f03c06adc3e412b4a482b06d46fe82ab"
+    },
+    "permission.resource_xfrmc_viewPurchaseAny.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "de4f91afa54b42c421b44d072d703848"
     },
     "permission_interface.xfrmcPermsInterface.txt": {
         "global_cache": false,
@@ -352,6 +364,36 @@
         "version_id": 1010100,
         "version_string": "1.1.1",
         "hash": "710b389ba00c3e85da944c3e469bde7f"
+    },
+    "xfrmc_invoice.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "466eadd40b3c10580e3ab4e8061161ce"
+    },
+    "xfrmc_invoice_due.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "d0363921c897ec48ae2a05228c825d0d"
+    },
+    "xfrmc_invoice_item.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "7d74f3b92b19da5e606d737d339a9679"
+    },
+    "xfrmc_invoice_x.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "2a19d6c4ff849ece6e3bb13ae1c13033"
+    },
+    "xfrmc_invoices.txt": {
+        "global_cache": false,
+        "version_id": 3010000,
+        "version_string": "3.1.0",
+        "hash": "fce9a6a1bd2a2050eb86d33103f46fd3"
     },
     "xfrmc_license_duration.txt": {
         "global_cache": false,

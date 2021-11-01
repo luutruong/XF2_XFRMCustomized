@@ -1,0 +1,6 @@
+{
+    "permission_type": "flag",
+    "interface_group_id": "xfrmcPermsInterface",
+    "display_order": 550,
+    "depend_permission_id": ""
+}

@@ -1,0 +1,71 @@
+<xf:title>{{ phrase('xfrmc_invoice_x', {'id': $purchase.purchase_id}) }}</xf:title>
+
+<xf:css src="xfrmc_invoice_view.less" />
+
+<xf:set var="$srcset">{{ property('publicLogoUrl2x') ? base_url(property('publicLogoUrl2x')) . ' 2x' : '' }}</xf:set>
+
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            <img src="{{ base_url(property('publicLogoUrl')) }}" srcset="{$srcset}"
+                                 alt="{$xf.options.boardTitle}"
+                                 style="width: 100%; max-width: 300px" />
+                        </td>
+
+                        <td>
+                            <div>{{ phrase('xfrmc_invoice:') }}&nbsp;#{$purchase.purchase_id}</div>
+                            <div>{{ phrase('created:') }}&nbsp;{{ date($purchase.purchased_date, 'absolute') }}</div>
+                            <div>{{ phrase('xfrmc_invoice_due:') }}&nbsp;{{ date($purchase.purchased_date, 'absolute') }}</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            <div>{$xf.options.boardTitle}</div>
+                            <div>{$xf.options.contactEmailAddress}</div>
+                        </td>
+                        <td>
+                            <div>{$purchase.User.username}</div>
+                            <div>{$purchase.User.email}</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <xf:if is="$purchaseRequest AND $purchaseRequest.PaymentProfile">
+            <tr class="heading">
+                <td colspan="2">{{ phrase('payment_profile') }}</td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="2">{{ $purchaseRequest.PaymentProfile.display_title ?: $purchaseRequest.PaymentProfile.title }}</td>
+            </tr>
+        </xf:if>
+
+        <tr class="heading">
+            <td>{{ phrase('xfrmc_invoice_item') }}</td>
+            <td>{{ phrase('xfrmc_price') }}</td>
+        </tr>
+
+        <tr class="item last">
+            <td>{$purchase.Resource.title}</td>
+            <td>{$purchase.amount|currency($purchase.Resource.currency)}</td>
+        </tr>
+
+        <tr class="total">
+            <td></td>
+            <td>{{ phrase('total:') }}&nbsp;{$purchase.amount|currency($purchase.Resource.currency)}</td>
+        </tr>
+    </table>
+</div>

@@ -566,6 +566,57 @@ class ResourceItem extends XFCP_ResourceItem
         return $message;
     }
 
+    public function actionInvoices()
+    {
+        $this->assertRegistrationRequired();
+
+        $purchaseId = $this->filter('purchase_id', 'uint');
+        if ($purchaseId > 0) {
+            /** @var Purchase|null $purchase */
+            $purchase = $this->em()->find('Truonglv\XFRMCustomized:Purchase', $purchaseId);
+            if ($purchase !== null && $purchase->canView()) {
+                $purchaseRequest = $this->em()->findOne('XF:PurchaseRequest', [
+                    'request_key' => $purchase->purchase_request_key,
+                ]);
+
+                return $this->view(
+                    '',
+                    'xfrmc_invoice_view',
+                    [
+                        'purchase' => $purchase,
+                        'purchaseRequest' => $purchaseRequest,
+                    ]
+                );
+            }
+        }
+
+        $finder = $this->finder('Truonglv\XFRMCustomized:Purchase');
+        $finder->with('Resource');
+        $finder->order('purchased_date', 'desc');
+
+        $visitor = \XF::visitor();
+        if (!$visitor->hasPermission('resource', 'xfrmc_viewPurchaseAny')) {
+            $finder->where('user_id', $visitor->user_id);
+        }
+
+        $page = $this->filterPage();
+        $perPage = 20;
+
+        $total = $finder->total();
+        $purchases = $finder->limitByPage($page, $perPage)->fetch();
+
+        return $this->view(
+            '',
+            'xfrmc_invoice_list',
+            [
+                'purchases' => $purchases,
+                'page' => $page,
+                'perPage' => $perPage,
+                'total' => $total,
+            ]
+        );
+    }
+
     /**
      * @param int|string|mixed $resourceId
      * @param array $extraWith

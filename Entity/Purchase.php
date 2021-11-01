@@ -32,6 +32,20 @@ use XFRM\Entity\ResourceVersion;
  */
 class Purchase extends Entity
 {
+    public function canView(&$error = null): bool
+    {
+        $visitor = \XF::visitor();
+        if ($visitor->user_id <= 0) {
+            return false;
+        }
+
+        if ($visitor->hasPermission('resource', 'xfrmc_viewPurchaseAny')) {
+            return true;
+        }
+
+        return $visitor->user_id === $this->user_id;
+    }
+
     /**
      * @return bool
      */

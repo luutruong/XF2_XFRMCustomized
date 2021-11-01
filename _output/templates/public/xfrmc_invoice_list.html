@@ -1,0 +1,32 @@
+<xf:title>{{ phrase('xfrmc_invoices') }}</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:datalist>
+                <xf:datarow rowtype="subSection">
+                    <xf:cell>{{ phrase('xfrm_resource') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_purchased_date') }}</xf:cell>
+                    <xf:cell class="dataList-cell--action" />
+                </xf:datarow>
+
+                <xf:foreach loop="$purchases" value="$purchase" if="$purchase.Resource.canView()">
+                    <xf:datarow>
+                        <xf:cell>
+                            <a href="{{ link('resources', $purchase.Resource) }}">{$purchase.Resource.title}</a>
+                        </xf:cell>
+                        <xf:cell><xf:date time="$purchase.purchased_date" /></xf:cell>
+                        <xf:cell class="dataList-cell--action">
+                            <a href="{{ link('resources/invoices', null, {'purchase_id': $purchase.purchase_id}) }}">{{ phrase('view') }}</a>
+                        </xf:cell>
+                    </xf:datarow>
+                </xf:foreach>
+            </xf:datalist>
+        </div>
+    </div>
+
+    <div class="block-outer block-outer--after">
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+                    link="resources/invoices" />
+    </div>
+</div>
