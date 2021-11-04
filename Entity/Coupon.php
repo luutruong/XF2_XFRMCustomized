@@ -13,22 +13,22 @@ use XFRM\Entity\ResourceItem;
 
 /**
  * COLUMNS
- * @property int|null coupon_id
- * @property string coupon_code
- * @property string title
- * @property int created_date
- * @property int begin_date
- * @property int end_date
- * @property int used_count
- * @property array criteria
- * @property string discount_unit
- * @property int discount_amount
- * @property int user_id
- * @property string username
+ * @property int|null $coupon_id
+ * @property string $coupon_code
+ * @property string $title
+ * @property int $created_date
+ * @property int $begin_date
+ * @property int $end_date
+ * @property int $used_count
+ * @property array $criteria
+ * @property string $discount_unit
+ * @property int $discount_amount
+ * @property int $user_id
+ * @property string $username
  *
  * RELATIONS
- * @property \XF\Entity\User User
- * @property \XF\Mvc\Entity\AbstractCollection|\Truonglv\XFRMCustomized\Entity\CouponUser[] CouponUsers
+ * @property \XF\Entity\User $User
+ * @property \XF\Mvc\Entity\AbstractCollection|\Truonglv\XFRMCustomized\Entity\CouponUser[] $CouponUsers
  */
 class Coupon extends Entity
 {

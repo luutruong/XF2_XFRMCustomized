@@ -1,0 +1,15 @@
+<xf:title>{{ phrase('xfrmc_license_url') }}</xf:title>
+
+<xf:form action="{{ link('resources/license-url', $resource) }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:textboxrow name="license_url" value="{{ $lastLicense.license_url ?: '' }}" maxlength="100"
+                           label="{{ phrase('xfrmc_license_url') }}"
+                           explain="{{ phrase('xfrmc_license_url_explain') }}" />
+        </div>
+
+        <xf:submitrow icon="save" />
+    </div>
+
+    <xf:hiddenval name="redirect">{$redirect}</xf:hiddenval>
+</xf:form>

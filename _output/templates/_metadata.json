@@ -70,9 +70,9 @@
         "hash": "59b8c2fb14bb99d1325f3368da5eb632"
     },
     "public/xfrmc_resource_download.html": {
-        "version_id": 3000500,
-        "version_string": "3.0.5",
-        "hash": "bccb8173e2d3c005595d7bfb15e91a6a"
+        "version_id": 3020000,
+        "version_string": "3.2.0",
+        "hash": "1c442adb8fb32f8027b25c922d311160"
     },
     "public/xfrmc_resource_download_logs.html": {
         "version_id": 3000500,
@@ -83,6 +83,11 @@
         "version_id": 3000200,
         "version_string": "3.0.2",
         "hash": "4c07d1caf0a4c4ef3ddf3cfd627e5d20"
+    },
+    "public/xfrmc_resource_license_url.html": {
+        "version_id": 3020000,
+        "version_string": "3.2.0",
+        "hash": "633cf88ce43ab7e526f58586904c7927"
     },
     "public/xfrmc_resource_list.less": {
         "version_id": 3000200,

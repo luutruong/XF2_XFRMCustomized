@@ -66,6 +66,11 @@ class Setup extends AbstractSetup
         $this->doAlterTables($this->getAlters5());
     }
 
+    public function upgrade3020100Step1(): void
+    {
+        $this->doCreateTables($this->getTables3());
+    }
+
     /**
      * @return array
      */
@@ -137,10 +142,7 @@ class Setup extends AbstractSetup
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getTables1()
+    protected function getTables1(): array
     {
         $tables = [];
 
@@ -163,10 +165,7 @@ class Setup extends AbstractSetup
         return $tables;
     }
 
-    /**
-     * @return array
-     */
-    protected function getTables2()
+    protected function getTables2(): array
     {
         $tables = [];
 
@@ -202,5 +201,21 @@ class Setup extends AbstractSetup
         };
 
         return $tables;
+    }
+
+    protected function getTables3(): array
+    {
+        return [
+            'xf_xfrmc_license' => function (Create $table) {
+                $table->addColumn('license_id', 'int')->autoIncrement();
+                $table->addColumn('resource_id', 'int');
+                $table->addColumn('user_id', 'int');
+                $table->addColumn('license_url', 'varchar', 100);
+                $table->addColumn('added_date', 'int');
+                $table->addColumn('deleted_date', 'int')->setDefault(0);
+
+                $table->addKey(['resource_id', 'user_id']);
+            },
+        ];
     }
 }

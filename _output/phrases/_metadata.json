@@ -365,6 +365,18 @@
         "version_string": "1.1.1",
         "hash": "710b389ba00c3e85da944c3e469bde7f"
     },
+    "xfrmc_installable_in_urls.txt": {
+        "global_cache": false,
+        "version_id": 3020000,
+        "version_string": "3.2.0",
+        "hash": "5d662546424b4e1fe70a2dd86cc323b1"
+    },
+    "xfrmc_installable_in_urls_explain.txt": {
+        "global_cache": false,
+        "version_id": 3020000,
+        "version_string": "3.2.0",
+        "hash": "86ddc538d30204ffcdff268e9e83719c"
+    },
     "xfrmc_invoice.txt": {
         "global_cache": false,
         "version_id": 3010000,
@@ -406,6 +418,18 @@
         "version_id": 3010000,
         "version_string": "3.1.0",
         "hash": "3e781a735dd001e78c581679036b0cb5"
+    },
+    "xfrmc_license_url.txt": {
+        "global_cache": false,
+        "version_id": 3020000,
+        "version_string": "3.2.0",
+        "hash": "005bd49bb8ee96218fe07fc11aae8bc5"
+    },
+    "xfrmc_license_url_explain.txt": {
+        "global_cache": false,
+        "version_id": 3020000,
+        "version_string": "3.2.0",
+        "hash": "bc4f6526529eacd19aca46295a30f23c"
     },
     "xfrmc_max_use_count.txt": {
         "global_cache": false,

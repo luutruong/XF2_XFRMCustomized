@@ -12,23 +12,23 @@ use XFRM\Entity\ResourceVersion;
 
 /**
  * COLUMNS
- * @property int|null purchase_id
- * @property int resource_id
- * @property int user_id
- * @property string username
- * @property int resource_version_id
- * @property float amount
- * @property int expire_date
- * @property int purchased_date
- * @property string purchase_request_key
- * @property array purchase_request_keys
- * @property string note
- * @property int new_purchase_id
+ * @property int|null $purchase_id
+ * @property int $resource_id
+ * @property int $user_id
+ * @property string $username
+ * @property int $resource_version_id
+ * @property float $amount
+ * @property int $expire_date
+ * @property int $purchased_date
+ * @property string $purchase_request_key
+ * @property array $purchase_request_keys
+ * @property string $note
+ * @property int $new_purchase_id
  *
  * RELATIONS
- * @property \XF\Entity\User User
- * @property \XFRM\Entity\ResourceItem Resource
- * @property \XFRM\Entity\ResourceVersion ResourceVersion
+ * @property \XF\Entity\User $User
+ * @property \XFRM\Entity\ResourceItem $Resource
+ * @property \XFRM\Entity\ResourceVersion $ResourceVersion
  */
 class Purchase extends Entity
 {

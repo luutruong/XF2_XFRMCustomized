@@ -10,7 +10,7 @@
 
 <xf:form action="{{ link('resources/download', $resource) }}" class="block">
     <div class="block-container">
-        <div class="block-body" data-debug="{$debugData|json}">
+        <div class="block-body">
             <xf:if is="$purchase AND $purchase.isExpired()">
                 <xf:inforow rowtype="confirm">
                     {{ phrase('xfrmc_your_license_has_been_expired_renew_to_download_latest_version') }}
@@ -22,6 +22,15 @@
                     <xf:option value="{$version.resource_version_id}">{$version.version_string}</xf:option>
                 </xf:foreach>
             </xf:selectrow>
+
+            <xf:formrow label="{{ phrase('xfrmc_installable_in_urls') }}"
+                        explain="{{ phrase('xfrmc_installable_in_urls_explain') }}">
+                <ol class="listPlain">
+                    <xf:foreach loop="$licenses" value="$license">
+                        <li><a href="{$license.license_url}">{$license.license_url}</a></li>
+                    </xf:foreach>
+                </ol>
+            </xf:formrow>
         </div>
 
         <xf:submitrow icon="download" rowtype="simple" submit="{{ phrase('download') }}" />

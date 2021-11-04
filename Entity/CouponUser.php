@@ -11,18 +11,18 @@ use XF\Mvc\Entity\Structure;
 
 /**
  * COLUMNS
- * @property int|null coupon_user_id
- * @property int user_id
- * @property int coupon_id
- * @property int resource_id
- * @property string username
- * @property int created_date
- * @property int purchase_id
+ * @property int|null $coupon_user_id
+ * @property int $user_id
+ * @property int $coupon_id
+ * @property int $resource_id
+ * @property string $username
+ * @property int $created_date
+ * @property int $purchase_id
  *
  * RELATIONS
- * @property \Truonglv\XFRMCustomized\Entity\Coupon Coupon
- * @property \XF\Entity\User User
- * @property \XFRM\Entity\ResourceItem Resource
+ * @property \Truonglv\XFRMCustomized\Entity\Coupon $Coupon
+ * @property \XF\Entity\User $User
+ * @property \XFRM\Entity\ResourceItem $Resource
  */
 class CouponUser extends Entity
 {

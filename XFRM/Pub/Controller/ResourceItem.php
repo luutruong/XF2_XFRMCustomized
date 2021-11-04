@@ -12,7 +12,9 @@ use XF\Mvc\ParameterBag;
 use XF\Entity\PaymentProfile;
 use Truonglv\XFRMCustomized\App;
 use XFRM\Entity\ResourceVersion;
+use Truonglv\XFRMCustomized\Entity\License;
 use Truonglv\XFRMCustomized\Entity\Purchase;
+use Truonglv\XFRMCustomized\Service\License\Creator;
 
 class ResourceItem extends XFCP_ResourceItem
 {
@@ -344,26 +346,13 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
         $resource = $this->assertViewableResource($params['resource_id']);
 
-        /** @var User|null $user */
-        $user = null;
-        if (\XF::visitor()->is_admin) {
-            $userId = $this->filter('user_id', 'uint');
-            if ($userId > 0) {
-                /** @var User|null $user */
-                $user = $this->em()->find('XF:User', $userId);
-            }
-        }
-
-        if ($user === null) {
-            $user = \XF::visitor();
-        }
-
-        if ($resource->user_id !== $user->user_id
+        $visitor = \XF::visitor();
+        if ($resource->user_id !== $visitor->user_id
             && !$resource->canDownload()
         ) {
             $activeLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $resource->resource_id)
-                ->where('user_id', $user->user_id)
+                ->where('user_id', $visitor->user_id)
                 ->where('new_purchase_id', 0)
                 ->total();
             if ($activeLicenses === 0) {
@@ -373,7 +362,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         /** @var Purchase|null $lastPurchase */
         $lastPurchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
-            ->where('user_id', $user->user_id)
+            ->where('user_id', $visitor->user_id)
             ->where('resource_id', $resource->resource_id)
             ->where('new_purchase_id', 0)
             ->order('expire_date', 'desc')
@@ -383,7 +372,7 @@ class ResourceItem extends XFCP_ResourceItem
         if ($versionId > 0) {
             return $this->rerouteController('XFRM:ResourceVersion', 'download', [
                 'resource_id' => $resource->resource_id,
-                'resource_version_id' => $versionId
+                'resource_version_id' => $versionId,
             ]);
         }
 
@@ -409,7 +398,7 @@ class ResourceItem extends XFCP_ResourceItem
                 'release_date'
             ]);
         foreach ($versions as &$version) {
-            if ($user->user_id === $resource->user_id
+            if ($visitor->user_id === $resource->user_id
                 || $resource->canDownload()
             ) {
                 $version['canDownload'] = true;
@@ -431,21 +420,11 @@ class ResourceItem extends XFCP_ResourceItem
         }
         unset($version);
 
-        $debugData = [
-            'user_id' => $user->user_id,
-        ];
-        if (\XF::visitor()->is_admin) {
-            $language = $this->app()->language(\XF::visitor()->user_id);
-            $debugData += [
-                'purchase_id' => $lastPurchase->purchase_id ?? 0,
-                'purchase_date' => $lastPurchase !== null
-                    ? $language->date($lastPurchase->purchased_date, 'Y-m-d H:i:s')
-                    : 'n_a',
-                'expire_date' => $lastPurchase !== null
-                    ? $language->date($lastPurchase->expire_date, 'Y-m-d H:i:s')
-                    : 'n_a',
-            ];
-        }
+        $licenses = $this->finder('Truonglv\XFRMCustomized:License')
+            ->where('resource_id', $resource->resource_id)
+            ->where('user_id', $visitor->user_id)
+            ->where('deleted_date', 0)
+            ->fetch();
 
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Download',
@@ -455,10 +434,56 @@ class ResourceItem extends XFCP_ResourceItem
                 'versions' => $versions,
                 'inlineDownload' => $this->filter('_xfWithData', 'bool'),
                 'purchase' => $lastPurchase,
-                'user' => $user,
-                'debugData' => $debugData,
+                'licenses' => $licenses,
             ]
         );
+    }
+
+    public function actionLicenseUrl(ParameterBag $params)
+    {
+        $this->assertRegistrationRequired();
+        $resource = $this->assertViewableResource($params['resource_id']);
+
+        $redirect = $this->filter('redirect', 'str');
+        /** @var License|null $lastLicense */
+        $lastLicense = $this->finder('Truonglv\XFRMCustomized:License')
+            ->where('resource_id', $resource->resource_id)
+            ->where('user_id', \XF::visitor()->user_id)
+            ->where('deleted_date', 0)
+            ->order('added_date', 'desc')
+            ->fetchOne();
+
+        if ($this->isPost()) {
+            $licenseUrl = $this->filter('license_url', 'str');
+            $create = true;
+            if ($lastLicense !== null && $lastLicense->license_url === $licenseUrl) {
+                $create = false;
+            }
+
+            if ($create) {
+                /** @var Creator $creator */
+                $creator = $this->service('Truonglv\XFRMCustomized:License\Creator', $resource);
+                $creator->setLicenseUrl($licenseUrl);
+
+                if (!$creator->validate($errors)) {
+                    return $this->error($errors);
+                }
+
+                $creator->save();
+            }
+
+            if ($redirect !== '') {
+                return $this->redirect($redirect);
+            }
+
+            return $this->redirect($this->buildLink('resources', $resource));
+        }
+
+        return $this->view('', 'xfrmc_resource_license_url', [
+            'resource' => $resource,
+            'redirect' => $redirect,
+            'lastLicense' => $lastLicense,
+        ]);
     }
 
     public function actionDownloadLogs(ParameterBag $params)
