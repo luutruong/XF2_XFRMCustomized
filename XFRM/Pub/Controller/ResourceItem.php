@@ -563,12 +563,6 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission();
         }
 
-        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
-        $resource = $this->em()->find('XFRM:ResourceItem', $input['resource_id']);
-        if ($resource === null || !$resource->canView()) {
-            return $this->error(\XF::phrase('xfrm_requested_resource_not_found'));
-        }
-
         if (!$coupon->canUseWith($resource, $error)) {
             return $this->error($error !== null
                 ? $error
