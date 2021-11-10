@@ -85,9 +85,9 @@
         "hash": "4c07d1caf0a4c4ef3ddf3cfd627e5d20"
     },
     "public/xfrmc_resource_license_url.html": {
-        "version_id": 3020000,
-        "version_string": "3.2.0",
-        "hash": "633cf88ce43ab7e526f58586904c7927"
+        "version_id": 3020100,
+        "version_string": "3.2.1",
+        "hash": "ca90963ef00c746375048e14ce9767a7"
     },
     "public/xfrmc_resource_list.less": {
         "version_id": 3000200,

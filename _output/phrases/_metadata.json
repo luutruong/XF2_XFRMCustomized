@@ -397,9 +397,9 @@
     },
     "xfrmc_license_url_explain.txt": {
         "global_cache": false,
-        "version_id": 3020000,
-        "version_string": "3.2.0",
-        "hash": "bc4f6526529eacd19aca46295a30f23c"
+        "version_id": 3020100,
+        "version_string": "3.2.1",
+        "hash": "8fbf6fc12c3b6f91f3377a0bd25f1362"
     },
     "xfrmc_max_use_count.txt": {
         "global_cache": false,

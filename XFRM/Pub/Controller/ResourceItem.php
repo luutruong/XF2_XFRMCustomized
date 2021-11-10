@@ -445,16 +445,31 @@ class ResourceItem extends XFCP_ResourceItem
         $resource = $this->assertViewableResource($params['resource_id']);
 
         $redirect = $this->filter('redirect', 'str');
+        $visitor = \XF::visitor();
+
         /** @var License|null $lastLicense */
         $lastLicense = $this->finder('Truonglv\XFRMCustomized:License')
             ->where('resource_id', $resource->resource_id)
-            ->where('user_id', \XF::visitor()->user_id)
+            ->where('user_id', $visitor->user_id)
             ->where('deleted_date', 0)
             ->order('added_date', 'desc')
             ->fetchOne();
+        $recommendUrls = [];
+        if ($lastLicense === null) {
+            $recommendUrls = $this->finder('Truonglv\XFRMCustomized:License')
+                ->where('user_id', $visitor->user_id)
+                ->where('deleted_date', 0)
+                ->fetchColumns('license_url');
+            $recommendUrls = array_column($recommendUrls, 'license_url');
+            $recommendUrls = array_map(function ($recommendUrl) {
+                return rtrim(strtolower($recommendUrl), '/');
+            }, $recommendUrls);
+            $recommendUrls = array_unique($recommendUrls);
+        }
 
         if ($this->isPost()) {
             $licenseUrl = $this->filter('license_url', 'str');
+            $recommendUrl = $this->filter('recommend_url', 'str');
             $create = true;
             if ($lastLicense !== null && $lastLicense->license_url === $licenseUrl) {
                 $create = false;
@@ -463,7 +478,11 @@ class ResourceItem extends XFCP_ResourceItem
             if ($create) {
                 /** @var Creator $creator */
                 $creator = $this->service('Truonglv\XFRMCustomized:License\Creator', $resource);
-                $creator->setLicenseUrl($licenseUrl);
+                if (strlen($recommendUrl) > 0 && $recommendUrl !== '_') {
+                    $creator->setLicenseUrl($recommendUrl);
+                } else {
+                    $creator->setLicenseUrl($licenseUrl);
+                }
 
                 if (!$creator->validate($errors)) {
                     return $this->error($errors);
@@ -483,6 +502,7 @@ class ResourceItem extends XFCP_ResourceItem
             'resource' => $resource,
             'redirect' => $redirect,
             'lastLicense' => $lastLicense,
+            'recommendUrls' => $recommendUrls,
         ]);
     }
 

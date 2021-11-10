@@ -3,9 +3,25 @@
 <xf:form action="{{ link('resources/license-url', $resource) }}" class="block" ajax="true">
     <div class="block-container">
         <div class="block-body">
-            <xf:textboxrow name="license_url" value="{{ $lastLicense.license_url ?: '' }}" maxlength="100"
-                           label="{{ phrase('xfrmc_license_url') }}"
-                           explain="{{ phrase('xfrmc_license_url_explain') }}" />
+            <xf:if is="$recommendUrls">
+                <xf:radiorow name="recommend_url" value=""
+                             explain="{{ phrase('xfrmc_license_url_explain') }}"
+                             label="{{ phrase('xfrmc_license_url') }}">
+                    <xf:foreach loop="$recommendUrls" value="$recommendUrl">
+                        <xf:option value="{$recommendUrl}">{$recommendUrl}</xf:option>
+                    </xf:foreach>
+                    <xf:option value="_">
+                        <xf:dependent>
+                            <xf:textbox type="url" name="license_url" maxlength="100" />
+                        </xf:dependent>
+                    </xf:option>
+                </xf:radiorow>
+            <xf:else />
+                <xf:textboxrow type="url" name="license_url"
+                               value="{{ $lastLicense.license_url ?: '' }}" maxlength="100"
+                               label="{{ phrase('xfrmc_license_url') }}"
+                               explain="{{ phrase('xfrmc_license_url_explain') }}" />
+            </xf:if>
         </div>
 
         <xf:submitrow icon="save" />
