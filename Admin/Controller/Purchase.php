@@ -2,12 +2,12 @@
 
 namespace Truonglv\XFRMCustomized\Admin\Controller;
 
-use Truonglv\XFRMCustomized\Entity\License;
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
-use XF\Admin\Controller\AbstractController;
-use XF\Service\Conversation\Creator;
 use XFRM\Entity\ResourceItem;
+use XF\Service\Conversation\Creator;
+use Truonglv\XFRMCustomized\Entity\License;
+use XF\Admin\Controller\AbstractController;
 
 class Purchase extends AbstractController
 {
