@@ -32,7 +32,9 @@ class License extends Entity
             'user_id' => ['type' => self::UINT, 'required' => true],
             'license_url' => ['type' => self::STR, 'maxLength' => 100, 'required' => true],
             'added_date' => ['type' => self::UINT, 'default' =>  time()],
-            'deleted_date' => ['type' => self::UINT, 'default' => 0]
+            'deleted_date' => ['type' => self::UINT, 'default' => 0],
+
+            'warned_date' => ['type' => self::UINT, 'default' => 0]
         ];
 
         $structure->relations = [

@@ -71,6 +71,11 @@ class Setup extends AbstractSetup
         $this->doCreateTables($this->getTables3());
     }
 
+    public function upgrade3020300Step1(): void
+    {
+        $this->doAlterTables($this->getAlters6());
+    }
+
     /**
      * @return array
      */
@@ -139,6 +144,17 @@ class Setup extends AbstractSetup
                     $table->dropColumns('max_use_count');
                 },
             ],
+        ];
+    }
+
+    protected function getAlters6(): array
+    {
+        return [
+            'xf_xfrmc_license' => [
+                'warned_date' => function (Alter $table) {
+                    $table->addColumn('warned_date', 'int')->setDefault(0);
+                },
+            ]
         ];
     }
 

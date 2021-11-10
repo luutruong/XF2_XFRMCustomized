@@ -10,6 +10,7 @@
                     <xf:cell>{{ phrase('xfrm_resource') }}</xf:cell>
                     <xf:cell>{{ phrase('xfrmc_added_date') }}</xf:cell>
                     <xf:cell>{{ phrase('xfrmc_deleted_date') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_warned_date') }}</xf:cell>
                     <xf:action />
                 </xf:datarow>
 
@@ -27,6 +28,11 @@
                         <xf:cell>
                             <xf:if is="$record.deleted_date">
                                 <xf:date time="$record.deleted_date" />
+                            </xf:if>
+                        </xf:cell>
+                        <xf:cell>
+                            <xf:if is="$record.warned_date">
+                                <xf:date time="$record.warned_date" />
                             </xf:if>
                         </xf:cell>
                         <xf:if is="$record.deleted_date">

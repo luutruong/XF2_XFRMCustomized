@@ -238,6 +238,9 @@ class Purchase extends AbstractController
 
         $creator->save();
 
+        $license->warned_date = \XF::$time;
+        $license->save();
+
         return $this->redirect($this->buildLink($this->getLinkPrefix() . '/license-urls'));
     }
 

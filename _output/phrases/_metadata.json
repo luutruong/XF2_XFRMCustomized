@@ -719,6 +719,12 @@
         "version_string": "3.0.4",
         "hash": "d0158c80cf40e77f64ae2d15546886c3"
     },
+    "xfrmc_warned_date.txt": {
+        "global_cache": false,
+        "version_id": 3020200,
+        "version_string": "3.2.2",
+        "hash": "472b7fd86e100ba1851d8d213cc8c041"
+    },
     "xfrmc_x_days.txt": {
         "global_cache": false,
         "version_id": 3000200,
