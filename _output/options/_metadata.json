@@ -1,7 +1,4 @@
 {
-    "xfrmc_conversationStarter.json": {
-        "hash": "e6b81b6b2e36aed574fd81ebb273f90e"
-    },
     "xfrmc_defaultCurrency.json": {
         "hash": "21cbc8b80482c6739a4370b482446dbc"
     },
@@ -16,9 +13,6 @@
     },
     "xfrmc_licenseDuration.json": {
         "hash": "bd334a1cc17ec406e1f771e2f6657500"
-    },
-    "xfrmc_reminderRenewDays.json": {
-        "hash": "9b2f35de0ad2bfc22da43abe75dffa98"
     },
     "xfrmc_resourceIconSize.json": {
         "hash": "617775fa1a0b489b0107f74898a1c482"

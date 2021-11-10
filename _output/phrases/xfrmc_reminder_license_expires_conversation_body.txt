@@ -1,5 +1,0 @@
-Hi {receiver},
-
-Your license for resource [URL="{resource_url}"]{title}[/URL] expires in {day} day(s). You will not receive an updates, support if your license has expired. [URL="{renew_url}"]Click here[/URL] to renew your license.
-
-Thank you

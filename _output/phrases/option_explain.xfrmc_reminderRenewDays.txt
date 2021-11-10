@@ -1,1 +1,0 @@
-System will send conversations to users before X days before their licenses expires. You can put multiple days by separate by comma (,)

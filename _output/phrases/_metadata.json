@@ -11,12 +11,6 @@
         "version_string": "3.0.5",
         "hash": "b4b5e091be238ed9df46d35b241611bc"
     },
-    "cron_entry.xfrmc_reminderLicenseExpi.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "c4359753dd2ae06975ccf3a784b6a437"
-    },
     "nav.xfrmcInvoices.txt": {
         "global_cache": false,
         "version_id": 3010000,
@@ -28,12 +22,6 @@
         "version_id": 3010000,
         "version_string": "3.1.0",
         "hash": "45ff9251f5191a622e93c1bd449b5670"
-    },
-    "option.xfrmc_conversationStarter.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "5101c04f3e88a6232e91345a06d781cd"
     },
     "option.xfrmc_defaultCurrency.txt": {
         "global_cache": false,
@@ -65,23 +53,11 @@
         "version_string": "3.0.2",
         "hash": "96fc35b6f9ffc7d38325a9aa31e1b29f"
     },
-    "option.xfrmc_reminderRenewDays.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "9d325545d82c669e0bae514c9f1fbb0d"
-    },
     "option.xfrmc_resourceIconSize.txt": {
         "global_cache": false,
         "version_id": 2000500,
         "version_string": "2.0.5",
         "hash": "90f0bcc93aa6367991476f9821515c8d"
-    },
-    "option_explain.xfrmc_conversationStarter.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "option_explain.xfrmc_defaultCurrency.txt": {
         "global_cache": false,
@@ -112,12 +88,6 @@
         "version_id": 3000200,
         "version_string": "3.0.2",
         "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "option_explain.xfrmc_reminderRenewDays.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "16e978a0b89d8f24ca4d87db2131edf6"
     },
     "option_explain.xfrmc_resourceIconSize.txt": {
         "global_cache": false,
@@ -514,18 +484,6 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "581be822e22b8c4ca28875ab4f921fd7"
-    },
-    "xfrmc_reminder_license_expires_conversation_body.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "a398ba73129d007a353259be4ad1b346"
-    },
-    "xfrmc_reminder_license_expires_conversation_title.txt": {
-        "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "3f922a08d59164bf14db8718bd63020f"
     },
     "xfrmc_renew_for_x.txt": {
         "global_cache": false,
