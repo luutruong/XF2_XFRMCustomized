@@ -63,6 +63,12 @@
                 <xf:formrow label="{{ phrase('xfrmc_license_duration') }}"
                             explain="{{ phrase('xfrmc_license_duration_explain') }}">{{ phrase('xfrmc_x_days', {'days': $xf.app.options.xfrmc_licenseDuration}) }}</xf:formrow>
 
+                <xf:if is="$xf.options.xfrmc_termsAndRulesUrl">
+                    <xf:formrow label="">{{ phrase('xfrmc_agree_resource_purchase_terms_and_rules', {
+                        'link': $xf.options.xfrmc_termsAndRulesUrl
+                    }) }}</xf:formrow>
+                </xf:if>
+
                 <xf:formrow label="">
                     <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
                         <xf:button href="{{ link('resources/purchase', $resource, {'payment_profile_id': $paymentProfile.payment_profile_id}) }}"

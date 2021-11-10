@@ -2,9 +2,12 @@
 
 namespace Truonglv\XFRMCustomized\Admin\Controller;
 
+use Truonglv\XFRMCustomized\Entity\License;
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use XF\Admin\Controller\AbstractController;
+use XF\Service\Conversation\Creator;
+use XFRM\Entity\ResourceItem;
 
 class Purchase extends AbstractController
 {
@@ -169,6 +172,73 @@ class Purchase extends AbstractController
         ];
 
         return $this->view('Truonglv\XFRMCustomized:Purchase\Report', 'xfrmc_purchase_report', $params);
+    }
+
+    public function actionLicenseUrls()
+    {
+        $page = $this->filterPage();
+        $perPage = 20;
+
+        $finder = $this->finder('Truonglv\XFRMCustomized:License');
+        $finder->with(['User', 'Resource']);
+        $finder->order('added_date', 'desc');
+
+        $total = $finder->total();
+        $licenses = $finder->limitByPage($page, $perPage)->fetch();
+
+        return $this->view('', 'xfrmc_license_url_list', [
+            'page' => $page,
+            'perPage' => $perPage,
+            'total' => $total,
+            'licenses' => $licenses,
+            'linkPrefix' => $this->getLinkPrefix(),
+        ]);
+    }
+
+    public function actionLicenseWarn()
+    {
+        $licenseId = $this->filter('license_id', 'uint');
+        /** @var License|null $license */
+        $license = $this->em()->find('Truonglv\XFRMCustomized:License', $licenseId);
+        if ($license === null) {
+            return $this->notFound();
+        }
+
+        $visitor = \XF::visitor();
+        if ($visitor->user_id === $license->user_id) {
+            return $this->redirect($this->buildLink($this->getLinkPrefix() . '/license-urls'));
+        }
+
+        /** @var Creator $creator */
+        $creator = $this->service('XF:Conversation\Creator', $visitor);
+        $creator->setIsAutomated();
+
+        /** @var User $receiver */
+        $receiver = $license->User;
+        /** @var ResourceItem $resource */
+        $resource = $license->Resource;
+        $creator->setRecipientsTrusted($receiver);
+
+        $title = \XF::phrase('xfrmc_invalid_license_url_for_resource_conversation_title', [
+            'title' => $resource->title,
+        ]);
+        $router = $this->app()->router('public');
+        $body = \XF::phrase('xfrmc_invalid_license_url_for_resource_conversation_html', [
+            'name' => $receiver->username,
+            'title' => $resource->title,
+            'resource_url' => $router->buildLink('canonical:resources', $resource),
+            'update_url' => $router->buildLink('canonical:resources/license-url', $resource),
+        ]);
+
+        $creator->setContent($title, $body);
+
+        if (!$creator->validate($errors)) {
+            return $this->error($errors);
+        }
+
+        $creator->save();
+
+        return $this->redirect($this->buildLink($this->getLinkPrefix() . '/license-urls'));
     }
 
     protected function assertPurchaseExists(int $purchaseId): \Truonglv\XFRMCustomized\Entity\Purchase

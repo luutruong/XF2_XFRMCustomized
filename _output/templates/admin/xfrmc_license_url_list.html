@@ -1,0 +1,47 @@
+<xf:title>{{ phrase('xfrmc_license_urls') }}</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:datalist>
+                <xf:datarow rowtype="subSection">
+                    <xf:cell>{{ phrase('name') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_license_url') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrm_resource') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_added_date') }}</xf:cell>
+                    <xf:cell>{{ phrase('xfrmc_deleted_date') }}</xf:cell>
+                    <xf:action />
+                </xf:datarow>
+
+                <xf:foreach loop="$licenses" value="$record">
+                    <xf:datarow>
+                        <xf:cell><xf:username user="$record.User" /></xf:cell>
+                        <xf:cell>
+                            <a href="{$record.license_url}" target="_blank">{$record.license_url}</a>
+                        </xf:cell>
+                        <xf:cell>
+                            <a href="{{ link_type('public', 'resources', $record.Resource) }}"
+                               target="_blank">{$record.Resource.title}</a>
+                        </xf:cell>
+                        <xf:cell><xf:date time="$record.added_date" /></xf:cell>
+                        <xf:cell>
+                            <xf:if is="$record.deleted_date">
+                                <xf:date time="$record.deleted_date" />
+                            </xf:if>
+                        </xf:cell>
+                        <xf:if is="$record.deleted_date">
+                            <xf:action />
+                        <xf:else />
+                            <xf:action href="{{ link($linkPrefix . '/license-warn', null, {'license_id': $record.license_id}) }}">{{ phrase('warn') }}</xf:action>
+                        </xf:if>
+                    </xf:datarow>
+                </xf:foreach>
+            </xf:datalist>
+        </div>
+    </div>
+
+    <div class="block-outer block-outer--after">
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+                    link="{{ $linkPrefix . '/license-urls' }}" />
+    </div>
+</div>

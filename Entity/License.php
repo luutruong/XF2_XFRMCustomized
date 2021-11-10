@@ -13,6 +13,10 @@ use XF\Mvc\Entity\Structure;
  * @property string $license_url
  * @property int $added_date
  * @property int $deleted_date
+ *
+ * RELATIONS
+ * @property \XF\Entity\User $User
+ * @property \XFRM\Entity\ResourceItem $Resource
  */
 class License extends Entity
 {
@@ -29,6 +33,21 @@ class License extends Entity
             'license_url' => ['type' => self::STR, 'maxLength' => 100, 'required' => true],
             'added_date' => ['type' => self::UINT, 'default' =>  time()],
             'deleted_date' => ['type' => self::UINT, 'default' => 0]
+        ];
+
+        $structure->relations = [
+            'User' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XF:User',
+                'conditions' => 'user_id',
+                'primary' => true,
+            ],
+            'Resource' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XFRM:ResourceItem',
+                'conditions' => 'resource_id',
+                'primary' => true,
+            ],
         ];
 
         return $structure;

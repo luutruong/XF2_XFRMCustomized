@@ -276,11 +276,6 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
 
         $resource = $this->assertViewableResource($params->resource_id);
-        if ($resource->canDownload()) {
-            // skip users who has permission to download resource directly
-            return $this->noPermission();
-        }
-
         $purchases = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', \XF::visitor()->user_id)

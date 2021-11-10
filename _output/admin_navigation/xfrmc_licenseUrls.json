@@ -1,0 +1,10 @@
+{
+    "parent_navigation_id": "xfrm",
+    "display_order": 2230,
+    "link": "xfrmc-purchases/license-urls",
+    "icon": "",
+    "admin_permission_id": "",
+    "debug_only": false,
+    "development_only": false,
+    "hide_no_children": false
+}

@@ -1,0 +1,7 @@
+Hi {name},
+
+We found an issue that you are using invalid license URL the resource [URL={resource_url}]{title}[/URL]. Please update the forum which being used the resource. After 7 days, if you are not update URL, your license will be revoked.
+
+To update your license please [URL={update_url}]click here[/URL].
+
+Thanks
