@@ -13,6 +13,7 @@ use XF\Mvc\Entity\Structure;
  * @property string $license_url
  * @property int $added_date
  * @property int $deleted_date
+ * @property int $warned_date
  *
  * RELATIONS
  * @property \XF\Entity\User $User

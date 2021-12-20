@@ -17,7 +17,7 @@ class Category extends AbstractOption
         $categoryRepo = $option->repository('XFRM:Category');
         $choices = $categoryRepo->getCategoryOptionsData();
 
-        $choices[0]['label'] = \XF::phrase('(unspecified)');
+        $choices[0]['label'] = \XF::phrase('(none)');
 
         $data = [
             'htmlParams' => $htmlParams,

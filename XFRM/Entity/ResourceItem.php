@@ -17,9 +17,9 @@ use Truonglv\XFRMCustomized\Entity\Coupon;
  * @package Truonglv\XFRMCustomized\XFRM\Entity
  * @inheritdoc
  *
- * @property array payment_profile_ids
- * @property float renew_price
- * @property \Truonglv\XFRMCustomized\Entity\Purchase[] Purchases
+ * @property array $payment_profile_ids
+ * @property float $renew_price
+ * @property \Truonglv\XFRMCustomized\Entity\Purchase[] $Purchases
  */
 class ResourceItem extends XFCP_ResourceItem
 {

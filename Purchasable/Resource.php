@@ -34,7 +34,7 @@ class Resource extends AbstractPurchasable
      * @param \XF\Http\Request $request
      * @param \XF\Entity\User $purchaser
      * @param null|string $error
-     * @return Purchase|mixed
+     * @return Purchase|bool
      */
     public function getPurchaseFromRequest(\XF\Http\Request $request, \XF\Entity\User $purchaser, &$error = null)
     {
@@ -290,7 +290,7 @@ class Resource extends AbstractPurchasable
      * @param PaymentProfile $paymentProfile
      * @param \XF\Entity\User $purchaser
      * @param null|string $error
-     * @return bool|mixed|Purchase
+     * @return Purchase|bool
      */
     public function getPurchaseFromExtraData(
         array $extraData,

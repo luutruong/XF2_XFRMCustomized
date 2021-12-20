@@ -391,6 +391,7 @@ abstract class Entity extends AbstractController
                         } elseif (is_object($columnLabel) && $columnLabel instanceof \XF\Phrase) {
                             $labelPhraseName = $columnLabel->getName() . '_' .
                                 preg_replace('/[^a-z]+/i', '_', $allowedValue);
+                            // @phpstan-ignore-next-line
                             $label = \XF::phraseDeferred($labelPhraseName);
                         }
 
@@ -692,6 +693,7 @@ abstract class Entity extends AbstractController
                      'entities',
                      'entity',
                  ] as $partial) {
+            // @phpstan-ignore-next-line
             $phrases[$partial] = \XF::phrase(sprintf('%s_%s', $prefix, $partial));
         }
 
