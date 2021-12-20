@@ -20,7 +20,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             ->total();
         if ($licenses <= 0) {
             return $this->redirect($this->buildLink('resources/license-url', $resource, [
-                'redirect' => $this->buildLink('resources/versions/download', $version),
+                'redirect' => $this->buildLink('resources/version/download', $version),
             ]));
         }
 
