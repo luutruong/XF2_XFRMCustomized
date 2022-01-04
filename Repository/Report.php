@@ -31,11 +31,10 @@ class Report extends Repository
             $groups[$date] += $record['amount'];
         }
 
-        $nextDate = floor($fromDate / 86400) * 86400;
+        $nextDate = $fromDate;
         $results = [];
-        $maxDate = floor($toDate / 86400) * 86400;
 
-        while ($nextDate <= $maxDate) {
+        while ($nextDate <= $toDate) {
             $date = $language->date($nextDate, 'Y-m-d');
             $results[] = [
                 'date' => $date,
