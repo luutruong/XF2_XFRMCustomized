@@ -154,6 +154,12 @@ class Purchase extends AbstractController
         $fromDate->setTime(0, 0, 0);
         $toDate->setTime(23, 59, 59);
 
+        $now = new \DateTime();
+        $now->setTimezone($timeZone);
+        if ($toDate->getTimestamp() > $now->getTimestamp()) {
+            $toDate = $now;
+        }
+
         /** @var \Truonglv\XFRMCustomized\Repository\Report $reportRepo */
         $reportRepo = $this->repository('Truonglv\XFRMCustomized:Report');
         $data = $reportRepo->getReportsData($fromDate->getTimestamp(), $toDate->getTimestamp());
