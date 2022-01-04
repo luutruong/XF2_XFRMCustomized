@@ -10,32 +10,36 @@ use XF\Mvc\Entity\Repository;
 
 class Report extends Repository
 {
-    /**
-     * @param int $fromDate
-     * @param int $toDate
-     * @return array
-     */
-    public function getReportsData($fromDate, $toDate)
+    public function getReportsData(int $fromDate, int $toDate): array
     {
         $db = $this->db();
-        $records = $db->fetchAllKeyed('
-            SELECT FROM_UNIXTIME(purchased_date, "%Y-%m-%d") AS date, SUM(amount) AS total_amount
+        $records = $db->fetchAll('
+            SELECT purchased_date, amount
             FROM xf_xfrmc_resource_purchase
             WHERE purchased_date >= ? AND purchased_date <= ?
-            GROUP BY FLOOR(purchased_date/86400)
             ORDER BY purchased_date
-        ', 'date', [$fromDate, $toDate]);
+        ', [$fromDate, $toDate]);
+
+        $groups = [];
+        $language = \XF::app()->userLanguage(\XF::visitor());
+        foreach ($records as $record) {
+            $date = $language->date($record['purchased_date'], 'Y-m-d');
+            if (!isset($groups[$date])) {
+                $groups[$date] = 0;
+            }
+
+            $groups[$date] += $record['amount'];
+        }
 
         $nextDate = floor($fromDate / 86400) * 86400;
         $results = [];
         $maxDate = floor($toDate / 86400) * 86400;
 
         while ($nextDate <= $maxDate) {
-            $date = date('Y-m-d', (int) $nextDate);
-
+            $date = $language->date($nextDate, 'Y-m-d');
             $results[] = [
                 'date' => $date,
-                'amount' => isset($records[$date]) ? $records[$date]['total_amount'] : 0
+                'amount' => $groups[$date] ?? 0
             ];
 
             $nextDate += 86400;

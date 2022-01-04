@@ -139,12 +139,15 @@ class Purchase extends AbstractController
         /** @var \DateTime|null $toDate */
         $toDate = $this->filter('to', 'datetime,obj,tz:' . $visitor->timezone);
 
+        $timeZone = new \DateTimeZone($visitor->timezone);
+
         if ($toDate === null) {
-            $toDate = new \DateTime('@' . time(), new \DateTimeZone($visitor->timezone));
+            $toDate = new \DateTime('now');
+            $toDate->setTimezone($timeZone);
             $toDate->modify('last day of this month');
         }
         if ($fromDate === null) {
-            $fromDate = new \DateTime('@' . $toDate->getTimestamp(), new \DateTimeZone($visitor->timezone));
+            $fromDate = clone $toDate;
             $fromDate->modify('first day of this month');
         }
 
