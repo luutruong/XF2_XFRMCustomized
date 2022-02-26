@@ -371,6 +371,12 @@
         "version_string": "1.1.1",
         "hash": "710b389ba00c3e85da944c3e469bde7f"
     },
+    "xfrmc_from_user.txt": {
+        "global_cache": false,
+        "version_id": 3020400,
+        "version_string": "3.2.4",
+        "hash": "5c446be21144e17427dbf144d992594c"
+    },
     "xfrmc_installable_in_urls.txt": {
         "global_cache": false,
         "version_id": 3020000,
@@ -490,6 +496,18 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "adaaee4b22041c27198d410c68d952c9"
+    },
+    "xfrmc_please_enter_valid_from_user.txt": {
+        "global_cache": false,
+        "version_id": 3020400,
+        "version_string": "3.2.4",
+        "hash": "45928f08d451ffa8e6e4630f3b324d53"
+    },
+    "xfrmc_please_enter_valid_target_user.txt": {
+        "global_cache": false,
+        "version_id": 3020400,
+        "version_string": "3.2.4",
+        "hash": "d8731eacf03d8ba5959679a6eb5d5e1f"
     },
     "xfrmc_please_select_valid_resource_version.txt": {
         "global_cache": false,
@@ -659,6 +677,12 @@
         "version_string": "1.1.1",
         "hash": "6886bfd169ca6550e6236cb261af09e3"
     },
+    "xfrmc_to_user.txt": {
+        "global_cache": false,
+        "version_id": 3020400,
+        "version_string": "3.2.4",
+        "hash": "e63c62356907b7996ea90939ce0bacbe"
+    },
     "xfrmc_total.txt": {
         "global_cache": false,
         "version_id": 1000971,
@@ -670,6 +694,18 @@
         "version_id": 1010100,
         "version_string": "1.1.1",
         "hash": "bc30768048a7bbfd2d158d722c140c6d"
+    },
+    "xfrmc_transfer_license.txt": {
+        "global_cache": false,
+        "version_id": 3020400,
+        "version_string": "3.2.4",
+        "hash": "21b11c85ad939acf542865a1f0d3ca75"
+    },
+    "xfrmc_transfer_to_same_user.txt": {
+        "global_cache": false,
+        "version_id": 3020400,
+        "version_string": "3.2.4",
+        "hash": "8a56e9c7a9fdbb9f4253b2389d01db3f"
     },
     "xfrmc_update_expires.txt": {
         "global_cache": false,

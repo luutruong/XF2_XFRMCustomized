@@ -19,7 +19,7 @@ use Truonglv\XFRMCustomized\Entity\Coupon;
  *
  * @property array $payment_profile_ids
  * @property float $renew_price
- * @property \Truonglv\XFRMCustomized\Entity\Purchase[] $Purchases
+ * @property bool $is_purchased
  */
 class ResourceItem extends XFCP_ResourceItem
 {
@@ -119,7 +119,7 @@ class ResourceItem extends XFCP_ResourceItem
     }
 
     /**
-     * @param null|string $error
+     * @param mixed $error
      * @return bool
      */
     public function canPurchase(&$error = null)
@@ -130,6 +130,24 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         return $this->price > 0;
+    }
+
+    /**
+     * @param mixed $error
+     * @return bool
+     */
+    public function canTransferLicense(&$error = null): bool
+    {
+        $visitor = \XF::visitor();
+        if ($visitor->user_id <= 0) {
+            return false;
+        }
+
+        if ($this->hasPermission('editAny')) {
+            return true;
+        }
+
+        return $this->is_purchased;
     }
 
     public function getRenewPrice(): float
@@ -186,6 +204,20 @@ class ResourceItem extends XFCP_ResourceItem
         return $visitor->user_id === $this->user_id;
     }
 
+    public function setIsPurchased(bool $flag): void
+    {
+        $this->_getterCache['is_purchased'] = $flag;
+    }
+
+    public function getIsPurchased(): bool
+    {
+        if (array_key_exists('is_purchased', $this->_getterCache)) {
+            return $this->_getterCache['is_purchased'];
+        }
+
+        return App::purchaseRepo()->isPurchased($this, \XF::visitor());
+    }
+
     public static function getStructure(Structure $structure)
     {
         $structure = parent::getStructure($structure);
@@ -197,6 +229,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         $structure->getters['payment_profile_ids'] = true;
         $structure->getters['external_purchase_url'] = true;
+        $structure->getters['is_purchased'] = true;
 
         return $structure;
     }

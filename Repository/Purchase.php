@@ -28,6 +28,14 @@ class Purchase extends Repository
         return $purchase;
     }
 
+    public function isPurchased(ResourceItem $resource, User $user): bool
+    {
+        return $this->finder('Truonglv\XFRMCustomized:Purchase')
+            ->where('resource_id', $resource->resource_id)
+            ->where('user_id', $user->user_id)
+            ->total() > 0;
+    }
+
     public function getAllPurchases(ResourceItem $resource, User $user = null): AbstractCollection
     {
         $user = $user !== null ? $user : \XF::visitor();
@@ -35,7 +43,7 @@ class Purchase extends Repository
         return $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $user->user_id)
-            ->order('expire_date', 'ASC')
+            ->order('expire_date')
             ->fetch();
     }
 
@@ -52,9 +60,15 @@ class Purchase extends Repository
             return $this->em->getEmptyCollection();
         }
 
-        return $this->finder('XFRM:ResourceItem')
+        $resources = $this->finder('XFRM:ResourceItem')
             ->with(['Category', 'User', 'Featured'])
             ->whereIds($resourceIds)
             ->fetch();
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        foreach ($resources as $resource) {
+            $resource->setIsPurchased(true);
+        }
+
+        return $resources;
     }
 }

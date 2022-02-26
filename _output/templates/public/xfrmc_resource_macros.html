@@ -162,3 +162,9 @@
 		</script>
 	</xf:page>
 </xf:macro>
+
+<xf:macro name="tools_menu" arg-resource="!">
+	<xf:if is="$resource.canTransferLicense()">
+		<a href="{{ link('resources/transfer-license', $resource) }}" class="menu-linkRow">{{ phrase('xfrmc_transfer_license') }}</a>
+	</xf:if>
+</xf:macro>

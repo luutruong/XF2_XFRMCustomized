@@ -15,6 +15,7 @@ use XFRM\Entity\ResourceVersion;
 use Truonglv\XFRMCustomized\Entity\License;
 use Truonglv\XFRMCustomized\Entity\Purchase;
 use Truonglv\XFRMCustomized\Service\License\Creator;
+use Truonglv\XFRMCustomized\Service\License\Transfer;
 
 class ResourceItem extends XFCP_ResourceItem
 {
@@ -647,6 +648,44 @@ class ResourceItem extends XFCP_ResourceItem
                 'page' => $page,
                 'perPage' => $perPage,
                 'total' => $total,
+            ]
+        );
+    }
+
+    public function actionTransferLicense(ParameterBag $params)
+    {
+        $resource = $this->assertViewableResource($params['resource_id']);
+        if (!$resource->canTransferLicense($error)) {
+            return $this->noPermission($error);
+        }
+
+        if ($this->isPost()) {
+            $toUsername = $this->filter('to_username', 'str');
+
+            /** @var Transfer $transfer */
+            $transfer = $this->service('Truonglv\XFRMCustomized:License\Transfer', $resource);
+            $transfer->setToUsername($toUsername);
+            if ($resource->hasPermission('editAny')) {
+                $fromUsername = $this->filter('from_username', 'str');
+                if ($fromUsername !== '') {
+                    $transfer->setFromUsername($fromUsername);
+                }
+            }
+
+            if (!$transfer->validate($errors)) {
+                return $this->error($errors);
+            }
+
+            $transfer->save();
+
+            return $this->redirect($this->buildLink('resources', $resource));
+        }
+
+        return $this->view(
+            'Truonglv\XFRMCustomized:Resource\TransferLicense',
+            'xfrmc_resource_transfer_license',
+            [
+                'resource' => $resource,
             ]
         );
     }

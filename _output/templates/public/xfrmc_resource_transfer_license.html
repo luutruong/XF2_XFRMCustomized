@@ -1,0 +1,17 @@
+<xf:title>{{ phrase('xfrmc_transfer_license') }}</xf:title>
+
+<xf:form action="{{ link('resources/transfer-license', $resource) }}" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:if is="$resource.hasPermission('editAny')">
+                <xf:textboxrow name="from_username" value="" ac="single"
+                               label="{{ phrase('xfrmc_from_user') }}" />
+            </xf:if>
+
+            <xf:textboxrow name="to_username" value="" ac="single"
+                           label="{{ phrase('xfrmc_to_user') }}" />
+        </div>
+
+        <xf:submitrow icon="save" />
+    </div>
+</xf:form>
