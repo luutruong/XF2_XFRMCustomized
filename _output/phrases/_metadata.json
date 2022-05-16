@@ -347,6 +347,12 @@
         "version_string": "1.0.9",
         "hash": "9efd5d1168d8316b2b6fa92f86bbd226"
     },
+    "xfrmc_expired_at_x.txt": {
+        "global_cache": false,
+        "version_id": 3020500,
+        "version_string": "3.2.5",
+        "hash": "4295a42982df1ce005a2ca38cafc2b73"
+    },
     "xfrmc_expires_at_x.txt": {
         "global_cache": false,
         "version_id": 3000200,

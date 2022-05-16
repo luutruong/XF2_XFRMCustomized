@@ -10,7 +10,9 @@
             <xf:radiorow name="purchase_id" label="{{ phrase('xfrmc_choose_license') }}"
                          hint="{{ phrase('xfrmc_renew_license_explain', {'days': $xf.app.options.xfrmc_licenseDuration}) }}">
                 <xf:foreach loop="$purchases" value="$purchase">
-                    <xf:option value="{$purchase.purchase_id}">{{ phrase('xfrmc_expires_at_x', {
+                    <xf:option value="{$purchase.purchase_id}">{{ ($purchase.expire_date > $xf.time) ? phrase('xfrmc_expires_at_x', {
+                        'date': date($purchase.expire_date, 'absolute')
+                    }) : phrase('xfrmc_expired_at_x', {
                         'date': date($purchase.expire_date, 'absolute')
                     }) }}</xf:option>
                 </xf:foreach>
