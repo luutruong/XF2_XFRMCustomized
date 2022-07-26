@@ -129,37 +129,8 @@
 </xf:macro>
 
 <xf:macro name="structured_data" arg-resource="!" arg-description="!">
-	<xf:set var="$descSnippet" value="{{ snippet($description.message, 250, {'stripBbCode': true}) }}" />
 	<xf:page option="ldJsonHtml">
-		<script type="application/ld+json">
-			{
-				"@context": "https://schema.org",
-				"@id": "{{ link('canonical:resources', $resource)|escape('json') }}",
-				"@type": "Product",
-				"name": "{$resource.title|escape('json')}",
-				"headline": "{$resource.title|escape('json')}",
-				"alternativeHeadline": "{$resource.tag_line|escape('json')}",
-				"description": "{$descSnippet|escape('json')}",
-				"sku": "{$resource.resource_id|escape('json')}",
-				"url": "{{ link('canonical:resources', $resource)|escape('json') }}",
-				"brand": "{$xf.options.boardTitle|escape('json')}",
-				"mpn": "{{ 'E-' . $resource.resource_id|escape('json') }}",
-				"offers": {
-					"@type": "Offer",
-					"availability": "https://schema.org/InStock",
-					"price": "{$resource.price|escape('json')}"<xf:if is="$resource.currency OR $xf.options.xfrmc_defaultCurrency">,
-					"priceCurrency": "{{ ($resource.currency ?: $xf.options.xfrmc_defaultCurrency)|escape('json') }}"</xf:if>
-				},
-				"image": "{{ ($xf.options.xfrmAllowIcons AND $resource.icon_date) ? $resource.getIconUrl('m', true) : $resource.User.getAvatarUrl('m', null, true)|escape('json') }}",
-				<xf:if is="$resource.review_count > 0">"aggregateRating": {
-					"@type": "AggregateRating",
-					"ratingValue": "{$resource.rating_avg|escape('json')}",
-					"reviewCount": "{$resource.review_count|escape('json')}"
-				},</xf:if>
-				"dateCreated": "{{ date($resource.resource_date, 'c')|escape('json') }}",
-				"dateModified": "{{ date($resource.last_update, 'c')|escape('json') }}"
-			}
-		</script>
+		<script type="application/ld+json">{{ $resource.getXFRMCStructureJsonLd()|json|raw }}</script>
 	</xf:page>
 </xf:macro>
 

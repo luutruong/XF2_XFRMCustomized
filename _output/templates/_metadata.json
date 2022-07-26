@@ -55,9 +55,9 @@
         "hash": "c660270bf47447136ed075177e3aecd5"
     },
     "public/xfrmc_invoice_view.html": {
-        "version_id": 3010000,
-        "version_string": "3.1.0",
-        "hash": "0deb15136b21aabe1e30b8ccdb6bcafe"
+        "version_id": 3020600,
+        "version_string": "3.2.6",
+        "hash": "0e2cc141cb4de5ef45d1d2577f686376"
     },
     "public/xfrmc_invoice_view.less": {
         "version_id": 3010000,
@@ -100,9 +100,9 @@
         "hash": "6583e86e032366769050a203db68de1b"
     },
     "public/xfrmc_resource_macros.html": {
-        "version_id": 3020400,
-        "version_string": "3.2.4",
-        "hash": "9d43bb9a06fd066500bd333ee07e99f3"
+        "version_id": 3020600,
+        "version_string": "3.2.6",
+        "hash": "53f7b078fb54adef837e2528fb7ea1fd"
     },
     "public/xfrmc_resource_purchase.html": {
         "version_id": 3020100,

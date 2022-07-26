@@ -186,6 +186,47 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->hasPermission('xfrmc_addBuyer');
     }
 
+    public function getXFRMCStructureJsonLd(): array
+    {
+        $router = $this->app()->router('public');
+        $currency = strlen($this->currency) > 0 ? $this->currency : $this->app()->options()->xfrmc_defaultCurrency;
+
+        $data = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            '@id' => $router->buildLink('canonical:resources', $this),
+            'name' => $this->title,
+            'description' => $this->tag_line,
+            'sku' => strval($this->resource_id),
+            'brand' => $this->app()->options()->boardTitle,
+            'mpn' => 'E-' . $this->resource_id,
+            'offers' => [
+                '@type' => 'Offer',
+                'availability' => 'https://schema.org/InStock',
+                'price' => $this->app()->templater()->filter($this->price, [
+                    ['currency', [$currency]]
+                ]),
+                'priceCurrency' => $currency,
+            ],
+            'image' => $this->icon_date > 0
+                ? $this->getIconUrl('m', true)
+                : $this->User->getAvatarUrl('m', null, true),
+            'category' => $this->Category->title,
+            'productID' => 'E-' . $this->resource_id,
+            'releaseDate' => $this->app()->language()->date($this->resource_date, 'c'),
+        ];
+
+        if ($this->review_count > 0) {
+            $data['aggregateRating'] = [
+                '@type' => 'AggregateRating',
+                'ratingValue' => $this->rating_avg,
+                'reviewCount' => $this->review_count,
+            ];
+        }
+
+        return $data;
+    }
+
     /**
      * @param mixed $error
      * @return bool

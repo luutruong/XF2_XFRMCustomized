@@ -9,6 +9,7 @@ namespace Truonglv\XFRMCustomized\Entity;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceVersion;
+use Truonglv\XFRMCustomized\Purchasable\Resource;
 
 /**
  * COLUMNS
@@ -29,6 +30,7 @@ use XFRM\Entity\ResourceVersion;
  * @property \XF\Entity\User $User
  * @property \XFRM\Entity\ResourceItem $Resource
  * @property \XFRM\Entity\ResourceVersion $ResourceVersion
+ * @property \XF\Entity\PurchaseRequest $PurchaseRequest
  */
 class Purchase extends Entity
 {
@@ -71,6 +73,22 @@ class Purchase extends Entity
         return $version->resource_version_id <= $this->resource_version_id || $this->expire_date > time();
     }
 
+    public function getPurchasedAmount(): float
+    {
+        if ($this->PurchaseRequest !== null) {
+            $couponId = $this->PurchaseRequest->extra_data[Resource::EXTRA_DATA_COUPON_ID] ?? 0;
+            if ($couponId > 0) {
+                /** @var Coupon|null $coupon */
+                $coupon = $this->em()->find('Truonglv\XFRMCustomized:Coupon', $couponId);
+                if ($coupon !== null) {
+                    return $coupon->calcPrice($this->amount);
+                }
+            }
+        }
+
+        return $this->amount;
+    }
+
     public static function getStructure(Structure $structure)
     {
         $structure->table = 'xf_xfrmc_resource_purchase';
@@ -93,6 +111,10 @@ class Purchase extends Entity
             'new_purchase_id' => ['type' => self::UINT, 'default' => 0],
         ];
 
+        $structure->getters = [
+            'purchased_amount' => true,
+        ];
+
         $structure->relations = [
             'User' => [
                 'type' => self::TO_ONE,
@@ -112,6 +134,13 @@ class Purchase extends Entity
                 'conditions' => 'resource_version_id',
                 'primary' => true,
             ],
+            'PurchaseRequest' => [
+                'type' => self::TO_ONE,
+                'entity' => 'XF:PurchaseRequest',
+                'conditions' => [
+                    ['request_key', '=', '$purchase_request_key']
+                ],
+            ]
         ];
 
         return $structure;
