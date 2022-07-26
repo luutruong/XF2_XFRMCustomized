@@ -613,6 +613,7 @@ class ResourceItem extends XFCP_ResourceItem
                 $purchaseRequest = $this->em()->findOne('XF:PurchaseRequest', [
                     'request_key' => $purchase->purchase_request_key,
                 ]);
+                $purchase->hydrateRelation('PurchaseRequest', $purchaseRequest);
 
                 return $this->view(
                     '',
