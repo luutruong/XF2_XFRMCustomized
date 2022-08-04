@@ -203,9 +203,7 @@ class ResourceItem extends XFCP_ResourceItem
             'offers' => [
                 '@type' => 'Offer',
                 'availability' => 'https://schema.org/InStock',
-                'price' => $this->app()->templater()->filter($this->price, [
-                    ['currency', [$currency]]
-                ]),
+                'price' => $this->price,
                 'priceCurrency' => $currency,
             ],
             'image' => $this->icon_date > 0
