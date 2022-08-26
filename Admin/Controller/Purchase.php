@@ -131,58 +131,6 @@ class Purchase extends AbstractController
         );
     }
 
-    public function actionReports()
-    {
-        $visitor = \XF::visitor();
-        /** @var \DateTime|null $fromDate */
-        $fromDate = $this->filter('from', 'datetime,obj,tz:' . $visitor->timezone);
-        /** @var \DateTime|null $toDate */
-        $toDate = $this->filter('to', 'datetime,obj,tz:' . $visitor->timezone);
-
-        $timeZone = new \DateTimeZone($visitor->timezone);
-
-        if ($toDate === null) {
-            $toDate = new \DateTime('now');
-            $toDate->setTimezone($timeZone);
-            $toDate->modify('last day of this month');
-        }
-        if ($fromDate === null) {
-            $fromDate = clone $toDate;
-            $fromDate->modify('first day of this month');
-        }
-
-        $fromDate->setTime(0, 0, 0);
-        $toDate->setTime(23, 59, 59);
-
-        $now = new \DateTime();
-        $now->setTimezone($timeZone);
-        if ($toDate->getTimestamp() > $now->getTimestamp()) {
-            $toDate = $now;
-        }
-
-        /** @var \Truonglv\XFRMCustomized\Repository\Report $reportRepo */
-        $reportRepo = $this->repository('Truonglv\XFRMCustomized:Report');
-        $data = $reportRepo->getReportsData($fromDate->getTimestamp(), $toDate->getTimestamp());
-
-        $dataJs = [];
-        $totalAmount = 0;
-        foreach ($data as $item) {
-            $dataJs[] = [$item['date'], (int) $item['amount']];
-            $totalAmount += $item['amount'];
-        }
-
-        $params = [
-            'reports' => $data,
-            'fromDate' => $fromDate->format('Y-m-d'),
-            'toDate' => $toDate->format('Y-m-d'),
-            'dataJs' => $dataJs,
-            'totalAmount' => $totalAmount,
-            'linkPrefix' => $this->getLinkPrefix(),
-        ];
-
-        return $this->view('Truonglv\XFRMCustomized:Purchase\Report', 'xfrmc_purchase_report', $params);
-    }
-
     public function actionLicenseUrls()
     {
         $page = $this->filterPage();

@@ -25,19 +25,9 @@
         "hash": "fb1fbf1529ce847536ed83ab02d0ab0c"
     },
     "admin/xfrmc_purchase_list.html": {
-        "version_id": 3000800,
-        "version_string": "3.0.8",
-        "hash": "613b09679b7974b49c94f490e9d73c61"
-    },
-    "admin/xfrmc_purchase_report.html": {
-        "version_id": 3000910,
-        "version_string": "3.0.9",
-        "hash": "43e25afd334dd3be4ee54346f76300da"
-    },
-    "admin/xfrmc_purchase_report.less": {
-        "version_id": 3000910,
-        "version_string": "3.0.9",
-        "hash": "aa1fcb10b191bb7a293f3d8879ffd9bf"
+        "version_id": 3020700,
+        "version_string": "3.2.7",
+        "hash": "7b88edf9f69e71ec4a44047e67ab11a6"
     },
     "admin/xfrmc_purchase_view.html": {
         "version_id": 3000600,

@@ -371,12 +371,6 @@
         "version_string": "1.0.9",
         "hash": "4457d440870ad6d42bab9082d9bf9b61"
     },
-    "xfrmc_from_date.txt": {
-        "global_cache": false,
-        "version_id": 1010100,
-        "version_string": "1.1.1",
-        "hash": "710b389ba00c3e85da944c3e469bde7f"
-    },
     "xfrmc_from_user.txt": {
         "global_cache": false,
         "version_id": 3020400,
@@ -593,18 +587,6 @@
         "version_string": "1.0.9",
         "hash": "022d2853ee8f1ca7dd7753fb59ea87e4"
     },
-    "xfrmc_report_data_from_x_to_y.txt": {
-        "global_cache": false,
-        "version_id": 1010100,
-        "version_string": "1.1.1",
-        "hash": "4627ff4c7c8aadee82a5b43a8df4fdaa"
-    },
-    "xfrmc_report_details.txt": {
-        "global_cache": false,
-        "version_id": 3000800,
-        "version_string": "3.0.8",
-        "hash": "a69f266c0c0693bbbe371dc64d9be331"
-    },
     "xfrmc_reports.txt": {
         "global_cache": false,
         "version_id": 1010100,
@@ -676,12 +658,6 @@
         "version_id": 1000970,
         "version_string": "1.0.9",
         "hash": "354c930da954242a5f9f88016d8e018c"
-    },
-    "xfrmc_to_date.txt": {
-        "global_cache": false,
-        "version_id": 1010100,
-        "version_string": "1.1.1",
-        "hash": "6886bfd169ca6550e6236cb261af09e3"
     },
     "xfrmc_to_user.txt": {
         "global_cache": false,
