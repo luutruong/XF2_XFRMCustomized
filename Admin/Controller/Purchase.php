@@ -4,9 +4,6 @@ namespace Truonglv\XFRMCustomized\Admin\Controller;
 
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
-use XFRM\Entity\ResourceItem;
-use XF\Service\Conversation\Creator;
-use Truonglv\XFRMCustomized\Entity\License;
 use XF\Admin\Controller\AbstractController;
 
 class Purchase extends AbstractController
@@ -150,55 +147,6 @@ class Purchase extends AbstractController
             'licenses' => $licenses,
             'linkPrefix' => $this->getLinkPrefix(),
         ]);
-    }
-
-    public function actionLicenseWarn()
-    {
-        $licenseId = $this->filter('license_id', 'uint');
-        /** @var License|null $license */
-        $license = $this->em()->find('Truonglv\XFRMCustomized:License', $licenseId);
-        if ($license === null) {
-            return $this->notFound();
-        }
-
-        $visitor = \XF::visitor();
-        if ($visitor->user_id === $license->user_id) {
-            return $this->redirect($this->buildLink($this->getLinkPrefix() . '/license-urls'));
-        }
-
-        /** @var Creator $creator */
-        $creator = $this->service('XF:Conversation\Creator', $visitor);
-        $creator->setIsAutomated();
-
-        /** @var User $receiver */
-        $receiver = $license->User;
-        /** @var ResourceItem $resource */
-        $resource = $license->Resource;
-        $creator->setRecipientsTrusted($receiver);
-
-        $title = \XF::phrase('xfrmc_invalid_license_url_for_resource_conversation_title', [
-            'title' => $resource->title,
-        ]);
-        $router = $this->app()->router('public');
-        $body = \XF::phrase('xfrmc_invalid_license_url_for_resource_conversation_html', [
-            'name' => $receiver->username,
-            'title' => $resource->title,
-            'resource_url' => $router->buildLink('canonical:resources', $resource),
-            'update_url' => $router->buildLink('canonical:resources/license-url', $resource),
-        ]);
-
-        $creator->setContent($title, $body);
-
-        if (!$creator->validate($errors)) {
-            return $this->error($errors);
-        }
-
-        $creator->save();
-
-        $license->warned_date = \XF::$time;
-        $license->save();
-
-        return $this->redirect($this->buildLink($this->getLinkPrefix() . '/license-urls'));
     }
 
     protected function assertPurchaseExists(int $purchaseId): \Truonglv\XFRMCustomized\Entity\Purchase

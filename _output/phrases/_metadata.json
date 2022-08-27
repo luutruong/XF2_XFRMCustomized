@@ -389,18 +389,6 @@
         "version_string": "3.2.0",
         "hash": "86ddc538d30204ffcdff268e9e83719c"
     },
-    "xfrmc_invalid_license_url_for_resource_conversation_html.txt": {
-        "global_cache": false,
-        "version_id": 3020100,
-        "version_string": "3.2.1",
-        "hash": "ebfbe4004e27e046b91693a971c360f5"
-    },
-    "xfrmc_invalid_license_url_for_resource_conversation_title.txt": {
-        "global_cache": false,
-        "version_id": 3020100,
-        "version_string": "3.2.1",
-        "hash": "e943429c3486a8f00db518a9f746daa3"
-    },
     "xfrmc_invoice.txt": {
         "global_cache": false,
         "version_id": 3010000,
@@ -742,12 +730,6 @@
         "version_id": 3000400,
         "version_string": "3.0.4",
         "hash": "d0158c80cf40e77f64ae2d15546886c3"
-    },
-    "xfrmc_warned_date.txt": {
-        "global_cache": false,
-        "version_id": 3020200,
-        "version_string": "3.2.2",
-        "hash": "472b7fd86e100ba1851d8d213cc8c041"
     },
     "xfrmc_x_days.txt": {
         "global_cache": false,
