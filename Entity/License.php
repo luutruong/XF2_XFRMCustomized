@@ -13,7 +13,6 @@ use XF\Mvc\Entity\Structure;
  * @property string $license_url
  * @property int $added_date
  * @property int $deleted_date
- * @property int $warned_date
  *
  * RELATIONS
  * @property \XF\Entity\User $User
@@ -34,8 +33,6 @@ class License extends Entity
             'license_url' => ['type' => self::STR, 'maxLength' => 100, 'required' => true],
             'added_date' => ['type' => self::UINT, 'default' =>  time()],
             'deleted_date' => ['type' => self::UINT, 'default' => 0],
-
-            'warned_date' => ['type' => self::UINT, 'default' => 0]
         ];
 
         $structure->relations = [
