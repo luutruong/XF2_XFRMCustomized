@@ -6,7 +6,9 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
+use XF;
 use Truonglv\XFRMCustomized\App;
+use Truonglv\XFRMCustomized\Entity\Purchase;
 
 class ResourceVersion extends XFCP_ResourceVersion
 {
@@ -26,7 +28,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             return parent::canDownload($error);
         }
 
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
 
         if ($resource->price > 0
             && $this->file_count > 0
@@ -38,13 +40,14 @@ class ResourceVersion extends XFCP_ResourceVersion
 
             $purchases = App::purchaseRepo()->getAllPurchases($resource, $visitor);
             if ($purchases->count() === 0) {
-                $error = \XF::phrase('xfrmc_you_may_purchase_this_resource_to_download');
+                $error = XF::phrase('xfrmc_you_may_purchase_this_resource_to_download');
 
                 return false;
             }
 
             // all purchases has been expired.
             $canDownloadThisVersion = false;
+            /** @var Purchase $purchase */
             foreach ($purchases as $purchase) {
                 if ($purchase->canDownloadVersion($this)) {
                     $canDownloadThisVersion = true;
@@ -56,7 +59,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             if ($canDownloadThisVersion) {
                 return true;
             } else {
-                $error = \XF::phrase('xfrmc_your_license_expired_renew_to_download_latest_version');
+                $error = XF::phrase('xfrmc_your_license_expired_renew_to_download_latest_version');
 
                 return false;
             }

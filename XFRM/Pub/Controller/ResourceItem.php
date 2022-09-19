@@ -6,9 +6,12 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
+use XF;
+use function time;
 use XF\Entity\User;
 use XF\Mvc\Reply\View;
 use XF\Mvc\ParameterBag;
+use InvalidArgumentException;
 use XF\Entity\PaymentProfile;
 use Truonglv\XFRMCustomized\App;
 use XFRM\Entity\ResourceVersion;
@@ -51,19 +54,19 @@ class ResourceItem extends XFCP_ResourceItem
 
             $names = preg_split("/\s*,\s*/", $names, -1, PREG_SPLIT_NO_EMPTY);
             if ($names === false) {
-                throw new \InvalidArgumentException('Cannot parse names. $names=' . $names);
+                throw new InvalidArgumentException('Cannot parse names. $names=' . $names);
             }
 
             $users = $userRepo->getUsersByNames($names, $notFound);
 
             if ($notFound) {
-                return $this->error(\XF::phrase('following_members_not_found_x', [
+                return $this->error(XF::phrase('following_members_not_found_x', [
                     'members' => implode(', ', $notFound)
                 ]));
             }
 
             if ($users->count() === 0) {
-                return $this->error(\XF::phrase('please_enter_valid_name'));
+                return $this->error(XF::phrase('please_enter_valid_name'));
             }
 
             /** @var \XF\Entity\User $user */
@@ -79,7 +82,7 @@ class ResourceItem extends XFCP_ResourceItem
 
                 $purchasedDate = $this->filter('purchased_date', 'datetime');
                 if ($purchasedDate < 1) {
-                    $purchasedDate = \XF::$time;
+                    $purchasedDate = XF::$time;
                 }
 
                 $expireDate = $this->filter('expire_date', 'datetime');
@@ -88,7 +91,7 @@ class ResourceItem extends XFCP_ResourceItem
                 }
 
                 if ($expireDate < $purchasedDate) {
-                    return $this->error(\XF::phrase('xfrmc_expire_date_must_be_great_than_purchased_date'));
+                    return $this->error(XF::phrase('xfrmc_expire_date_must_be_great_than_purchased_date'));
                 }
 
                 /** @var \Truonglv\XFRMCustomized\Entity\Purchase $entity */
@@ -129,7 +132,7 @@ class ResourceItem extends XFCP_ResourceItem
         /** @var User|null $user */
         $user = $this->em()->find('XF:User', $this->filter('user_id', 'uint'));
         if ($user === null) {
-            return $this->notFound(\XF::phrase('requested_member_not_found'));
+            return $this->notFound(XF::phrase('requested_member_not_found'));
         }
 
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchased */
@@ -139,7 +142,7 @@ class ResourceItem extends XFCP_ResourceItem
             ->fetchOne();
 
         if ($purchased === null) {
-            return $this->error(\XF::phrase('xfrmc_user_x_did_not_bought_this_resource', [
+            return $this->error(XF::phrase('xfrmc_user_x_did_not_bought_this_resource', [
                 'name' => $user->username
             ]));
         }
@@ -147,7 +150,7 @@ class ResourceItem extends XFCP_ResourceItem
         if ($this->isPost()) {
             $expireDate = $this->filter('expire_date', 'datetime');
             if ($expireDate < $purchased->purchased_date) {
-                return $this->error(\XF::phrase('xfrmc_expire_date_must_be_great_than_purchased_date'));
+                return $this->error(XF::phrase('xfrmc_expire_date_must_be_great_than_purchased_date'));
             }
 
             $purchased->amount = $this->filter('amount', 'float');
@@ -232,7 +235,7 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         $existingLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
-            ->where('user_id', \XF::visitor()->user_id)
+            ->where('user_id', XF::visitor()->user_id)
             ->where('resource_id', $resource->resource_id)
             ->where('new_purchase_id', 0)
             ->total();
@@ -241,7 +244,7 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         /** @var \XF\Repository\Payment $paymentRepo */
-        $paymentRepo = \XF::repository('XF:Payment');
+        $paymentRepo = XF::repository('XF:Payment');
         $paymentProfiles = $paymentRepo->findPaymentProfilesForList()
             ->whereIds($resource->payment_profile_ids)
             ->fetch();
@@ -279,16 +282,16 @@ class ResourceItem extends XFCP_ResourceItem
         $resource = $this->assertViewableResource($params->resource_id);
         $purchases = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
-            ->where('user_id', \XF::visitor()->user_id)
+            ->where('user_id', XF::visitor()->user_id)
             ->where('new_purchase_id', 0)
             ->order('expire_date')
             ->fetch();
         if ($purchases->count() === 0) {
-            return $this->error(\XF::phrase('xfrmc_you_did_not_have_any_licenses_for_this_resource'));
+            return $this->error(XF::phrase('xfrmc_you_did_not_have_any_licenses_for_this_resource'));
         }
 
         /** @var \XF\Repository\Payment $paymentRepo */
-        $paymentRepo = \XF::repository('XF:Payment');
+        $paymentRepo = XF::repository('XF:Payment');
         $paymentProfiles = $paymentRepo->findPaymentProfilesForList()
             ->whereIds($resource->payment_profile_ids)
             ->fetch();
@@ -309,7 +312,7 @@ class ResourceItem extends XFCP_ResourceItem
     {
         $this->assertRegistrationRequired();
 
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         $resources = App::purchaseRepo()->getPurchasedResources($visitor);
 
         $viewParams = [
@@ -342,7 +345,7 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
         $resource = $this->assertViewableResource($params['resource_id']);
 
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         if ($resource->user_id !== $visitor->user_id
             && !$resource->canDownload()
         ) {
@@ -352,7 +355,7 @@ class ResourceItem extends XFCP_ResourceItem
                 ->where('new_purchase_id', 0)
                 ->total();
             if ($activeLicenses === 0) {
-                return $this->error(\XF::phrase('xfrmc_you_may_purchase_this_resource_to_download'));
+                return $this->error(XF::phrase('xfrmc_you_may_purchase_this_resource_to_download'));
             }
         }
 
@@ -372,21 +375,19 @@ class ResourceItem extends XFCP_ResourceItem
             ]);
         }
 
-        $limitVersionOp = '>=';
-        $limitVersionValue = 0;
-
-        if (($lastPurchase !== null && $lastPurchase->isExpired() && $lastPurchase->resource_version_id > 0)
-            && !$resource->canDownload()
-        ) {
-            // only allow users download resources from previous version
-            $limitVersionOp = '<=';
-            $limitVersionValue = $lastPurchase->resource_version_id;
+        $limitReleaseDate = 0;
+        if ($lastPurchase !== null) {
+            $limitReleaseDate = $lastPurchase->isExpired() ? $lastPurchase->expire_date : time();
         }
 
         $versions = $this->finder('XFRM:ResourceVersion')
             ->where('resource_id', $resource->resource_id)
             ->where('version_state', 'visible')
-            ->where('resource_version_id', $limitVersionOp, $limitVersionValue)
+            ->where(
+                'release_date',
+                '<=',
+                $limitReleaseDate
+            )
             ->order('release_date', 'DESC')
             ->fetchColumns([
                 'resource_version_id',
@@ -408,11 +409,7 @@ class ResourceItem extends XFCP_ResourceItem
                 continue;
             }
 
-            if ($lastPurchase->isExpired()) {
-                $version['canDownload'] = $version['resource_version_id'] <= $lastPurchase->resource_version_id;
-            } else {
-                $version['canDownload'] = true;
-            }
+            $version['canDownload'] = $lastPurchase->canDownloadVersion($version);
         }
         unset($version);
 
@@ -441,7 +438,7 @@ class ResourceItem extends XFCP_ResourceItem
         $resource = $this->assertViewableResource($params['resource_id']);
 
         $redirect = $this->filter('redirect', 'str');
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
 
         /** @var License|null $lastLicense */
         $lastLicense = $this->finder('Truonglv\XFRMCustomized:License')
@@ -568,7 +565,7 @@ class ResourceItem extends XFCP_ResourceItem
         ]);
 
         if ($coupon === null) {
-            return $this->error(\XF::phrase('xfrmc_requested_coupon_not_found'));
+            return $this->error(XF::phrase('xfrmc_requested_coupon_not_found'));
         }
 
         /** @var PaymentProfile|null $paymentProfile */
@@ -582,10 +579,10 @@ class ResourceItem extends XFCP_ResourceItem
         if (!$coupon->canUseWith($resource, $error)) {
             return $this->error($error !== null
                 ? $error
-                : \XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
+                : XF::phrase('xfrmc_coupon_has_been_expired_or_deleted'));
         }
 
-        $message = $this->message(\XF::phrase('xfrmc_coupon_code_available_for_use'));
+        $message = $this->message(XF::phrase('xfrmc_coupon_code_available_for_use'));
         $price = $resource->getXFRMCPriceForProfile($paymentProfile, $coupon);
 
         $message->setJsonParam(
@@ -630,7 +627,7 @@ class ResourceItem extends XFCP_ResourceItem
         $finder->with('Resource');
         $finder->order('purchased_date', 'desc');
 
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         if (!$visitor->hasPermission('resource', 'xfrmc_viewPurchaseAny')) {
             $finder->where('user_id', $visitor->user_id);
         }
