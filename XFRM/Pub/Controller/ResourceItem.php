@@ -380,7 +380,7 @@ class ResourceItem extends XFCP_ResourceItem
             $limitReleaseDate = $lastPurchase->isExpired() ? $lastPurchase->expire_date : time();
         }
 
-        $versions = $this->finder('XFRM:ResourceVersion')
+        $versionEntities = $this->finder('XFRM:ResourceVersion')
             ->where('resource_id', $resource->resource_id)
             ->where('version_state', 'visible')
             ->where(
@@ -389,27 +389,31 @@ class ResourceItem extends XFCP_ResourceItem
                 $limitReleaseDate
             )
             ->order('release_date', 'DESC')
-            ->fetchColumns([
-                'resource_version_id',
-                'version_string',
-                'release_date'
-            ]);
-        foreach ($versions as &$version) {
+            ->fetch();
+
+        $versions = [];
+        /** @var ResourceVersion $version */
+        foreach ($versionEntities as $version) {
+            $versions[$version->resource_version_id] = [
+                'resource_version_id' => $version->resource_version_id,
+                'version_string' => $version->version_string,
+                'release_date' => $version->release_date,
+            ];
             if ($visitor->user_id === $resource->user_id
                 || $resource->canDownload()
             ) {
-                $version['canDownload'] = true;
+                $versions[$version->resource_version_id]['canDownload'] = true;
 
                 continue;
             }
 
             if ($lastPurchase === null) {
-                $version['canDownload'] = false;
+                $versions[$version->resource_version_id]['canDownload'] = false;
 
                 continue;
             }
 
-            $version['canDownload'] = $lastPurchase->canDownloadVersion($version);
+            $versions[$version->resource_version_id]['canDownload'] = $lastPurchase->canDownloadVersion($version);
         }
         unset($version);
 
