@@ -2,6 +2,7 @@
 
 namespace Truonglv\XFRMCustomized\Option;
 
+use XF;
 use XF\Option\AbstractOption;
 
 class Category extends AbstractOption
@@ -17,7 +18,7 @@ class Category extends AbstractOption
         $categoryRepo = $option->repository('XFRM:Category');
         $choices = $categoryRepo->getCategoryOptionsData();
 
-        $choices[0]['label'] = \XF::phrase('(none)');
+        $choices[0]['label'] = XF::phrase('(none)');
 
         $data = [
             'htmlParams' => $htmlParams,

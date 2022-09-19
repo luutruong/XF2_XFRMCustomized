@@ -2,6 +2,7 @@
 
 namespace Truonglv\XFRMCustomized\Service\License;
 
+use XF;
 use XF\Entity\User;
 use XFRM\Entity\ResourceItem;
 use XF\Service\AbstractService;
@@ -29,7 +30,7 @@ class Transfer extends AbstractService
         parent::__construct($app);
 
         $this->resource = $resource;
-        $this->fromUser = \XF::visitor();
+        $this->fromUser = XF::visitor();
     }
 
     public function setFromUsername(string $username): void
@@ -59,17 +60,17 @@ class Transfer extends AbstractService
         $errors = [];
 
         if ($this->fromUser === null) {
-            $errors[] = \XF::phrase('xfrmc_please_enter_valid_from_user');
+            $errors[] = XF::phrase('xfrmc_please_enter_valid_from_user');
         }
         if ($this->toUser === null) {
-            $errors[] = \XF::phrase('xfrmc_please_enter_valid_target_user');
+            $errors[] = XF::phrase('xfrmc_please_enter_valid_target_user');
         }
 
         if ($this->fromUser !== null
             && $this->toUser !== null
             && $this->fromUser->user_id === $this->toUser->user_id
         ) {
-            $errors[] = \XF::phrase('xfrmc_transfer_to_same_user');
+            $errors[] = XF::phrase('xfrmc_transfer_to_same_user');
         }
 
         return $errors;

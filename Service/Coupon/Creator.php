@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized\Service\Coupon;
 
+use XF;
 use XF\Entity\User;
 use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
@@ -28,7 +29,7 @@ class Creator extends AbstractService
         $coupon = $app->em()->create('Truonglv\XFRMCustomized:Coupon');
         $this->coupon = $coupon;
 
-        $this->setUser(\XF::visitor());
+        $this->setUser(XF::visitor());
     }
 
     /**

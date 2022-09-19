@@ -6,6 +6,8 @@
 
 namespace Truonglv\XFRMCustomized\Entity;
 
+use XF;
+use LogicException;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
@@ -43,11 +45,11 @@ class Coupon extends Entity
 
     public function isActive(): bool
     {
-        if ($this->begin_date > 0 && $this->begin_date > \XF::$time) {
+        if ($this->begin_date > 0 && $this->begin_date > XF::$time) {
             return false;
         }
 
-        if ($this->end_date > 0 && $this->end_date <= \XF::$time) {
+        if ($this->end_date > 0 && $this->end_date <= XF::$time) {
             return false;
         }
 
@@ -62,7 +64,7 @@ class Coupon extends Entity
      */
     public function canUseWith(ResourceItem $resourceItem, &$error = null, User $purchaser = null)
     {
-        $purchaser = $purchaser !== null ? $purchaser : \XF::visitor();
+        $purchaser = $purchaser !== null ? $purchaser : XF::visitor();
         if ($purchaser->user_id <= 0) {
             return false;
         }
@@ -78,7 +80,7 @@ class Coupon extends Entity
         ]);
 
         if ($couponUser !== null) {
-            $error = \XF::phrase('xfrmc_this_code_is_only_valid_once_per_resource');
+            $error = XF::phrase('xfrmc_this_code_is_only_valid_once_per_resource');
 
             return false;
         }
@@ -113,7 +115,7 @@ class Coupon extends Entity
                 ->where('user_id', $purchaser->user_id)
                 ->total();
             if ($userTotal >= $perUser) {
-                $error = \XF::phrase('xfrmc_you_reached_maximum_times_used_this_coupon_code');
+                $error = XF::phrase('xfrmc_you_reached_maximum_times_used_this_coupon_code');
 
                 return false;
             }
@@ -128,7 +130,7 @@ class Coupon extends Entity
             && count($criteria['resource']['category_ids']) > 0
             && !in_array($resourceItem->resource_category_id, $criteria['resource']['category_ids'], true)
         ) {
-            $error = \XF::phrase('xfrmc_resource_category_not_discountable');
+            $error = XF::phrase('xfrmc_resource_category_not_discountable');
 
             return false;
         }
@@ -137,7 +139,7 @@ class Coupon extends Entity
             && count($criteria['resource']['resource_ids']) > 0
             && !in_array($resourceItem->resource_id, $criteria['resource']['resource_ids'], true)
         ) {
-            $error = \XF::phrase('xfrmc_resource_not_discountable');
+            $error = XF::phrase('xfrmc_resource_not_discountable');
 
             return false;
         }
@@ -172,7 +174,7 @@ class Coupon extends Entity
         ]);
 
         if ($existCoupon !== null && $existCoupon->coupon_id !== $this->coupon_id) {
-            $this->error(\XF::phrase('xfrmc_coupon_code_x_not_available', [
+            $this->error(XF::phrase('xfrmc_coupon_code_x_not_available', [
                 'code' => $value
             ]));
 
@@ -191,7 +193,7 @@ class Coupon extends Entity
             'coupon_id' => ['type' => self::UINT, 'nullable' => true, 'autoIncrement' => true],
             'coupon_code' => ['type' => self::STR, 'required' => true, 'maxLength' => 25],
             'title' => ['type' => self::STR, 'required' => true, 'maxLength' => 100],
-            'created_date' => ['type' => self::UINT, 'default' => \XF::$time],
+            'created_date' => ['type' => self::UINT, 'default' => XF::$time],
             'begin_date' => ['type' => self::UINT, 'required' => true],
             'end_date' => ['type' => self::UINT, 'default' => 0],
             'used_count' => ['type' => self::UINT, 'forced' => true, 'default' => 0],
@@ -222,7 +224,7 @@ class Coupon extends Entity
     protected function _preSave()
     {
         if ($this->end_date > 0 && $this->end_date <= $this->begin_date) {
-            throw new \LogicException('End-date must be great than begin-date');
+            throw new LogicException('End-date must be great than begin-date');
         }
     }
 

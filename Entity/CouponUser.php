@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized\Entity;
 
+use XF;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -38,7 +39,7 @@ class CouponUser extends Entity
             'coupon_id' => ['type' => self::UINT, 'required' => true],
             'resource_id' => ['type' => self::UINT, 'required' => true],
             'username' => ['type' => self::STR, 'required' => true, 'maxLength' => 50],
-            'created_date' => ['type' => self::UINT, 'default' => \XF::$time],
+            'created_date' => ['type' => self::UINT, 'default' => XF::$time],
             'purchase_id' => ['type' => self::UINT, 'default' => 0]
         ];
 

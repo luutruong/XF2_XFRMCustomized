@@ -6,6 +6,7 @@
  
 namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
+use XF;
 use XF\Phrase;
 use XF\Mvc\Entity\Structure;
 use XF\Entity\PaymentProfile;
@@ -86,7 +87,7 @@ class ResourceItem extends XFCP_ResourceItem
             return parent::isDownloadable();
         }
 
-        if (\XF::visitor()->user_id == $this->user_id) {
+        if (XF::visitor()->user_id == $this->user_id) {
             return true;
         }
 
@@ -107,12 +108,12 @@ class ResourceItem extends XFCP_ResourceItem
 
     public function isRenewLicense(): bool
     {
-        if (\XF::visitor()->user_id <= 0) {
+        if (XF::visitor()->user_id <= 0) {
             return false;
         }
 
         return $this->finder('Truonglv\XFRMCustomized:Purchase')
-            ->where('user_id', \XF::visitor()->user_id)
+            ->where('user_id', XF::visitor()->user_id)
             ->where('resource_id', $this->resource_id)
             ->where('new_purchase_id', 0)
             ->total() > 0;
@@ -124,7 +125,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function canPurchase(&$error = null)
     {
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         if ($visitor->user_id <= 0 || $visitor->user_id === $this->user_id) {
             return false;
         }
@@ -138,7 +139,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function canTransferLicense(&$error = null): bool
     {
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         if ($visitor->user_id <= 0) {
             return false;
         }
@@ -231,7 +232,7 @@ class ResourceItem extends XFCP_ResourceItem
      */
     public function canViewHistory(&$error = null)
     {
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         if ($visitor->user_id <= 0) {
             return false;
         }
@@ -254,7 +255,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->_getterCache['is_purchased'];
         }
 
-        return App::purchaseRepo()->isPurchased($this, \XF::visitor());
+        return App::purchaseRepo()->isPurchased($this, XF::visitor());
     }
 
     public static function getStructure(Structure $structure)

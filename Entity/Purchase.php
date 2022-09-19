@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized\Entity;
 
+use XF;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceVersion;
@@ -40,7 +41,7 @@ class Purchase extends Entity
      */
     public function canView(&$error = null): bool
     {
-        $visitor = \XF::visitor();
+        $visitor = XF::visitor();
         if ($visitor->user_id <= 0) {
             return false;
         }
@@ -70,7 +71,12 @@ class Purchase extends Entity
             return false;
         }
 
-        return $version->resource_version_id <= $this->resource_version_id || $this->expire_date > time();
+        if ($this->expire_date > time()) {
+            return true;
+        }
+
+        // expired.
+        return $version->release_date <= $this->expire_date;
     }
 
     public function getPurchasedAmount(): float
@@ -104,7 +110,7 @@ class Purchase extends Entity
             'resource_version_id' => ['type' => self::UINT, 'required' => true],
             'amount' => ['type' => self::FLOAT, 'default' => 0],
             'expire_date' => ['type' => self::UINT, 'default' => 0],
-            'purchased_date' => ['type' => self::UINT, 'default' => \XF::$time],
+            'purchased_date' => ['type' => self::UINT, 'default' => XF::$time],
             'purchase_request_key' => ['type' => self::STR, 'default' => '', 'maxLength' => 32],
             'purchase_request_keys' => ['type' => self::JSON_ARRAY, 'default' => []],
             'note' => ['type' => self::STR, 'default' => '', 'maxLength' => 255],

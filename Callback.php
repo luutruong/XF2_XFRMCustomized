@@ -6,8 +6,10 @@
 
 namespace Truonglv\XFRMCustomized;
 
+use XF;
 use XF\Repository\AddOn;
 use XF\Template\Templater;
+use InvalidArgumentException;
 use XFRM\Entity\ResourceItem;
 
 class Callback
@@ -21,14 +23,14 @@ class Callback
     public static function renderPaymentProfiles(string $value, array $params, Templater $templater)
     {
         if (!isset($params['resource']) || !$params['resource'] instanceof ResourceItem) {
-            throw new \InvalidArgumentException('Missing resource data in callback.');
+            throw new InvalidArgumentException('Missing resource data in callback.');
         }
 
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
         $resource = $params['resource'];
 
         /** @var \XF\Repository\Payment $paymentRepo */
-        $paymentRepo = \XF::repository('XF:Payment');
+        $paymentRepo = XF::repository('XF:Payment');
 
         $controlOptions = [
             'name' => 'payment_profile_ids'
@@ -45,7 +47,7 @@ class Callback
         }
 
         $rowOptions = [
-            'label' => \XF::phrase('payment_profiles')
+            'label' => XF::phrase('payment_profiles')
         ];
 
         return $templater->formCheckBoxRow($controlOptions, $choices, $rowOptions);
@@ -57,7 +59,7 @@ class Callback
     public static function getIsXFRMSupportLargeFileEnabled()
     {
         /** @var AddOn $addOnRepo */
-        $addOnRepo = \XF::repository('XF:AddOn');
+        $addOnRepo = XF::repository('XF:AddOn');
         $addOns = $addOnRepo->getEnabledAddOns();
 
         return isset($addOns['Truonglv/XFRMSupportLargeFile']) ? true : null;

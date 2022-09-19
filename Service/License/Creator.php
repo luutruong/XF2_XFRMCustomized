@@ -2,6 +2,8 @@
 
 namespace Truonglv\XFRMCustomized\Service\License;
 
+use XF;
+use LogicException;
 use XF\Entity\User;
 use XF\Validator\Url;
 use XFRM\Entity\ResourceItem;
@@ -25,7 +27,7 @@ class Creator extends AbstractService
         parent::__construct($app);
 
         $this->resource = $resource;
-        $this->user = \XF::visitor();
+        $this->user = XF::visitor();
 
         /** @var License $license */
         $license = $app->em()->create('Truonglv\XFRMCustomized:License');
@@ -54,7 +56,7 @@ class Creator extends AbstractService
     protected function _validate()
     {
         if ($this->licenseUrl === null) {
-            throw new \LogicException('Must be set licenseUrl property');
+            throw new LogicException('Must be set licenseUrl property');
         }
 
         $this->finalizeSetup();
@@ -89,7 +91,7 @@ class Creator extends AbstractService
             $db->update(
                 'xf_xfrmc_license',
                 [
-                    'deleted_date' => \XF::$time
+                    'deleted_date' => XF::$time
                 ],
                 'resource_id = ? AND user_id = ? AND deleted_date = ?',
                 [$this->resource->resource_id, $this->user->user_id, 0]

@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized;
 
+use XF;
 use XF\Entity\User;
 use Truonglv\XFRMCustomized\Repository\Purchase;
 
@@ -20,7 +21,7 @@ class App
      */
     public static function hasPermission(string $permission, User $user = null)
     {
-        $user = $user !== null ? $user : \XF::visitor();
+        $user = $user !== null ? $user : XF::visitor();
 
         return $user->hasPermission('xfrmc', $permission);
     }
@@ -31,7 +32,7 @@ class App
      */
     public static function isDisabledCategory(int $categoryId)
     {
-        $disabled = \XF::options()->xfrmc_disableCategories;
+        $disabled = XF::options()->xfrmc_disableCategories;
         $disabled = array_map('intval', $disabled);
 
         return in_array($categoryId, $disabled, true);
@@ -43,7 +44,7 @@ class App
      */
     public static function getFee(float $amount)
     {
-        $formula = \XF::options()->xfrmc_feeFormula;
+        $formula = XF::options()->xfrmc_feeFormula;
         if (strlen($formula) <= 0) {
             return 0.0;
         }
@@ -64,7 +65,7 @@ class App
     public static function purchaseRepo()
     {
         /** @var Purchase $repo */
-        $repo = \XF::repository('Truonglv\XFRMCustomized:Purchase');
+        $repo = XF::repository('Truonglv\XFRMCustomized:Purchase');
 
         return $repo;
     }

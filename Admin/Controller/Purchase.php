@@ -2,6 +2,7 @@
 
 namespace Truonglv\XFRMCustomized\Admin\Controller;
 
+use XF;
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use XF\Admin\Controller\AbstractController;
@@ -104,7 +105,7 @@ class Purchase extends AbstractController
             ]);
 
             if (!isset($resourceVersions[$inputData['resource_version_id']])) {
-                return $this->error(\XF::phrase('xfrmc_please_select_valid_resource_version'));
+                return $this->error(XF::phrase('xfrmc_please_select_valid_resource_version'));
             }
             if ($inputData['expire_type'] === 'update') {
                 $inputData['expire_date'] = $this->filter('expire_date', 'datetime');

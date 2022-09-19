@@ -2,6 +2,8 @@
 
 namespace Truonglv\XFRMCustomized\Data;
 
+use XF;
+
 class Lazy
 {
     /**
@@ -16,7 +18,7 @@ class Lazy
      */
     public function isPurchasedResource($resourceId, $userId = null)
     {
-        $userId = ($userId === null) ? \XF::visitor()->user_id : $userId;
+        $userId = ($userId === null) ? XF::visitor()->user_id : $userId;
         if ($userId <= 0) {
             return false;
         }
@@ -24,7 +26,7 @@ class Lazy
         if ($this->purchasedPairs === null) {
             $this->purchasedPairs = [];
 
-            $db = \XF::db();
+            $db = XF::db();
             $results = $db->fetchAll('
                 SELECT resource_id, user_id
                 FROM xf_xfrmc_resource_purchase

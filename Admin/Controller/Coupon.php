@@ -2,6 +2,8 @@
 
 namespace Truonglv\XFRMCustomized\Admin\Controller;
 
+use XF;
+use DateTime;
 use XF\Mvc\ParameterBag;
 use XF\ControllerPlugin\Delete;
 use XF\Mvc\Reply\AbstractReply;
@@ -50,7 +52,7 @@ class Coupon extends AbstractController
         } else {
             $coupon = $this->getNewCoupon();
 
-            $visitor = \XF::visitor();
+            $visitor = XF::visitor();
             $coupon->user_id = $visitor->user_id;
             $coupon->username = $visitor->username;
         }
@@ -94,14 +96,14 @@ class Coupon extends AbstractController
         ];
         $coupon->criteria = $criteria;
 
-        /** @var \DateTime|null $beginDate */
+        /** @var DateTime|null $beginDate */
         $beginDate = $this->filter('begin_date', 'datetime,obj');
         if ($beginDate === null) {
-            return $this->error(\XF::phrase('please_enter_valid_date_format'));
+            return $this->error(XF::phrase('please_enter_valid_date_format'));
         }
         $coupon->begin_date = $beginDate->setTime(0, 0, 0)->getTimestamp();
 
-        /** @var \DateTime|null $endDate */
+        /** @var DateTime|null $endDate */
         $endDate = $this->filter('end_date', 'datetime,obj');
         if ($endDate !== null) {
             $coupon->end_date = $endDate->setTime(23, 59, 59)->getTimestamp();

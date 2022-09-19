@@ -6,6 +6,7 @@
 
 namespace Truonglv\XFRMCustomized\Repository;
 
+use XF;
 use XF\Entity\User;
 use XF\Mvc\Entity\Repository;
 use XFRM\Entity\ResourceItem;
@@ -15,13 +16,13 @@ class Purchase extends Repository
 {
     public function getActivePurchase(ResourceItem $resource, User $user = null): ?\Truonglv\XFRMCustomized\Entity\Purchase
     {
-        $user = $user !== null ? $user : \XF::visitor();
+        $user = $user !== null ? $user : XF::visitor();
 
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
         $purchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
                 ->where('resource_id', $resource->resource_id)
                 ->where('user_id', $user->user_id)
-                ->where('expire_date', '>', \XF::$time)
+                ->where('expire_date', '>', XF::$time)
                 ->order('expire_date', 'ASC')
                 ->fetchOne();
 
@@ -38,7 +39,7 @@ class Purchase extends Repository
 
     public function getAllPurchases(ResourceItem $resource, User $user = null): AbstractCollection
     {
-        $user = $user !== null ? $user : \XF::visitor();
+        $user = $user !== null ? $user : XF::visitor();
 
         return $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('resource_id', $resource->resource_id)
