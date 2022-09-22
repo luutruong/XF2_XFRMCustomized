@@ -2,6 +2,7 @@
 
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
+use Truonglv\XFRMCustomized\App;
 use XF;
 use XF\Mvc\ParameterBag;
 
@@ -13,6 +14,9 @@ class ResourceVersion extends XFCP_ResourceVersion
         $version = $this->assertViewableVersion($params['resource_version_id']);
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
         $resource = $version->Resource;
+        if (App::isDisabledCategory($resource->resource_category_id)) {
+            return parent::actionDownload($params);
+        }
 
         $licenses = $this->finder('Truonglv\XFRMCustomized:License')
             ->where('resource_id', $resource->resource_id)
