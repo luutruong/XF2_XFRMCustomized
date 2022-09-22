@@ -344,6 +344,16 @@ class ResourceItem extends XFCP_ResourceItem
     {
         $this->assertRegistrationRequired();
         $resource = $this->assertViewableResource($params['resource_id']);
+        if (App::isDisabledCategory($resource->resource_category_id)) {
+            if (!$resource->canDownload($error)) {
+                return $this->noPermission($error);
+            }
+
+            return $this->rerouteController('XFRM:ResourceVersion', 'download', [
+                'resource_id' => $resource->resource_id,
+                'resource_version_id' => $resource->current_version_id,
+            ]);
+        }
 
         $visitor = XF::visitor();
         if ($resource->user_id !== $visitor->user_id
@@ -401,7 +411,6 @@ class ResourceItem extends XFCP_ResourceItem
             ];
             if ($visitor->user_id === $resource->user_id
                 || $resource->canDownload()
-                || App::isDisabledCategory($resource->resource_category_id)
             ) {
                 $versions[$version->resource_version_id]['canDownload'] = true;
 
