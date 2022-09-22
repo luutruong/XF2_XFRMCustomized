@@ -401,6 +401,7 @@ class ResourceItem extends XFCP_ResourceItem
             ];
             if ($visitor->user_id === $resource->user_id
                 || $resource->canDownload()
+                || App::isDisabledCategory($resource->resource_category_id)
             ) {
                 $versions[$version->resource_version_id]['canDownload'] = true;
 
