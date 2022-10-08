@@ -91,9 +91,9 @@
     },
     "option_explain.xfrmc_feeFormula.txt": {
         "global_cache": false,
-        "version_id": 2000400,
-        "version_string": "2.0.4",
-        "hash": "f40d0207b3ee41c7e03059fe9ef965eb"
+        "version_id": 3020900,
+        "version_string": "3.2.9",
+        "hash": "aab3af7fbd6eb9692afa7e8d99ff817b"
     },
     "option_explain.xfrmc_licenseDuration.txt": {
         "global_cache": false,

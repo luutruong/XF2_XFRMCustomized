@@ -151,18 +151,14 @@ class ResourceItem extends XFCP_ResourceItem
         return $this->is_purchased;
     }
 
-    public function getRenewPrice(): float
+    public function getRenewPrice(PaymentProfile $paymentProfile): float
     {
-        return $this->renew_price + App::getFee($this->renew_price);
+        return App::getPriceWithTax($paymentProfile, $this->renew_price);
     }
 
     public function getXFRMCPriceForProfile(PaymentProfile $paymentProfile, Coupon $coupon = null): float
     {
-        if ($paymentProfile->provider_id === 'paypal') {
-            $price = $this->price + App::getFee($this->price);
-        } else {
-            $price = $this->price;
-        }
+        $price = App::getPriceWithTax($paymentProfile, $this->price);
 
         return $coupon === null ? $price : $coupon->calcPrice($price);
     }

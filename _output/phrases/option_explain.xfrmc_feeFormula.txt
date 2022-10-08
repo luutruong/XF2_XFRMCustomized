@@ -1,1 +1,5 @@
-Use <b>{price}</b> for present order price.
+Formula must following this rule:<br>
+<code>{payment_provider_id}={price} * {adjust}</code><br>
+Example:<br>
+paypal={price}*1.2<br>
+stripe={price}

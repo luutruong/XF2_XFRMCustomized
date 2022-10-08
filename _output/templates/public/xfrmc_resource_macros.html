@@ -35,20 +35,32 @@
 </xf:macro>
 
 <xf:macro name="purchase_inputs" arg-resource="!" arg-showPrice="{{ false }}">
+	<xf:js src="Truonglv/XFRMCustomized/coupon.js" min="1" addon="Truonglv/XFRMCustomized" />
     <hr class="formRowSep" />
-    <xf:callback class="Truonglv\XFRMCustomized\Callback"
-                 method="renderPaymentProfiles"
-                 params="{'resource': $resource}" />
+	<div class="js-xfrmc-paymentProfiles">
+		<xf:callback class="Truonglv\XFRMCustomized\Callback"
+					 method="renderPaymentProfiles"
+					 params="{'resource': $resource}" />
+	</div>
+
     <xf:if is="$showPrice">
         <xf:formrow rowtype="input" label="{{ phrase('price') }}">
-            <xf:macro template="xfrm_resource_edit_macros" name="purchase_inputs"
-                      arg-resource="{$resource}" />
+			<div data-xf-init="xfrmc-price-calc"
+				 data-estimate-url="{{ link('resources/xfrmc-price-calc') }}"
+				 data-input-selector="input[name='price']"
+				 data-payment-profiles="< .block-body | .js-xfrmc-paymentProfiles">
+				<xf:macro template="xfrm_resource_edit_macros" name="purchase_inputs"
+						  arg-resource="{$resource}" />
+			</div>
         </xf:formrow>
     </xf:if>
 
     <xf:textboxrow name="renew_price"
                    label="{{ phrase('xfrmc_renew_price') }}"
                    value="{{ $resource.renew_price ?: '' }}"
+				   data-xf-init="xfrmc-price-calc"
+				   data-estimate-url="{{ link('resources/xfrmc-price-calc') }}"
+				   data-payment-profiles="< .block-body | .js-xfrmc-paymentProfiles"
                    placeholder="{{ phrase('xfrmc_renew_price') }}" style="width: 120px" />
     <hr class="formRowSep" />
 </xf:macro>

@@ -33,7 +33,7 @@ class Callback
         $paymentRepo = XF::repository('XF:Payment');
 
         $controlOptions = [
-            'name' => 'payment_profile_ids'
+            'name' => 'payment_profile_ids',
         ];
 
         $choices = [];
@@ -47,7 +47,7 @@ class Callback
         }
 
         $rowOptions = [
-            'label' => XF::phrase('payment_profiles')
+            'label' => XF::phrase('payment_profiles'),
         ];
 
         return $templater->formCheckBoxRow($controlOptions, $choices, $rowOptions);

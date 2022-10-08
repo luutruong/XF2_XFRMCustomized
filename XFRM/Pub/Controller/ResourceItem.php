@@ -296,6 +296,16 @@ class ResourceItem extends XFCP_ResourceItem
             ->whereIds($resource->payment_profile_ids)
             ->fetch();
 
+        $suggestPurchaseId = 0;
+        $lastExpireDate = 0;
+        /** @var Purchase $purchase */
+        foreach ($purchases as $purchase) {
+            if ($purchase->expire_date >= $lastExpireDate) {
+                $lastExpireDate = $purchase->expire_date;
+                $suggestPurchaseId = $purchase->purchase_id;
+            }
+        }
+
         return $this->view(
             'Truonglv\XFRMCustomized:Resource\Renew',
             'xfrmc_resource_license_renew',
@@ -304,6 +314,7 @@ class ResourceItem extends XFCP_ResourceItem
                 'purchases' => $purchases,
                 'purchasable' => $this->em()->find('XF:Purchasable', App::PURCHASABLE_ID),
                 'paymentProfiles' => $paymentProfiles,
+                'suggestPurchaseId' => $suggestPurchaseId,
             ]
         );
     }
@@ -700,6 +711,37 @@ class ResourceItem extends XFCP_ResourceItem
                 'resource' => $resource,
             ]
         );
+    }
+
+    public function actionXFRMCPriceCalc()
+    {
+        $price = $this->filter('price', 'float');
+        $paymentProfileIds = XF\Util\Arr::stringToArray(
+            $this->filter('payment_profile_ids', 'str'),
+            '/\,/'
+        );
+
+        $paymentProfiles = $this->em()->findByIds(
+            'XF:PaymentProfile',
+            $paymentProfileIds
+        );
+
+        $prices = [];
+        /** @var PaymentProfile $paymentProfile */
+        foreach ($paymentProfiles as $paymentProfile) {
+            $prices[] = [
+                'label' => $paymentProfile->display_title,
+                'amount' => App::getPriceWithTax($paymentProfile, $price),
+            ];
+        }
+
+        $view = $this->view();
+        $view->setJsonParam(
+            'prices',
+            $prices
+        );
+
+        return $view;
     }
 
     /**

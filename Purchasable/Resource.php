@@ -227,7 +227,7 @@ class Resource extends AbstractPurchasable
                 } else {
                     $purchase->amount = $this->oldPurchase === null
                         ? $resource->getXFRMCPriceForProfile($paymentProfile)
-                        : $resource->getRenewPrice();
+                        : $resource->getRenewPrice($paymentProfile);
                 }
 
                 $purchase->save();
@@ -438,7 +438,7 @@ class Resource extends AbstractPurchasable
 
         $cost = $this->oldPurchase === null
             ? $purchasable->getXFRMCPriceForProfile($paymentProfile, $this->coupon)
-            : $purchasable->getRenewPrice();
+            : $purchasable->getRenewPrice($paymentProfile);
 
         $purchase = new Purchase();
 

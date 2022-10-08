@@ -7,7 +7,10 @@
 namespace Truonglv\XFRMCustomized;
 
 use XF;
+use function ceil;
 use XF\Entity\User;
+use function strpos;
+use function explode;
 use Truonglv\XFRMCustomized\Repository\Purchase;
 
 class App
@@ -42,21 +45,37 @@ class App
      * @param float $amount
      * @return float
      */
-    public static function getFee(float $amount)
+    public static function getPriceWithTax(XF\Entity\PaymentProfile $paymentProfile, float $amount)
     {
-        $formula = XF::options()->xfrmc_feeFormula;
+        $formula = trim(XF::options()->xfrmc_feeFormula);
         if (strlen($formula) <= 0) {
-            return 0.0;
+            return $amount;
         }
 
         if ($amount < 1) {
-            return 0.0;
+            return $amount;
         }
 
-        $formula = str_replace('{price}', strval($amount), $formula);
+        $formulaRules = [];
+        $rawRules = XF\Util\Arr::stringToArray($formula, "/\r?\n/");
+        foreach ($rawRules as $rawRule) {
+            if (strpos($rawRule, '=') === false) {
+                continue;
+            }
+
+            $parts = explode('=', $rawRule, 2);
+            $paymentProfileId = \trim($parts[0]);
+            $formulaRules[$paymentProfileId] = \trim($parts[1]);
+        }
+
+        if (!isset($formulaRules[$paymentProfile->provider_id])) {
+            return $amount;
+        }
+
+        $formula = str_replace('{price}', strval($amount), $formulaRules[$paymentProfile->provider_id]);
         $price = eval("return $formula;");
 
-        return round($price, 2);
+        return ceil($price);
     }
 
     /**

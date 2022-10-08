@@ -2,9 +2,9 @@
 
 namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 
-use Truonglv\XFRMCustomized\App;
 use XF;
 use XF\Mvc\ParameterBag;
+use Truonglv\XFRMCustomized\App;
 
 class ResourceVersion extends XFCP_ResourceVersion
 {

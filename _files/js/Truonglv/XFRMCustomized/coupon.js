@@ -121,5 +121,82 @@
         },
     });
 
+    XF.XFRMCustomized_PriceCalc = XF.Element.newHandler({
+        options: {
+            paymentProfiles: null,
+            inputSelector: null,
+            estimateUrl: null,
+        },
+
+        $paymentProfiles: null,
+        $priceInput: null,
+        $results: null,
+
+        xhr: null,
+
+        init: function () {
+            this.$paymentProfiles = XF.findRelativeIf(this.options.paymentProfiles, this.$target);
+            this.$paymentProfiles.bind('change', XF.proxy(this, 'showPurchasePrices'));
+
+            if (this.$target[0].nodeName === 'INPUT') {
+                this.$target.bind('change', XF.proxy(this, 'onChangePrice'));
+                this.$priceInput = this.$target;
+            } else {
+                var $input = this.$target.find(this.options.inputSelector);
+                $input.bind('change', XF.proxy(this, 'onChangePrice'));
+
+                this.$priceInput = $input;
+            }
+
+            var $results = $('<ul />').addClass('listPlain listInline--bullet');
+            this.$results = $results;
+
+            $results.insertAfter(this.$target);
+
+            this.showPurchasePrices();
+        },
+
+        onChangePrice: function () {
+            this.showPurchasePrices();
+        },
+
+        showPurchasePrices: function () {
+            var selectedPaymentProfiles = [],
+                $paymentProfileInputs = this.$paymentProfiles.find('input'),
+                _this = this;
+            for (var i = 0; i < $paymentProfileInputs.length; i++) {
+                var $paymentProfile = $($paymentProfileInputs[i]);
+
+                if ($paymentProfile.is(':checked')) {
+                    selectedPaymentProfiles.push($paymentProfile.val());
+                }
+            }
+
+            if (this.xhr) {
+                this.xhr.abort();
+            }
+
+            this.xhr = XF.ajax(
+                'POST',
+                this.options.estimateUrl,
+                {
+                    price: this.$priceInput.val(),
+                    payment_profile_ids: selectedPaymentProfiles.join(','),
+                },
+                function (data) {
+                    _this.$results.empty();
+                    for (var j = 0; j < data.prices.length; j++) {
+                        var price = data.prices[j];
+                        var $li = $('<li />').text(price.label + ' (' + price.amount + ')');
+                        $li.appendTo(_this.$results);
+                    }
+                }
+            ).always(function () {
+                _this.xhr = null;
+            });
+        },
+    });
+
     XF.Click.register('xfrmc-check-coupon-code', 'XF.XFRMCustomized_CouponCheck');
+    XF.Element.register('xfrmc-price-calc', 'XF.XFRMCustomized_PriceCalc');
 })(jQuery, this, document);
