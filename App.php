@@ -18,6 +18,11 @@ class App
     const PURCHASABLE_ID = 'tl_xfrm_customized_resource';
 
     /**
+     * @var null|XF\Entity\PaymentProfile[]
+     */
+    protected static $paymentProfiles = null;
+
+    /**
      * @param string $permission
      * @param User|null $user
      * @return bool
@@ -27,6 +32,23 @@ class App
         $user = $user !== null ? $user : XF::visitor();
 
         return $user->hasPermission('xfrmc', $permission);
+    }
+
+    /**
+     * @return XF\Entity\PaymentProfile[]
+     */
+    public static function getPaymentProfiles()
+    {
+        if (self::$paymentProfiles === null) {
+            /** @var XF\Repository\Payment $paymentProfileRepo */
+            $paymentProfileRepo = XF::repository('XF:Payment');
+            /** @var XF\Entity\PaymentProfile[] $paymentProfiles */
+            $paymentProfiles = $paymentProfileRepo->findPaymentProfilesForList()->fetch();
+
+            self::$paymentProfiles = $paymentProfiles;
+        }
+
+        return self::$paymentProfiles;
     }
 
     /**

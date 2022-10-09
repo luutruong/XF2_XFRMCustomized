@@ -8,6 +8,7 @@ namespace Truonglv\XFRMCustomized\XFRM\Entity;
 
 use XF;
 use XF\Phrase;
+use function sprintf;
 use XF\Mvc\Entity\Structure;
 use XF\Entity\PaymentProfile;
 use Truonglv\XFRMCustomized\App;
@@ -112,11 +113,18 @@ class ResourceItem extends XFCP_ResourceItem
             return false;
         }
 
-        return $this->finder('Truonglv\XFRMCustomized:Purchase')
+        if (\array_key_exists('xfrmc_is_renew_license', $this->_getterCache)) {
+            return $this->_getterCache['xfrmc_is_renew_license'];
+        }
+
+        $isRenew = $this->finder('Truonglv\XFRMCustomized:Purchase')
             ->where('user_id', XF::visitor()->user_id)
             ->where('resource_id', $this->resource_id)
             ->where('new_purchase_id', 0)
             ->total() > 0;
+        $this->_getterCache['xfrmc_is_renew_license'] = $isRenew;
+
+        return $isRenew;
     }
 
     /**
@@ -161,6 +169,45 @@ class ResourceItem extends XFCP_ResourceItem
         $price = App::getPriceWithTax($paymentProfile, $this->price);
 
         return $coupon === null ? $price : $coupon->calcPrice($price);
+    }
+
+    public function getXFRMCPriceBadges(bool $checkRenew = false): array
+    {
+        if ($this->price < 1) {
+            return [];
+        }
+
+        $paymentProfiles = App::getPaymentProfiles();
+        $templater = $this->app()->templater();
+        $badges = [];
+        $price = $this->price;
+
+        if ($checkRenew && $this->isRenewLicense()) {
+            $price = $this->renew_price;
+        }
+
+        foreach ($this->payment_profile_ids as $paymentProfileId) {
+            if (!isset($paymentProfiles[$paymentProfileId])) {
+                continue;
+            }
+
+            $paymentProfileRef = $paymentProfiles[$paymentProfileId];
+            $badges[] = [
+                'text' => sprintf(
+                    '%s: %s',
+                    $paymentProfileRef->display_title,
+                    $templater->filter(
+                        App::getPriceWithTax($paymentProfileRef, $price),
+                        [['currency', [$this->currency]]]
+                    )
+                ),
+                'link' => $this->app()->router('public')->buildLink('resources/purchase', $this, [
+                    'payment_profile_id' => $paymentProfileRef->payment_profile_id,
+                ])
+            ];
+        }
+
+        return $badges;
     }
 
     /**

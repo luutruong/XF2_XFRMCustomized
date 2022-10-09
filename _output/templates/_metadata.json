@@ -85,14 +85,14 @@
         "hash": "ca90963ef00c746375048e14ce9767a7"
     },
     "public/xfrmc_resource_list.less": {
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "6583e86e032366769050a203db68de1b"
+        "version_id": 3030000,
+        "version_string": "3.3.0",
+        "hash": "41e91e02b700b34a0aed6942f1e8c3ec"
     },
     "public/xfrmc_resource_macros.html": {
-        "version_id": 3020900,
-        "version_string": "3.2.9",
-        "hash": "1aa859ecf18e10ab475b6149230fc6d3"
+        "version_id": 3030000,
+        "version_string": "3.3.0",
+        "hash": "8425bcbdf9782e5096c28c28bfbc15fe"
     },
     "public/xfrmc_resource_purchase.html": {
         "version_id": 3020100,

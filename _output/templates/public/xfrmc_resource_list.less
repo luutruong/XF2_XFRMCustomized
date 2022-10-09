@@ -55,19 +55,18 @@
 
     .resourceList-item--description {
       padding: 0;
-      margin: 0;
       font-size: @xf-fontSizeSmaller;
       color: @xf-textColorMuted;
-      margin-bottom: @xf-paddingLarge;
+      margin: 0 0 @xf-paddingLarge;
     }
 
     .resourceList-item--price {
-      font-size: @xf-fontSizeLargest;
-      font-weight: @xf-fontWeightHeavy;
-      color: @xf-textColorAttention;
-      height: 33px;
-      display: block;
-      margin-bottom: @xf-paddingMedium;
+      font-weight: 600;
+      background-color: @xf-textColorAttention;
+      color: #fff;
+      font-size: @xf-fontSizeSmaller;
+      padding: @xf-paddingSmall @xf-paddingLarge;
+      border-radius: @xf-borderRadiusMedium;
     }
 
     .resourceList-item--meta {
@@ -97,6 +96,16 @@
     .button--icon {
       .fa {
         font-size: @xf-fontSizeLarge;
+      }
+    }
+
+    .resourceList-item--icon {
+      position: relative;
+
+      .resourceList-item--priceBadge {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
       }
     }
   }
