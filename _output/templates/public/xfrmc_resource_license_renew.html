@@ -21,11 +21,11 @@
 
             <hr class="formRowSep"/>
 
-            <xf:formrow label="{{ phrase('price') }}">{$resource.getRenewPrice()|currency($resource.currency)}</xf:formrow>
-
             <xf:radiorow label="{{ phrase('xfrmc_purchase_via') }}" name="payment_profile_id">
                 <xf:foreach loop="$paymentProfiles" value="$paymentProfile">
-                    <xf:option value="{$paymentProfile.payment_profile_id}">{{ $paymentProfile.display_title . ' - ' . $paymentProfile.title }}</xf:option>
+                    <xf:option value="{$paymentProfile.payment_profile_id}">
+                        {{ $paymentProfile.display_title ?: $paymentProfile.title }}: {$resource.getRenewPrice($paymentProfile)|currency($resource.currency)}
+                    </xf:option>
                 </xf:foreach>
             </xf:radiorow>
         </div>
