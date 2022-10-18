@@ -55,14 +55,14 @@
         "hash": "0aded9227ac2d3940cb9d49329bd3a7f"
     },
     "public/xfrmc_resource_add_buyer.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "f72b4a1c8518baba337c97b34162dd32"
+        "version_id": 3030200,
+        "version_string": "3.3.2",
+        "hash": "3e3a5b6385e5b1750382ef82863f9b6c"
     },
     "public/xfrmc_resource_buyers.html": {
-        "version_id": 1000970,
-        "version_string": "1.0.9",
-        "hash": "59b8c2fb14bb99d1325f3368da5eb632"
+        "version_id": 3030200,
+        "version_string": "3.3.2",
+        "hash": "d3a70edccf12115592e4473d40320f11"
     },
     "public/xfrmc_resource_download.html": {
         "version_id": 3020000,
@@ -95,9 +95,9 @@
         "hash": "8425bcbdf9782e5096c28c28bfbc15fe"
     },
     "public/xfrmc_resource_purchase.html": {
-        "version_id": 3020100,
-        "version_string": "3.2.1",
-        "hash": "9d0e5ceb258d222a7d24c804ef4b3b13"
+        "version_id": 3030200,
+        "version_string": "3.3.2",
+        "hash": "ea1a1cd882339bd8f07dd975e7d27c8d"
     },
     "public/xfrmc_resource_purchased.html": {
         "version_id": 3000200,

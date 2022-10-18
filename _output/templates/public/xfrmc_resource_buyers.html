@@ -40,6 +40,7 @@
                 <xf:set var="$extraHtml">
                     <ol class="listPlain" style="min-width: 200px">
                         <li><span>{{ phrase('xfrmc_amount') }}</span>: {$data.amount|currency($resource.currency)}</li>
+                        <li><span>{{ phrase('xfrmc_total_licenses') }}</span>:&nbsp;{$data.total_license}</li>
                         <li><span>{{ phrase('xfrmc_purchased_date') }}</span>: <xf:date time="$data.purchased_date" /></li>
                         <li><span>{{ phrase('xfrmc_expire_date') }}</span>: <xf:date time="$data.expire_date" /></li>
 

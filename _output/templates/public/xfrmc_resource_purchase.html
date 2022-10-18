@@ -22,9 +22,17 @@
                 <xf:formrow label="{{ phrase('price') }}">
                     <span id="xfrmc-price" style="font-size: 17px">{$purchasePrice|currency($resource.currency)}</span>
                 </xf:formrow>
+                <xf:numberboxrow
+                        name="total_license" data-xf-init="xfrmc-total-licenses"
+                        data-base-price="{$purchasePrice}"
+                        class="js-xfrmc-numLicenses"
+                        data-total="< .block-body | .js-xfrmc-totalPrice"
+                        label="{{ phrase('xfrmc_total_licenses') }}"
+                        explain="{{ phrase('xfrmc_total_licenses_explain') }}"
+                        min="1" value="1" />
                 <hr class="formRowSep" />
                 <xf:formrow label="{{ phrase('xfrmc_total') }}">
-                    <span id="xfrmc-total" style="font-size: 20px">{{ $purchasePrice|currency($resource.currency) }}</span>
+                    <span id="xfrmc-total" class="js-xfrmc-totalPrice" style="font-size: 20px">{{ $purchasePrice|currency($resource.currency) }}</span>
                 </xf:formrow>
                 <hr class="formRowSep" />
 
@@ -36,6 +44,7 @@
                         <xf:button data-xf-init="xfrmc-check-coupon-code"
                                    class="is-disabled"
                                    data-href="{$checkCouponUrl}"
+                                   data-license-input="< .block-body | .js-xfrmc-numLicenses"
                                    data-coupon-input="< .inputGroup | .input--couponCode"
                                    data-price="#xfrmc-price" data-total="#xfrmc-total"
                                    type="button">{{ phrase('xfrmc_check_available') }}</xf:button>

@@ -665,6 +665,18 @@
         "version_string": "1.1.1",
         "hash": "bc30768048a7bbfd2d158d722c140c6d"
     },
+    "xfrmc_total_licenses.txt": {
+        "global_cache": false,
+        "version_id": 3030200,
+        "version_string": "3.3.2",
+        "hash": "0f9b99d65a61a6b7f88c6276e68b7054"
+    },
+    "xfrmc_total_licenses_explain.txt": {
+        "global_cache": false,
+        "version_id": 3030200,
+        "version_string": "3.3.2",
+        "hash": "b00943ba76df73d85c765210c845adde"
+    },
     "xfrmc_transfer_license.txt": {
         "global_cache": false,
         "version_id": 3020400,

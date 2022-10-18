@@ -26,6 +26,9 @@
                              value="{$purchased.amount}"
                              label="{{ phrase('xfrmc_price') }}" />
 
+            <xf:numberboxrow name="total_license" min="1" label="{{ phrase('xfrmc_total_licenses') }}"
+                             value="{$purchased.total_license}" />
+
             <xf:dateinputrow name="expire_date"
                              value="{{ $purchased.expire_date ? date($purchased.expire_date, 'picker') : '' }}"
                              label="{{ phrase('xfrmc_expire_date') }}"  />

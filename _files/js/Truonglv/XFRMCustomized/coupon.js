@@ -5,6 +5,7 @@
             href: null,
             price: null,
             total: null,
+            licenseInput: null,
         },
 
         $input: null,
@@ -17,12 +18,15 @@
         orgData: null,
         cacheData: {},
 
+        $licenseInput: null,
+
         init: function () {
             if (!this.options.href) {
                 throw new Error('Must have data-href attribute.');
             }
 
             this.$target.prop('disabled', true).addClass('is-disabled');
+            this.$licenseInput = XF.findRelativeIf(this.options.licenseInput, this.$target);
 
             this.$input = XF.findRelativeIf(this.options.couponInput, this.$target);
             if (!this.$input.length) {
@@ -82,7 +86,10 @@
             }
 
             var _this = this,
-                data = { coupon_code: this.$input.val() };
+                data = {
+                    coupon_code: this.$input.val(),
+                    [this.$licenseInput.attr('name')]: this.$licenseInput.val(),
+                };
 
             if (this.cacheData[data.coupon_code]) {
                 this.onResponse(this.cacheData[data.coupon_code]);
@@ -197,6 +204,30 @@
         },
     });
 
+    XF.XFRMCustomized_TotalLicenses = XF.Element.newHandler({
+        options: {
+            basePrice: null,
+            total: null,
+        },
+
+        $total: null,
+
+        init: function () {
+            this.$target.on('change', XF.proxy(this, 'onChange'));
+
+            this.$total = XF.findRelativeIf(this.options.total, this.$target);
+        },
+
+        onChange: function () {
+            var value = this.$target.val(),
+                price = this.options.basePrice * parseFloat(value),
+                priceText = this.$total.text();
+
+            this.$total.text(priceText.substring(0, 1) + price);
+        },
+    });
+
     XF.Click.register('xfrmc-check-coupon-code', 'XF.XFRMCustomized_CouponCheck');
     XF.Element.register('xfrmc-price-calc', 'XF.XFRMCustomized_PriceCalc');
+    XF.Element.register('xfrmc-total-licenses', 'XF.XFRMCustomized_TotalLicenses');
 })(jQuery, this, document);

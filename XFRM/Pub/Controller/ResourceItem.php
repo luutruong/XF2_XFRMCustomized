@@ -17,6 +17,7 @@ use Truonglv\XFRMCustomized\App;
 use XFRM\Entity\ResourceVersion;
 use Truonglv\XFRMCustomized\Entity\License;
 use Truonglv\XFRMCustomized\Entity\Purchase;
+use Truonglv\XFRMCustomized\Purchasable\Resource;
 use Truonglv\XFRMCustomized\Service\License\Creator;
 use Truonglv\XFRMCustomized\Service\License\Transfer;
 
@@ -103,6 +104,7 @@ class ResourceItem extends XFCP_ResourceItem
                 $entity->expire_date = $expireDate;
                 $entity->amount = $this->filter('amount', 'uint');
                 $entity->resource_version_id = $resource->current_version_id;
+                $entity->total_license = $this->filter('total_license', 'uint');
 
                 $entity->save();
             }
@@ -155,6 +157,7 @@ class ResourceItem extends XFCP_ResourceItem
 
             $purchased->amount = $this->filter('amount', 'float');
             $purchased->expire_date = $expireDate;
+            $purchased->total_license = $this->filter('total_license', 'uint');
 
             $purchased->save();
 
@@ -581,7 +584,8 @@ class ResourceItem extends XFCP_ResourceItem
 
         $input = $this->filter([
             'payment_profile_id' => 'uint',
-            'coupon_code' => 'str'
+            'coupon_code' => 'str',
+            Resource::EXTRA_DATA_TOTAL_LICENSE => 'uint',
         ]);
 
         /** @var \Truonglv\XFRMCustomized\Entity\Coupon|null $coupon */
@@ -609,6 +613,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         $message = $this->message(XF::phrase('xfrmc_coupon_code_available_for_use'));
         $price = $resource->getXFRMCPriceForProfile($paymentProfile, $coupon);
+        $price *= $input['total_licenses'];
 
         $message->setJsonParam(
             'newPrice',

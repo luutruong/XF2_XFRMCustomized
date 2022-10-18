@@ -26,6 +26,10 @@ use Truonglv\XFRMCustomized\Purchasable\Resource;
  * @property array $purchase_request_keys
  * @property string $note
  * @property int $new_purchase_id
+ * @property int $total_license
+ *
+ * GETTERS
+ * @property float $purchased_amount
  *
  * RELATIONS
  * @property \XF\Entity\User $User
@@ -115,6 +119,8 @@ class Purchase extends Entity
             'purchase_request_keys' => ['type' => self::JSON_ARRAY, 'default' => []],
             'note' => ['type' => self::STR, 'default' => '', 'maxLength' => 255],
             'new_purchase_id' => ['type' => self::UINT, 'default' => 0],
+
+            'total_license' => ['type' => self::UINT, 'default' => 1],
         ];
 
         $structure->getters = [

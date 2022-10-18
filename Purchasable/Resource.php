@@ -23,6 +23,8 @@ class Resource extends AbstractPurchasable
     const EXTRA_DATA_RESOURCE_ID = 'resource_id';
     const EXTRA_DATA_PURCHASE_ID = 'purchase_id';
 
+    const EXTRA_DATA_TOTAL_LICENSE = 'total_license';
+
     /**
      * @var Coupon|null
      */
@@ -31,6 +33,10 @@ class Resource extends AbstractPurchasable
      * @var \Truonglv\XFRMCustomized\Entity\Purchase|null
      */
     protected $oldPurchase;
+    /**
+     * @var int
+     */
+    protected $totalLicenses = 1;
 
     /**
      * @param \XF\Http\Request $request
@@ -102,6 +108,12 @@ class Resource extends AbstractPurchasable
             $this->coupon = $coupon;
         }
 
+        $totalLicenses = $request->filter(self::EXTRA_DATA_TOTAL_LICENSE, 'uint');
+        if ($totalLicenses <= 0) {
+            return false;
+        }
+        $this->totalLicenses = $totalLicenses;
+
         if (!in_array($profileId, $resource->payment_profile_ids, true)) {
             $error = XF::phrase('selected_payment_profile_is_not_valid_for_this_purchase');
 
@@ -141,6 +153,7 @@ class Resource extends AbstractPurchasable
      */
     public function completePurchase(CallbackState $state)
     {
+        $totalLicense = 1;
         if ($state->legacy) {
             $purchaseRequest = null;
             $resourceId = $state->{ self::EXTRA_DATA_RESOURCE_ID };
@@ -151,6 +164,7 @@ class Resource extends AbstractPurchasable
             $resourceId = $purchaseRequest->extra_data[self::EXTRA_DATA_RESOURCE_ID];
             $purchaseId = $purchaseRequest->extra_data[self::EXTRA_DATA_PURCHASE_ID] ?? null;
             $oldPurchaseId = $purchaseRequest->extra_data[self::EXTRA_OLD_PURCHASE_ID] ?? null;
+            $totalLicense = $purchaseRequest->extra_data[self::EXTRA_DATA_TOTAL_LICENSE] ?? 1;
         }
 
         $paymentResult = $state->paymentResult;
@@ -205,6 +219,7 @@ class Resource extends AbstractPurchasable
                 $purchase->username = $purchaser->username;
                 $purchase->expire_date = max(time(), $licenseStartDate) + XF::app()->options()->xfrmc_licenseDuration * 86400;
                 $purchase->resource_version_id = $resource->current_version_id;
+                $purchase->total_license = $totalLicense;
                 if ($purchaseRequest->request_key !== '') {
                     $purchase->purchase_request_key = substr($purchaseRequest->request_key, 0, 32);
                 }
@@ -281,6 +296,7 @@ class Resource extends AbstractPurchasable
         if ($purchaseRequest !== null && $purchase !== null) {
             $extraData = $purchaseRequest->extra_data;
             $extraData[self::EXTRA_DATA_PURCHASE_ID] = $purchase->purchase_id;
+            $extraData[self::EXTRA_DATA_TOTAL_LICENSE] = $totalLicense;
             $purchaseRequest->extra_data = $extraData;
 
             $purchaseRequest->save();
@@ -350,6 +366,10 @@ class Resource extends AbstractPurchasable
             $this->coupon = $coupon;
         }
 
+        if (isset($extraData[self::EXTRA_DATA_TOTAL_LICENSE])) {
+            $this->totalLicenses = $extraData[self::EXTRA_DATA_TOTAL_LICENSE];
+        }
+
         return $this->getPurchaseObject($paymentProfile, $purchasable, $purchaser);
     }
 
@@ -411,7 +431,7 @@ class Resource extends AbstractPurchasable
         $upgrades = $finder->whereSql("FIND_IN_SET($quotedProfileId, $columnName)")->fetch();
 
         return $upgrades->pluck(function (\XFRM\Entity\ResourceItem $resource, $key) use ($router) {
-            return ['tl_xfrm_resource' . $key, [
+            return ['xfrmc_resource' . $key, [
                 'title' => $this->getTitle() . ': ' . $resource->title,
                 'link' => $router->buildLink('resources/edit', $resource)
             ]];
@@ -436,9 +456,14 @@ class Resource extends AbstractPurchasable
             }
         }
 
+        if ($this->totalLicenses < 1) {
+            throw new LogicException('Requires at least 1 license to purchase.');
+        }
+
         $cost = $this->oldPurchase === null
             ? $purchasable->getXFRMCPriceForProfile($paymentProfile, $this->coupon)
             : $purchasable->getRenewPrice($paymentProfile);
+        $cost *= $this->totalLicenses;
 
         $purchase = new Purchase();
 
@@ -469,6 +494,7 @@ class Resource extends AbstractPurchasable
         $purchase->purchasableTitle = $purchasable->title;
         $extraData = [
             self::EXTRA_DATA_RESOURCE_ID => $purchasable->resource_id,
+            self::EXTRA_DATA_TOTAL_LICENSE => $this->totalLicenses,
         ];
         if ($this->coupon !== null) {
             $extraData[self::EXTRA_DATA_COUPON_ID] = $this->coupon->coupon_id;
@@ -482,7 +508,9 @@ class Resource extends AbstractPurchasable
         $router = XF::app()->router('public');
 
         $purchase->returnUrl = $router->buildLink('canonical:resources', $purchasable);
-        $purchase->cancelUrl = $router->buildLink('canonical:resources', $purchasable);
+        $purchase->cancelUrl = $router->buildLink('canonical:resources', $purchasable, [
+            'action' => 'cancel',
+        ]);
 
         return $purchase;
     }
