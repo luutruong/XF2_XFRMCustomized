@@ -76,6 +76,12 @@ class Setup extends AbstractSetup
         $this->doAlterTables($this->getAlters6());
     }
 
+    public function upgrade3030400Step1(): void
+    {
+        $this->doAlterTables($this->getAlters7());
+    }
+
+
     protected function getTables1(): array
     {
         $tables = [];
