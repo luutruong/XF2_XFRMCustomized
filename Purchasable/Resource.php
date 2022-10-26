@@ -89,6 +89,8 @@ class Resource extends AbstractPurchasable
 
             $totalLicenses = $request->filter(self::EXTRA_DATA_TOTAL_LICENSE, 'uint');
             if ($totalLicenses <= 0) {
+                $error = 'Please enter a valid number of licenses';
+
                 return false;
             }
             $this->totalLicenses = $totalLicenses;
