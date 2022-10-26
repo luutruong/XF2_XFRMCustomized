@@ -749,6 +749,12 @@
         "version_string": "3.0.2",
         "hash": "651963af0c5b18b4d165a347e31fd21b"
     },
+    "xfrmc_x_licenses.txt": {
+        "global_cache": false,
+        "version_id": 3030400,
+        "version_string": "3.3.4",
+        "hash": "eb93118de04eded5ed345813e01373be"
+    },
     "xfrmc_you_did_not_bought_any_resources_yet.txt": {
         "global_cache": false,
         "version_id": 1000970,
@@ -763,9 +769,9 @@
     },
     "xfrmc_you_have_license_this_resource_but_it_expired_renew_continue_download.txt": {
         "global_cache": false,
-        "version_id": 3000200,
-        "version_string": "3.0.2",
-        "hash": "4fbe0698d6d1a451959a6e1ffe6f9785"
+        "version_id": 3030400,
+        "version_string": "3.3.4",
+        "hash": "be9cc239ae5689a437ee02060ddff189"
     },
     "xfrmc_you_may_purchase_this_resource_to_download.txt": {
         "global_cache": false,

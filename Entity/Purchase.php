@@ -9,6 +9,7 @@ namespace Truonglv\XFRMCustomized\Entity;
 use XF;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
+use XFRM\Entity\ResourceItem;
 use XFRM\Entity\ResourceVersion;
 use Truonglv\XFRMCustomized\Purchasable\Resource;
 
@@ -97,6 +98,17 @@ class Purchase extends Entity
         }
 
         return $this->amount;
+    }
+
+    public function getRenewPrice(ResourceItem $resource, XF\Entity\PaymentProfile $profile): string
+    {
+        /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
+        $price = $resource->getRenewPrice($profile);
+
+        $price *= $this->total_license;
+        $templater = $this->app()->templater();
+
+        return $templater->filter($price, [['currency', [$resource->currency]]]);
     }
 
     public static function getStructure(Structure $structure)

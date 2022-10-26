@@ -75,7 +75,9 @@ class Resource extends AbstractPurchasable
             /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
             $resource = $purchase->Resource;
             $canUseCouponCode = false;
+
             $this->oldPurchase = $purchase;
+            $this->totalLicenses = $purchase->total_license;
         } else {
             /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem|null $resource */
             $resource = XF::em()->find('XFRM:ResourceItem', $resourceId);
@@ -84,6 +86,12 @@ class Resource extends AbstractPurchasable
 
                 return false;
             }
+
+            $totalLicenses = $request->filter(self::EXTRA_DATA_TOTAL_LICENSE, 'uint');
+            if ($totalLicenses <= 0) {
+                return false;
+            }
+            $this->totalLicenses = $totalLicenses;
         }
 
         $couponCode = $request->filter('coupon_code', 'str');
@@ -107,12 +115,6 @@ class Resource extends AbstractPurchasable
 
             $this->coupon = $coupon;
         }
-
-        $totalLicenses = $request->filter(self::EXTRA_DATA_TOTAL_LICENSE, 'uint');
-        if ($totalLicenses <= 0) {
-            return false;
-        }
-        $this->totalLicenses = $totalLicenses;
 
         if (!in_array($profileId, $resource->payment_profile_ids, true)) {
             $error = XF::phrase('selected_payment_profile_is_not_valid_for_this_purchase');
