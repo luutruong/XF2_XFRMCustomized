@@ -400,7 +400,9 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         $limitReleaseDate = 0;
-        if ($lastPurchase !== null) {
+        if ($resource->canDownload()) {
+            $limitReleaseDate = time();
+        } elseif ($lastPurchase !== null) {
             $limitReleaseDate = $lastPurchase->isExpired() ? $lastPurchase->expire_date : time();
         }
 
