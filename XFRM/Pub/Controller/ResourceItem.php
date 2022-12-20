@@ -615,7 +615,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         $message = $this->message(XF::phrase('xfrmc_coupon_code_available_for_use'));
         $price = $resource->getXFRMCPriceForProfile($paymentProfile, $coupon);
-        $price *= $input['total_licenses'];
+        $price *= $input[Resource::EXTRA_DATA_TOTAL_LICENSE];
 
         $message->setJsonParam(
             'newPrice',
