@@ -86,11 +86,6 @@ class Coupon extends Entity
         }
 
         $criteria = $this->criteria;
-        if (!isset($criteria['user']) || !isset($criteria['resource'])) {
-            // OLD coupon code
-            return false;
-        }
-
         $criteria = array_replace_recursive([
             'limit' => [
                 'total' => 0,
@@ -99,7 +94,8 @@ class Coupon extends Entity
             'resource' => [
                 'category_ids' => null,
                 'resource_ids' => null
-            ]
+            ],
+            'user' => [],
         ], $criteria);
 
         $total = $criteria['limit']['total'];
