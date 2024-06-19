@@ -90,3 +90,13 @@
 .invoice-box.rtl table tr td:nth-child(2) {
   text-align: left;
 }
+
+@media print {
+  .p-header,
+  .p-breadcrumbs,
+  .p-body-header,
+  .p-navSticky,
+  .p-footer {
+    display: none;
+  }
+}

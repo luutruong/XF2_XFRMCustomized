@@ -50,9 +50,9 @@
         "hash": "0e2cc141cb4de5ef45d1d2577f686376"
     },
     "public/xfrmc_invoice_view.less": {
-        "version_id": 3010000,
-        "version_string": "3.1.0",
-        "hash": "0aded9227ac2d3940cb9d49329bd3a7f"
+        "version_id": 3030500,
+        "version_string": "3.3.5",
+        "hash": "80005334470a1c7d403a8f0af89e292f"
     },
     "public/xfrmc_resource_add_buyer.html": {
         "version_id": 3030200,
