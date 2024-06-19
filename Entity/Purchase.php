@@ -102,6 +102,17 @@ class Purchase extends Entity
         return $this->amount;
     }
 
+    public function getCurrency(): string
+    {
+        if ($this->PurchaseRequest !== null) {
+            return $this->PurchaseRequest->cost_currency;
+        } elseif ($this->Resource !== null) {
+            return $this->Resource->currency;
+        }
+
+        return 'USD';
+    }
+
     public function getRenewPrice(ResourceItem $resource, XF\Entity\PaymentProfile $profile): string
     {
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */

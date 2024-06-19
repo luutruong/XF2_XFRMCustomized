@@ -61,12 +61,12 @@
 
         <tr class="item last">
             <td>{$purchase.Resource.title}</td>
-            <td>{$purchase.purchased_amount|currency($purchase.Resource.currency)}</td>
+            <td>{$purchase.purchased_amount|currency($purchase.getCurrency())}</td>
         </tr>
 
         <tr class="total">
             <td></td>
-            <td>{{ phrase('total:') }}&nbsp;{$purchase.amount|currency($purchase.Resource.currency)}</td>
+            <td>{{ phrase('total:') }}&nbsp;{$purchase.purchased_amount|currency($purchase.getCurrency())}</td>
         </tr>
     </table>
 </div>
