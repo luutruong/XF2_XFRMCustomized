@@ -95,6 +95,8 @@ class Purchase extends Entity
                     return $coupon->calcPrice($this->amount);
                 }
             }
+
+            return $this->PurchaseRequest->cost_amount;
         }
 
         return $this->amount;
