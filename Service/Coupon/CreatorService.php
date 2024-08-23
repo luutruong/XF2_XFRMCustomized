@@ -12,58 +12,39 @@ use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
 use Truonglv\XFRMCustomized\Entity\Coupon;
 
-class Creator extends AbstractService
+class CreatorService extends AbstractService
 {
     use ValidateAndSavableTrait;
 
-    /**
-     * @var Coupon
-     */
-    protected $coupon;
+    protected Coupon $coupon;
 
     public function __construct(\XF\App $app)
     {
         parent::__construct($app);
 
-        /** @var Coupon $coupon */
-        $coupon = $app->em()->create('Truonglv\XFRMCustomized:Coupon');
+        $coupon = $app->em()->create(Coupon::class);
         $this->coupon = $coupon;
 
         $this->setUser(XF::visitor());
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
-    protected function setUser(User $user)
+    protected function setUser(User $user): void
     {
         $this->coupon->user_id = $user->user_id;
         $this->coupon->username = $user->username;
     }
 
-    /**
-     * @return Coupon
-     */
-    public function getCoupon()
+    public function getCoupon(): Coupon
     {
         return $this->coupon;
     }
 
-    /**
-     * @param string $title
-     * @return void
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->coupon->title = $title;
     }
 
-    /**
-     * @param string $couponCode
-     * @return void
-     */
-    public function setCouponCode(string $couponCode)
+    public function setCouponCode(string $couponCode): void
     {
         $this->coupon->coupon_code = $couponCode;
     }

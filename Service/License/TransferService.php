@@ -8,22 +8,13 @@ use XFRM\Entity\ResourceItem;
 use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
 
-class Transfer extends AbstractService
+class TransferService extends AbstractService
 {
     use ValidateAndSavableTrait;
 
-    /**
-     * @var ResourceItem
-     */
-    protected $resource;
-    /**
-     * @var User|null
-     */
-    protected $fromUser;
-    /**
-     * @var User|null
-     */
-    protected $toUser;
+    protected ResourceItem $resource;
+    protected ?User $fromUser = null;
+    protected ?User $toUser = null;
 
     public function __construct(\XF\App $app, ResourceItem $resource)
     {
@@ -35,15 +26,13 @@ class Transfer extends AbstractService
 
     public function setFromUsername(string $username): void
     {
-        /** @var User|null $user */
-        $user = $this->finder('XF:User')->where('username', $username)->fetchOne();
+        $user = $this->finder(XF\Finder\UserFinder::class)->where('username', $username)->fetchOne();
         $this->fromUser = $user;
     }
 
     public function setToUsername(string $username): void
     {
-        /** @var User|null $user */
-        $user = $this->finder('XF:User')->where('username', $username)->fetchOne();
+        $user = $this->finder(XF\Finder\UserFinder::class)->where('username', $username)->fetchOne();
         $this->setToUser($user);
     }
 

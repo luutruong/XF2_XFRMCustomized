@@ -7,6 +7,8 @@ use XF\Mvc\Entity\Entity as MvcEntity;
 use XF\Mvc\Entity\Finder;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
+use XF\Repository\NodeRepository;
+use XF\Repository\UserRepository;
 
 /**
  * @version 2020052301
@@ -277,8 +279,7 @@ abstract class Entity extends AbstractController
         switch ($relation['entity']) {
             case 'XF:Forum':
                 $tag = 'select';
-                /** @var \XF\Repository\Node $nodeRepo */
-                $nodeRepo = $entity->repository('XF:Node');
+                $nodeRepo = $entity->repository(NodeRepository::class);
                 $tagOptions['choices'] = $nodeRepo->getNodeOptionsData(false, ['Forum']);
                 break;
             case 'XF:User':
@@ -605,8 +606,7 @@ abstract class Entity extends AbstractController
                 $userId = 0;
 
                 if (isset($input['username_values'][$columnName])) {
-                    /** @var \XF\Repository\User $userRepo */
-                    $userRepo = $this->repository('XF:User');
+                    $userRepo = $this->repository(UserRepository::class);
                     /** @var \XF\Entity\User|null $user */
                     $user = $userRepo->getUserByNameOrEmail($input['username_values'][$columnName]);
                     if ($user === null) {

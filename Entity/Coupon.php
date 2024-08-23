@@ -12,6 +12,7 @@ use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XFRM\Entity\ResourceItem;
+use Truonglv\XFRMCustomized\Finder\CouponUserFinder;
 
 /**
  * COLUMNS
@@ -106,7 +107,7 @@ class Coupon extends Entity
         }
 
         if ($perUser >= 0) {
-            $userTotal = $this->finder('Truonglv\XFRMCustomized:CouponUser')
+            $userTotal = $this->finder(CouponUserFinder::class)
                 ->where('coupon_id', $this->coupon_id)
                 ->where('user_id', $purchaser->user_id)
                 ->total();

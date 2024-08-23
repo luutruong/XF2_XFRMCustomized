@@ -7,7 +7,6 @@
 namespace Truonglv\XFRMCustomized;
 
 use XF;
-use XF\Repository\AddOn;
 use XF\Template\Templater;
 use InvalidArgumentException;
 use XFRM\Entity\ResourceItem;
@@ -29,8 +28,7 @@ class Callback
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
         $resource = $params['resource'];
 
-        /** @var \XF\Repository\Payment $paymentRepo */
-        $paymentRepo = XF::repository('XF:Payment');
+        $paymentRepo = XF::repository(XF\Repository\PaymentRepository::class);
 
         $controlOptions = [
             'name' => 'payment_profile_ids',
@@ -58,8 +56,7 @@ class Callback
      */
     public static function getIsXFRMSupportLargeFileEnabled()
     {
-        /** @var AddOn $addOnRepo */
-        $addOnRepo = XF::repository('XF:AddOn');
+        $addOnRepo = XF::repository(XF\Repository\AddOnRepository::class);
         $addOns = $addOnRepo->getEnabledAddOns();
 
         return isset($addOns['Truonglv/XFRMSupportLargeFile']) ? true : null;

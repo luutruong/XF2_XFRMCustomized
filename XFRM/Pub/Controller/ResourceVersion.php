@@ -5,6 +5,7 @@ namespace Truonglv\XFRMCustomized\XFRM\Pub\Controller;
 use XF;
 use XF\Mvc\ParameterBag;
 use Truonglv\XFRMCustomized\App;
+use Truonglv\XFRMCustomized\Finder\LicenseFinder;
 
 class ResourceVersion extends XFCP_ResourceVersion
 {
@@ -18,7 +19,7 @@ class ResourceVersion extends XFCP_ResourceVersion
             return parent::actionDownload($params);
         }
 
-        $licenses = $this->finder('Truonglv\XFRMCustomized:License')
+        $licenses = $this->finder(LicenseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', XF::visitor()->user_id)
             ->where('deleted_date', 0)

@@ -5,9 +5,10 @@ namespace Truonglv\XFRMCustomized\Admin\Controller;
 use XF;
 use DateTime;
 use XF\Mvc\ParameterBag;
-use XF\ControllerPlugin\Delete;
+use XFRM\Repository\Category;
 use XF\Mvc\Reply\AbstractReply;
 use XF\Admin\Controller\AbstractController;
+use Truonglv\XFRMCustomized\Finder\CouponFinder;
 
 class Coupon extends AbstractController
 {
@@ -16,7 +17,7 @@ class Coupon extends AbstractController
         $page = $this->filterPage();
         $perPage = 20;
 
-        $finder = $this->finder('Truonglv\XFRMCustomized:Coupon');
+        $finder = $this->finder(CouponFinder::class);
         $finder->order('coupon_code');
 
         $total = $finder->total();
@@ -121,8 +122,7 @@ class Coupon extends AbstractController
     {
         $coupon = $this->assertCouponExists($params['coupon_id']);
 
-        /** @var Delete $delete */
-        $delete = $this->plugin('XF:Delete');
+        $delete = $this->plugin(XF\ControllerPlugin\DeletePlugin::class);
 
         return $delete->actionDelete(
             $coupon,
@@ -136,8 +136,7 @@ class Coupon extends AbstractController
     protected function couponAddEdit(\Truonglv\XFRMCustomized\Entity\Coupon $coupon): AbstractReply
     {
         $userCriteria = $this->app->criteria('XF:User', $coupon->criteria['user'] ?? []);
-        /** @var \XFRM\Repository\Category $xfrmCategoryRepo */
-        $xfrmCategoryRepo = $this->repository('XFRM:Category');
+        $xfrmCategoryRepo = $this->repository(Category::class);
 
         return $this->view(
             'Truonglv\XFRMCustomized:Coupon\Edit',
@@ -164,11 +163,10 @@ class Coupon extends AbstractController
      * @return \Truonglv\XFRMCustomized\Entity\Coupon
      * @throws \XF\Mvc\Reply\Exception
      */
-    protected function assertCouponExists($couponId): \Truonglv\XFRMCustomized\Entity\Coupon
+    protected function assertCouponExists(mixed $couponId): \Truonglv\XFRMCustomized\Entity\Coupon
     {
-        /** @var \Truonglv\XFRMCustomized\Entity\Coupon $coupon */
         $coupon = $this->assertRecordExists(
-            'Truonglv\XFRMCustomized:Coupon',
+            \Truonglv\XFRMCustomized\Entity\Coupon::class,
             $couponId,
             [],
             'requested_page_not_found'

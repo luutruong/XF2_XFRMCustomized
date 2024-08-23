@@ -13,6 +13,7 @@ use XF\Mvc\Entity\Structure;
 use XF\Entity\PaymentProfile;
 use Truonglv\XFRMCustomized\App;
 use Truonglv\XFRMCustomized\Entity\Coupon;
+use Truonglv\XFRMCustomized\Finder\PurchaseFinder;
 
 /**
  * Class ResourceItem
@@ -117,7 +118,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->_getterCache['xfrmc_is_renew_license'];
         }
 
-        $isRenew = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $isRenew = $this->finder(PurchaseFinder::class)
             ->where('user_id', XF::visitor()->user_id)
             ->where('resource_id', $this->resource_id)
             ->where('new_purchase_id', 0)

@@ -11,7 +11,7 @@ use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
 use Truonglv\XFRMCustomized\Entity\License;
 
-class Creator extends AbstractService
+class CreatorService extends AbstractService
 {
     use ValidateAndSavableTrait;
 
@@ -30,7 +30,7 @@ class Creator extends AbstractService
         $this->user = XF::visitor();
 
         /** @var License $license */
-        $license = $app->em()->create('Truonglv\XFRMCustomized:License');
+        $license = $app->em()->create(License::class);
         $this->license = $license;
     }
 

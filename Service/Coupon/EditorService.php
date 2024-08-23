@@ -10,14 +10,11 @@ use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
 use Truonglv\XFRMCustomized\Entity\Coupon;
 
-class Editor extends AbstractService
+class EditorService extends AbstractService
 {
     use ValidateAndSavableTrait;
 
-    /**
-     * @var Coupon
-     */
-    protected $coupon;
+    protected Coupon $coupon;
 
     public function __construct(\XF\App $app, Coupon $coupon)
     {
@@ -26,10 +23,7 @@ class Editor extends AbstractService
         $this->coupon = $coupon;
     }
 
-    /**
-     * @return Coupon
-     */
-    public function getCoupon()
+    public function getCoupon(): Coupon
     {
         return $this->coupon;
     }

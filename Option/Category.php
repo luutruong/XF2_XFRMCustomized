@@ -14,14 +14,12 @@ class Category extends AbstractOption
      */
     public static function renderSelectMultiple(\XF\Entity\Option $option, array $htmlParams)
     {
-        /** @var \XFRM\Repository\Category $categoryRepo */
-        $categoryRepo = $option->repository('XFRM:Category');
+        $categoryRepo = $option->repository(\XFRM\Repository\Category::class);
         $choices = $categoryRepo->getCategoryOptionsData();
 
         $choices[0]['label'] = XF::phrase('(none)');
 
         $data = [
-            'htmlParams' => $htmlParams,
             'controlOptions' => self::getControlOptions($option, $htmlParams),
             'rowOptions' => self::getRowOptions($option, $htmlParams)
         ];

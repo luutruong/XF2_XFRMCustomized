@@ -17,9 +17,11 @@ use Truonglv\XFRMCustomized\App;
 use XFRM\Entity\ResourceVersion;
 use Truonglv\XFRMCustomized\Entity\License;
 use Truonglv\XFRMCustomized\Entity\Purchase;
+use Truonglv\XFRMCustomized\Finder\LicenseFinder;
 use Truonglv\XFRMCustomized\Purchasable\Resource;
-use Truonglv\XFRMCustomized\Service\License\Creator;
-use Truonglv\XFRMCustomized\Service\License\Transfer;
+use Truonglv\XFRMCustomized\Finder\PurchaseFinder;
+use Truonglv\XFRMCustomized\Service\License\CreatorService;
+use Truonglv\XFRMCustomized\Service\License\TransferService;
 
 class ResourceItem extends XFCP_ResourceItem
 {
@@ -50,8 +52,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         if ($this->isPost()) {
             $names = $this->filter('names', 'str');
-            /** @var \XF\Repository\User $userRepo */
-            $userRepo = $this->repository('XF:User');
+            $userRepo = $this->repository(XF\Repository\UserRepository::class);
 
             $names = preg_split("/\s*,\s*/", $names, -1, PREG_SPLIT_NO_EMPTY);
             if ($names === false) {
@@ -138,7 +139,7 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchased */
-        $purchased = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $purchased = $this->finder(PurchaseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $user->user_id)
             ->fetchOne();
@@ -186,7 +187,7 @@ class ResourceItem extends XFCP_ResourceItem
 
         $this->assertCanonicalUrl($this->buildLink('resources/buyers', $resource));
 
-        $finder = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $finder = $this->finder(PurchaseFinder::class)
             ->with('User')
             ->where('resource_id', $resource->resource_id)
             ->order('purchased_date', 'DESC');
@@ -195,8 +196,7 @@ class ResourceItem extends XFCP_ResourceItem
         $user = null;
 
         if ($username !== '') {
-            /** @var \XF\Repository\User $userRepo */
-            $userRepo = $this->repository('XF:User');
+            $userRepo = $this->repository(XF\Repository\UserRepository::class);
             /** @var User|null $user */
             $user = $userRepo->getUserByNameOrEmail($username);
 
@@ -237,7 +237,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->noPermission($error);
         }
 
-        $existingLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $existingLicenses = $this->finder(PurchaseFinder::class)
             ->where('user_id', XF::visitor()->user_id)
             ->where('resource_id', $resource->resource_id)
             ->where('new_purchase_id', 0)
@@ -246,8 +246,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->rerouteController(__CLASS__, 'renew', $params);
         }
 
-        /** @var \XF\Repository\Payment $paymentRepo */
-        $paymentRepo = XF::repository('XF:Payment');
+        $paymentRepo = XF::repository(XF\Repository\PaymentRepository::class);
         $paymentProfiles = $paymentRepo->findPaymentProfilesForList()
             ->whereIds($resource->payment_profile_ids)
             ->fetch();
@@ -283,7 +282,7 @@ class ResourceItem extends XFCP_ResourceItem
         $this->assertRegistrationRequired();
 
         $resource = $this->assertViewableResource($params->resource_id);
-        $purchases = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $purchases = $this->finder(PurchaseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', XF::visitor()->user_id)
             ->where('new_purchase_id', 0)
@@ -293,8 +292,7 @@ class ResourceItem extends XFCP_ResourceItem
             return $this->error(XF::phrase('xfrmc_you_did_not_have_any_licenses_for_this_resource'));
         }
 
-        /** @var \XF\Repository\Payment $paymentRepo */
-        $paymentRepo = XF::repository('XF:Payment');
+        $paymentRepo = XF::repository(XF\Repository\PaymentRepository::class);
         $paymentProfiles = $paymentRepo->findPaymentProfilesForList()
             ->whereIds($resource->payment_profile_ids)
             ->fetch();
@@ -373,7 +371,7 @@ class ResourceItem extends XFCP_ResourceItem
         if ($resource->user_id !== $visitor->user_id
             && !$resource->canDownload()
         ) {
-            $activeLicenses = $this->finder('Truonglv\XFRMCustomized:Purchase')
+            $activeLicenses = $this->finder(PurchaseFinder::class)
                 ->where('resource_id', $resource->resource_id)
                 ->where('user_id', $visitor->user_id)
                 ->where('new_purchase_id', 0)
@@ -384,7 +382,7 @@ class ResourceItem extends XFCP_ResourceItem
         }
 
         /** @var Purchase|null $lastPurchase */
-        $lastPurchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $lastPurchase = $this->finder(PurchaseFinder::class)
             ->where('user_id', $visitor->user_id)
             ->where('resource_id', $resource->resource_id)
             ->where('new_purchase_id', 0)
@@ -443,7 +441,7 @@ class ResourceItem extends XFCP_ResourceItem
         }
         unset($version);
 
-        $licenses = $this->finder('Truonglv\XFRMCustomized:License')
+        $licenses = $this->finder(LicenseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $visitor->user_id)
             ->where('deleted_date', 0)
@@ -471,7 +469,7 @@ class ResourceItem extends XFCP_ResourceItem
         $visitor = XF::visitor();
 
         /** @var License|null $lastLicense */
-        $lastLicense = $this->finder('Truonglv\XFRMCustomized:License')
+        $lastLicense = $this->finder(LicenseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $visitor->user_id)
             ->where('deleted_date', 0)
@@ -479,7 +477,7 @@ class ResourceItem extends XFCP_ResourceItem
             ->fetchOne();
         $recommendUrls = [];
         if ($lastLicense === null) {
-            $recommendUrls = $this->finder('Truonglv\XFRMCustomized:License')
+            $recommendUrls = $this->finder(LicenseFinder::class)
                 ->where('user_id', $visitor->user_id)
                 ->where('deleted_date', 0)
                 ->fetchColumns('license_url');
@@ -499,8 +497,7 @@ class ResourceItem extends XFCP_ResourceItem
             }
 
             if ($create) {
-                /** @var Creator $creator */
-                $creator = $this->service('Truonglv\XFRMCustomized:License\Creator', $resource);
+                $creator = $this->service(CreatorService::class, $resource);
                 if (strlen($recommendUrl) > 0 && $recommendUrl !== '_') {
                     $creator->setLicenseUrl($recommendUrl);
                 } else {
@@ -655,7 +652,7 @@ class ResourceItem extends XFCP_ResourceItem
             }
         }
 
-        $finder = $this->finder('Truonglv\XFRMCustomized:Purchase');
+        $finder = $this->finder(PurchaseFinder::class);
         $finder->with('Resource');
         $finder->order('purchased_date', 'desc');
 
@@ -692,8 +689,7 @@ class ResourceItem extends XFCP_ResourceItem
         if ($this->isPost()) {
             $toUsername = $this->filter('to_username', 'str');
 
-            /** @var Transfer $transfer */
-            $transfer = $this->service('Truonglv\XFRMCustomized:License\Transfer', $resource);
+            $transfer = $this->service(TransferService::class, $resource);
             $transfer->setToUsername($toUsername);
             if ($resource->hasPermission('editAny')) {
                 $fromUsername = $this->filter('from_username', 'str');

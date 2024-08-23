@@ -11,15 +11,16 @@ use XF\Entity\User;
 use XF\Mvc\Entity\Repository;
 use XFRM\Entity\ResourceItem;
 use XF\Mvc\Entity\AbstractCollection;
+use Truonglv\XFRMCustomized\Finder\PurchaseFinder;
 
-class Purchase extends Repository
+class PurchaseRepository extends Repository
 {
     public function getActivePurchase(ResourceItem $resource, User $user = null): ?\Truonglv\XFRMCustomized\Entity\Purchase
     {
         $user = $user !== null ? $user : XF::visitor();
 
         /** @var \Truonglv\XFRMCustomized\Entity\Purchase|null $purchase */
-        $purchase = $this->finder('Truonglv\XFRMCustomized:Purchase')
+        $purchase = $this->finder(PurchaseFinder::class)
                 ->where('resource_id', $resource->resource_id)
                 ->where('user_id', $user->user_id)
                 ->where('expire_date', '>', XF::$time)
@@ -31,7 +32,7 @@ class Purchase extends Repository
 
     public function isPurchased(ResourceItem $resource, User $user): bool
     {
-        return $this->finder('Truonglv\XFRMCustomized:Purchase')
+        return $this->finder(PurchaseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $user->user_id)
             ->total() > 0;
@@ -41,7 +42,7 @@ class Purchase extends Repository
     {
         $user = $user !== null ? $user : XF::visitor();
 
-        return $this->finder('Truonglv\XFRMCustomized:Purchase')
+        return $this->finder(PurchaseFinder::class)
             ->where('resource_id', $resource->resource_id)
             ->where('user_id', $user->user_id)
             ->order('expire_date')

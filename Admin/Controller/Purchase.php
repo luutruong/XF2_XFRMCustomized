@@ -6,6 +6,8 @@ use XF;
 use XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use XF\Admin\Controller\AbstractController;
+use Truonglv\XFRMCustomized\Finder\LicenseFinder;
+use Truonglv\XFRMCustomized\Finder\PurchaseFinder;
 
 class Purchase extends AbstractController
 {
@@ -15,7 +17,7 @@ class Purchase extends AbstractController
             return $this->rerouteController(__CLASS__, 'view', $params);
         }
 
-        $finder = $this->finder('Truonglv\XFRMCustomized:Purchase');
+        $finder = $this->finder(PurchaseFinder::class);
 
         $page = $this->filterPage();
         $perPage = 20;
@@ -134,7 +136,7 @@ class Purchase extends AbstractController
         $page = $this->filterPage();
         $perPage = 20;
 
-        $finder = $this->finder('Truonglv\XFRMCustomized:License');
+        $finder = $this->finder(LicenseFinder::class);
         $finder->with(['User', 'Resource']);
         $finder->order('added_date', 'desc');
 
@@ -152,8 +154,7 @@ class Purchase extends AbstractController
 
     protected function assertPurchaseExists(int $purchaseId): \Truonglv\XFRMCustomized\Entity\Purchase
     {
-        /** @var \Truonglv\XFRMCustomized\Entity\Purchase $purchase */
-        $purchase = $this->assertRecordExists('Truonglv\XFRMCustomized:Purchase', $purchaseId);
+        $purchase = $this->assertRecordExists(\Truonglv\XFRMCustomized\Entity\Purchase::class, $purchaseId);
 
         return $purchase;
     }

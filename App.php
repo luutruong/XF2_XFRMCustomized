@@ -11,7 +11,7 @@ use function ceil;
 use XF\Entity\User;
 use function strpos;
 use function explode;
-use Truonglv\XFRMCustomized\Repository\Purchase;
+use Truonglv\XFRMCustomized\Repository\PurchaseRepository;
 
 class App
 {
@@ -40,8 +40,7 @@ class App
     public static function getPaymentProfiles()
     {
         if (self::$paymentProfiles === null) {
-            /** @var XF\Repository\Payment $paymentProfileRepo */
-            $paymentProfileRepo = XF::repository('XF:Payment');
+            $paymentProfileRepo = XF::repository(XF\Repository\PaymentRepository::class);
             /** @var XF\Entity\PaymentProfile[] $paymentProfiles */
             $paymentProfiles = $paymentProfileRepo->findPaymentProfilesForList()->fetch();
 
@@ -101,12 +100,11 @@ class App
     }
 
     /**
-     * @return Purchase
+     * @return PurchaseRepository
      */
     public static function purchaseRepo()
     {
-        /** @var Purchase $repo */
-        $repo = XF::repository('Truonglv\XFRMCustomized:Purchase');
+        $repo = XF::repository(PurchaseRepository::class);
 
         return $repo;
     }

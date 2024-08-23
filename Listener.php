@@ -3,6 +3,7 @@
 namespace Truonglv\XFRMCustomized;
 
 use XF;
+use Truonglv\XFRMCustomized\Finder\PurchaseFinder;
 
 class Listener
 {
@@ -33,7 +34,7 @@ class Listener
         if ($rule === 'xfrmc_purchase_resources'
             && $data['total'] > 0
         ) {
-            $total = XF::finder('Truonglv\XFRMCustomized:Purchase')
+            $total = XF::finder(PurchaseFinder::class)
                 ->where('user_id', $user->user_id)
                 ->total();
             if ($total >= $data['total']) {
