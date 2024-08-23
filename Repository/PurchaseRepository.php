@@ -63,7 +63,7 @@ class PurchaseRepository extends Repository
         }
 
         $resources = $this->finder('XFRM:ResourceItem')
-            ->with(['Category', 'User', 'Featured'])
+            ->with(['Category', 'User'])
             ->whereIds($resourceIds)
             ->fetch();
         /** @var \Truonglv\XFRMCustomized\XFRM\Entity\ResourceItem $resource */
