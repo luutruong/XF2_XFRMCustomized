@@ -5,5 +5,5 @@
     "enabled": true,
     "action": "str_replace",
     "find": "<!--[XF:resource_tools_menu:before_footer]-->",
-    "replace": "<xf:macro name=\"xfrmc_resource_macros::tools_menu\" \n\t\t  arg-resource=\"{$resource}\" />\n$0"
+    "replace": "<xf:macro id=\"xfrmc_resource_macros::tools_menu\" \n\t\t  arg-resource=\"{$resource}\" />\n$0"
 }

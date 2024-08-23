@@ -4,6 +4,6 @@
     "execution_order": 10,
     "enabled": true,
     "action": "str_replace",
-    "find": "<xf:macro template=\"xfrm_resource_edit_macros\" name=\"type\"",
-    "replace": "<xf:macro template=\"{{ $xfrmc_isEnabled ? 'xfrmc_resource_macros' : 'xfrm_resource_edit_macros' }}\" name=\"type\""
+    "find": "<xf:macro id=\"xfrm_resource_edit_macros::type\"",
+    "replace": "<xf:macro id=\"{{ $xfrmc_isEnabled ? 'xfrmc_resource_macros::type' : 'xfrm_resource_edit_macros::type' }}\""
 }

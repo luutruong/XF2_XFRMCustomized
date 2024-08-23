@@ -1,4 +1,4 @@
-<xf:macro name="type"
+<xf:macro id="type"
 	arg-currentType="!"
 	arg-resource="!"
 	arg-category="!"
@@ -10,8 +10,7 @@
 					 label="{{ phrase('type') }}">
 			<xf:option value="download_local"
 					   label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
-				<xf:macro template="xfrm_extended_resource_macros"
-						  name="upload_button"
+				<xf:macro id="xfrm_extended_resource_macros::upload_button"
 						  arg-attachmentData="{$versionAttachData}"
 						  arg-category="{$category}"
 						  arg-hiddenName="version_attachment_hash"/>
@@ -24,17 +23,17 @@
 
 			<xf:option value="download_local"
 					   label="{{ phrase('xfrm_uploaded_files:') }}" selected="{{ true }}">
-				<xf:macro template="helper_attach_upload" name="upload_block"
+				<xf:macro id="helper_attach_upload::upload_block"
 						  arg-attachmentData="{$versionAttachData}"
 						  arg-hiddenName="version_attachment_hash" />
 			</xf:option>
 		</xf:radiorow>
 	</xf:if>
 
-    <xf:macro name="purchase_inputs" arg-resource="{$resource}" arg-showPrice="{{ true }}" />
+    <xf:macro id="purchase_inputs" arg-resource="{$resource}" arg-showPrice="{{ true }}" />
 </xf:macro>
 
-<xf:macro name="purchase_inputs" arg-resource="!" arg-showPrice="{{ false }}">
+<xf:macro id="purchase_inputs" arg-resource="!" arg-showPrice="{{ false }}">
 	<xf:js src="Truonglv/XFRMCustomized/coupon.js" min="1" addon="Truonglv/XFRMCustomized" />
     <hr class="formRowSep" />
 	<div class="js-xfrmc-paymentProfiles">
@@ -49,7 +48,7 @@
 				 data-estimate-url="{{ link('resources/xfrmc-price-calc') }}"
 				 data-input-selector="input[name='price']"
 				 data-payment-profiles="< .block-body | .js-xfrmc-paymentProfiles">
-				<xf:macro template="xfrm_resource_edit_macros" name="purchase_inputs"
+				<xf:macro id="xfrm_resource_edit_macros::purchase_inputs"
 						  arg-resource="{$resource}" />
 			</div>
         </xf:formrow>
@@ -65,7 +64,7 @@
     <hr class="formRowSep" />
 </xf:macro>
 
-<xf:macro name="buy_button" arg-resource="!">
+<xf:macro id="buy_button" arg-resource="!">
 	<xf:set var="$downloadButton">
 		<xf:button href="{{ link('resources/download', $resource) }}"
 				   style="margin-right:6px"
@@ -85,12 +84,12 @@
 	</xf:if>
 </xf:macro>
 
-<xf:macro name="resource_list_grid" arg-resources="!" arg-showPrice="{{ true }}">
+<xf:macro id="resource_list_grid" arg-resources="!" arg-showPrice="{{ true }}">
 	<xf:css src="xfrmc_resource_list.less"/>
 	<div class="xfrmc-resourceList">
 		<xf:foreach loop="$resources" value="$resource">
 			<div class="resourceList-item {{ $resource.resource_state }}">
-				<xf:macro name="resource_list_grid_item"
+				<xf:macro id="resource_list_grid_item"
 						  arg-showPrice="{$showPrice}"
 						  arg-resource="{$resource}"/>
 			</div>
@@ -98,7 +97,7 @@
 	</div>
 </xf:macro>
 
-<xf:macro name="resource_list_grid_item" arg-resource="!" arg-showPrice="{{ true }}">
+<xf:macro id="resource_list_grid_item" arg-resource="!" arg-showPrice="{{ true }}">
 	<div class="resourceList-item--wrapper">
 		<div class="resourceList-item--icon">
 			{{ resource_icon($resource, 'l', link('resources', $resource)) }}
@@ -124,7 +123,7 @@
 			</div>
 
 			<div class="resourceList-item--meta">
-				<xf:macro template="rating_macros" name="stars_text"
+				<xf:macro id="rating_macros::stars_text"
 						  arg-rating="{$resource.rating_avg}"
 						  arg-count="{$resource.rating_count}"
 						  arg-rowClass="ratingStarsRow--justified"
@@ -133,12 +132,12 @@
 					<xf:if is="$xf.visitor.user_id > 0">
 						<xf:button href="{{ link('resources/download', $resource) }}"
 								   title="{{ phrase('download') }}" data-xf-init="tooltip" data-xf-click="overlay"
-								   class="button--link button--icon"><i class="far fa-download" aria-hidden="true"></i></xf:button>
+								   class="button--link button--icon"><xf:fa icon="far fa-download" /></xf:button>
 					</xf:if>
 					<xf:if is="$resource.canPurchase()">
 						<xf:button href="{{ link('resources/purchase', $resource) }}"
 								   overlay="true" title="{{ phrase('xfrmc_buy_now') }}" data-xf-init="tooltip"
-								   class="button--cta button--icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></xf:button>
+								   class="button--cta button--icon"><xf:fa icon="far fa-shopping-cart" /></xf:button>
 					</xf:if>
 				</div>
 			</div>
@@ -146,13 +145,13 @@
 	</div>
 </xf:macro>
 
-<xf:macro name="structured_data" arg-resource="!" arg-description="!">
+<xf:macro id="structured_data" arg-resource="!" arg-description="!">
 	<xf:page option="ldJsonHtml">
 		<script type="application/ld+json">{{ $resource.getXFRMCStructureJsonLd()|json|raw }}</script>
 	</xf:page>
 </xf:macro>
 
-<xf:macro name="tools_menu" arg-resource="!">
+<xf:macro id="tools_menu" arg-resource="!">
 	<xf:if is="$resource.canTransferLicense()">
 		<a href="{{ link('resources/transfer-license', $resource) }}" class="menu-linkRow">{{ phrase('xfrmc_transfer_license') }}</a>
 	</xf:if>

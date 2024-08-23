@@ -5,5 +5,5 @@
     "enabled": true,
     "action": "preg_replace",
     "find": "#(<xf:if is=\"\\$resource\\.isExternalPurchasable\\(\\)\">).+?(\\t*)(<xf:elseif is=\"\\$resource\\.isExternalDownload\\(\\)\" \\/>)#si",
-    "replace": "$1\n<xf:macro template=\"xfrmc_resource_macros\"\n\t\t  name=\"purchase_inputs\"\n\t\t  arg-resource=\"{$resource}\" arg-showPrice=\"{{ true }}\" />\n$2$3"
+    "replace": "$1\n<xf:macro id=\"xfrmc_resource_macros::purchase_inputs\"\n\t\t  arg-resource=\"{$resource}\" arg-showPrice=\"{{ true }}\" />\n$2$3"
 }
