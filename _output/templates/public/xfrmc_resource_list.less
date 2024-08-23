@@ -9,7 +9,7 @@
 
 .xfrmc-resourceList {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: @xf-paddingMedium;
   padding: @xf-paddingMedium;
 
@@ -112,11 +112,18 @@
   .xfrmc-resourceList {
     gap: @xf-paddingSmall;
     padding: @xf-paddingSmall;
+    grid-template-columns: repeat(3, 1fr);
 
     .resourceList-item {
       .avatar {
         height: 140px;
       }
     }
+  }
+}
+
+@media(max-width: @xf-responsiveNarrow) {
+  .xfrmc-resourceList {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
